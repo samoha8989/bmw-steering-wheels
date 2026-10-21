@@ -74,8 +74,8 @@ body.is-home footer,body.is-home .site-footer{display:none}
 .home-btn{width:100%;min-height:84px;font-size:21px;border-radius:22px;gap:16px}
 .home-btn svg{width:26px;height:26px}.home-btn .mini-lines i{height:26px;width:6px}
 .home-shell .hero-cta{margin:16px 0 18px}
-.big-cta{min-height:72px;font-size:19px;border-radius:20px;background:var(--blue);color:#fff;box-shadow:0 18px 34px -18px rgba(52,95,240,.75);gap:14px}
-.big-cta:hover{background:#214ad4}.big-cta svg{width:24px;height:24px;color:#fff}
+.big-cta{min-height:72px;font-size:19px;border-radius:20px;background:#1b1e22;color:#fff;box-shadow:0 18px 34px -20px rgba(20,24,30,.7);gap:14px}
+.big-cta:hover{background:#2a2e34}.big-cta svg{width:24px;height:24px;color:#b9c9ff}
 .big-cta:disabled{background:#b9bfcc;box-shadow:none}
 .pick-go{width:100%}
 #features .section-actions{flex-direction:column;align-items:stretch;gap:12px}
@@ -91,4 +91,36 @@ body.is-home footer,body.is-home .site-footer{display:none}
  .home-shell .hero-copy{padding:24px 22px 18px}
  .home-shell .hero-copy h1{font-size:34px}
  .home-shell .hero-visual{min-height:260px}
+}
+
+/* 21.10.2026: без «Сравнить»; на главной фото руля ничем не закрыто, строка руля под фото */
+[data-nav="compare"],.compare-toggle,.bottom-compare,[data-compare]{display:none!important}
+.mobile-nav{grid-template-columns:repeat(3,1fr)!important}
+.home-shell .hero-visual{display:flex;flex-direction:column;background:#c2c5c9}
+.home-shell #hero-product-link{display:flex;flex-direction:column;flex:1;min-height:0}
+.home-shell .hero-visual .image-frame{flex:1;height:auto;min-height:0}
+.home-shell .hero-visual .image-frame img{object-fit:contain!important;padding:10px 6px 4px}
+.home-shell .hero-stamp,.home-shell .hero-dots{display:none}
+.home-shell .hero-caption{position:static;margin:0;border-radius:0;background:#1b1e22;color:#fff;backdrop-filter:none;padding:14px 18px;font-size:12px;border-top:1px solid #ffffff14}
+.hc-main{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.home-shell .hero-caption .hc-main b{display:inline;font-size:15px;margin:0;color:#fff}
+.home-shell .hero-caption .hc-main em{font-style:normal;color:#a4b6ef;font-size:11px;letter-spacing:.3px}
+.home-shell .hero-caption .hero-price{display:inline;color:#fff;font-weight:750;font-size:13px}
+.home-shell .hero-caption svg{color:#b9c9ff;width:18px}
+@media(max-width:760px){
+ .home-shell{padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+ .home-shell .hero{min-height:calc(100svh - 77px - 76px - 30px - 96px - env(safe-area-inset-bottom))}
+ .home-shell .hero-cta{margin:14px 0 0}
+ .home-shell .hero-copy{padding:20px 20px 14px}
+ .home-shell .hero-copy p{margin-bottom:10px}
+ .home-shell .hero-caption{padding:12px 16px}
+ .home-shell .hero-caption .hc-main b{font-size:14px}
+}
+@media(max-width:760px){
+ .home-shell .hero-foot{display:none}
+ .home-shell .hero-copy{padding:18px 20px 12px}
+ .home-shell .hero-copy .eyebrow{margin-bottom:10px}
+ .home-shell .hero-copy h1{font-size:30px;margin-bottom:8px}
+ .home-shell .hero-copy p{margin:0;font-size:12px}
+ .home-shell .hero-visual .image-frame img{padding:0}
 }
