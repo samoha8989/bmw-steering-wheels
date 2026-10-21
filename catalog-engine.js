@@ -1,4 +1,4 @@
-export const defaults = {heating:null,vibration:null,cruise:null,brand:'',series:'',branch:'',model:'',year:'',availability:'all',sort:'recommended',budget:'',q:''};
+export const defaults = {heating:'no',vibration:'no',cruise:'no',brand:'',series:'',branch:'',model:'',year:'',availability:'all',sort:'recommended',budget:'',q:''};
 export const featureLabels = {
  heating:{yes:'С подогревом',no:'Без подогрева',unknown:'Подогрев — уточнить'},
  vibration:{yes:'Нужна вибрация',no:'Вибрация не нужна',unknown:'Вибрация — уточнить'},
@@ -64,6 +64,5 @@ export function buildRequest(products,s,origin,branches={}){
  }
  lines.push('',`Автомобиль: ${[brandName(s.brand),s.model||(!ONE(s.series)?s.series:''),s.year].filter(Boolean).join(' · ')||'помогите определить'}`);
  for(const k of ['heating','vibration','cruise'])lines.push(({heating:'Подогрев',vibration:'Вибрация',cruise:'Круиз-контроль'})[k]+': '+(featureLabels[k][s[k]]||'помогите определить'));
- lines.push('Прошу проверить совместимость и итоговую стоимость. Фото штатного руля пришлю в чат.');
  return lines.join('\n');
 }
