@@ -5,23 +5,26 @@ export const featureLabels = {
  cruise:{yes:'Нужен круиз',no:'Круиз не нужен',unknown:'Круиз — уточнить'}
 };
 export const keyOf = p => p.availability+':'+p.id;
-export const brandOf = p => p.series==='Mercedes'?'Mercedes-Benz':'BMW';
+export const ONE = b => b==='Mercedes'||b==='Porsche'
+export const brandName = b => b==='Mercedes'?'Mercedes-Benz':b
+export const brandKey = p => ONE(p.series)?p.series:'BMW'
+export const brandOf = p => p.series==='Mercedes'?'Mercedes-Benz':p.series==='Porsche'?'Porsche':'BMW';
 export function cleanState(value={}){
  const s={...defaults};
  for(const k of ['heating','vibration','cruise'])if(Object.hasOwn(featureLabels[k],value[k]))s[k]=value[k];
- if(['BMW','Mercedes'].includes(value.brand))s.brand=value.brand;
- if(['E','F','G','Mercedes'].includes(value.series))s.series=value.series;
- if(['E60','Eother','Fsmall','Flarge','E','F','G','Mercedes'].includes(value.branch))s.branch=value.branch;
+ if(['BMW','Mercedes','Porsche'].includes(value.brand))s.brand=value.brand;
+ if(['E','F','G','Mercedes','Porsche'].includes(value.series))s.series=value.series;
+ if(['E60','Eother','Fsmall','Flarge','E','F','G','Mercedes','Porsche'].includes(value.branch))s.branch=value.branch;
  for(const k of ['model','year','q'])if(typeof value[k]==='string')s[k]=value[k].slice(0,k==='year'?4:100);
  if(['all','order','stock'].includes(value.availability))s.availability=value.availability;
  if(['recommended','price-asc','price-desc','photos'].includes(value.sort))s.sort=value.sort;
  if(['','20000','30000','40000','50000','70000'].includes(value.budget))s.budget=value.budget;
- if(s.brand==='Mercedes'){s.series='Mercedes';s.branch='Mercedes';s.availability='order';}
+ if(ONE(s.brand)){s.series=s.brand;s.branch=s.brand;s.availability='order';}
  if(s.series==='E')s.availability='order';
  return s;
 }
 export function priceInfo(p,s={},branchOverride){
- const matchesCar = (!s.brand || (s.brand==='Mercedes')===(p.series==='Mercedes')) && (!s.series || (p.compatibleSeries||[p.series]).includes(s.series));
+ const matchesCar = (!s.brand || s.brand===brandKey(p)) && (!s.series || (p.compatibleSeries||[p.series]).includes(s.series));
  const branch=branchOverride || (matchesCar?s.branch:'');
  const options = p.prices[branch] ? [p.prices[branch]] : p.prices.default ? [p.prices.default] : Object.values(p.prices);
  const packageRequired=p.series==='Mercedes'&&(s.heating==='yes'||s.vibration==='yes');
@@ -59,7 +62,7 @@ export function buildRequest(products,s,origin,branches={}){
   lines.push(`${brandOf(p)} № ${p.displayNumber} · ${p.availability==='stock'?'В наличии':'Под заказ'}`,`Цена в каталоге: ${amount} (${price.caption})`);
   lines.push(`${origin}/#/wheel/${p.availability}/${encodeURIComponent(p.id)}/${branches[keyOf(p)]||(p.series==='E'?(['E60','Eother'].includes(s.branch)?s.branch:'E'):p.series)}`);
  }
- lines.push('',`Автомобиль: ${[s.brand==='Mercedes'?'Mercedes-Benz':s.brand,s.model||(s.series!=='Mercedes'?s.series:''),s.year].filter(Boolean).join(' · ')||'помогите определить'}`);
+ lines.push('',`Автомобиль: ${[brandName(s.brand),s.model||(!ONE(s.series)?s.series:''),s.year].filter(Boolean).join(' · ')||'помогите определить'}`);
  for(const k of ['heating','vibration','cruise'])lines.push(({heating:'Подогрев',vibration:'Вибрация',cruise:'Круиз-контроль'})[k]+': '+(featureLabels[k][s[k]]||'помогите определить'));
  lines.push('Прошу проверить совместимость и итоговую стоимость. Фото штатного руля пришлю в чат.');
  return lines.join('\n');
