@@ -124,3 +124,18 @@ body.is-home footer,body.is-home .site-footer{display:none}
  .home-shell .hero-copy p{margin:0;font-size:12px}
  .home-shell .hero-visual .image-frame img{padding:0}
 }
+/* 21.10.2026: без нижнего меню; на главной без «Помочь с выбором», кнопка внизу, фото максимально крупно */
+.mobile-nav{display:none!important}
+.mobile-action-dock{bottom:0!important;padding-bottom:calc(10px + max(env(safe-area-inset-bottom),var(--safe-bottom,0px)))!important}
+body.is-home .header-contact{display:none!important}
+@media(max-width:760px){
+ .home-shell{padding-bottom:0}
+ .home-shell .hero-cta{position:fixed;left:14px;right:14px;bottom:calc(12px + max(env(safe-area-inset-bottom),var(--safe-bottom,0px)));z-index:31;margin:0}
+ .home-shell .hero{min-height:calc(100svh - 77px - 76px - 40px - max(env(safe-area-inset-bottom),var(--safe-bottom,0px)));margin-bottom:0}
+ .home-shell .hero-copy{padding:14px 18px 10px}
+ .home-shell .hero-copy .eyebrow{margin-bottom:6px;font-size:8px}
+ .home-shell .hero-copy h1{font-size:23px;line-height:1.08;margin-bottom:6px;letter-spacing:-.6px}
+ .home-shell .hero-copy h1 br{display:none}
+ .home-shell .hero-copy h1 span{margin-left:.25em}
+ .home-shell .hero-copy p{font-size:11px;line-height:1.4}
+}
