@@ -62,3 +62,9 @@
 .pick-body{margin-top:28px;padding:22px;border-radius:22px;background:#fff;border:1px solid var(--line)}
 .pick-h2{font-size:22px;letter-spacing:-.4px;margin:0 0 14px}
 @media(max-width:700px){.brand-tiles{gap:8px}.brand-tile{padding:18px 6px 16px;border-radius:18px;gap:10px}.brand-emblem{width:56px;height:56px}.brand-tile strong{font-size:13px}.pick-body{padding:16px;border-radius:18px}}
+
+/* 21.10.2026: надпись «Из нашего каталога» меньше; на главной ниже кнопки ничего */
+.hero-stamp{font-size:7px!important;letter-spacing:1.2px!important;padding:5px 9px!important;top:14px!important;right:14px!important}
+@media(max-width:700px){.hero-stamp{font-size:5.5px!important;padding:4px 7px!important;top:10px!important;right:9px!important;letter-spacing:.8px!important}}
+body.is-home footer,body.is-home .site-footer{display:none}
+.home-shell .hero-cta{margin-bottom:24px}
