@@ -13,3 +13,7 @@
 :root{--muted:#686d63}.share-chip{color:var(--blue);border-color:#cdd5f5;background:#edf0ff}.hero-visual .image-frame{background:#c2c5c9}
 @media(max-width:760px){.feature-title h3{font-size:18px}.feature-card>p{font-size:12px;line-height:1.7}.choice{font-size:12px;min-height:46px;padding:12px 9px}.section-heading p,.help-note{font-size:11px}.section-actions p{font-size:11px}.product-topline{font-size:10px}.product-meta h2{font-size:14px}.product-material{font-size:10px}.price-caption{font-size:10px;line-height:1.6;min-height:30px}.compare-toggle{font-size:10px}.card-link{font-size:11px}.mobile-nav a{font-size:10px}.footer-bottom{font-size:9px}.hero-foot{line-height:1.7}}
 @media(max-width:400px){.choice{font-size:11px;padding:12px 7px}.product-meta h2{font-size:13px}.compare-toggle{font-size:9px}.card-link{font-size:10px}.product-topline{font-size:9px}}
+
+/* Кнопка «Выбрать руль» под верхним блоком (владелец 21.10.2026) */
+.hero-cta{display:flex;justify-content:center;margin:18px 0 6px}.hero-cta .btn{min-width:260px;font-size:15px}
+@media(max-width:700px){.hero-cta{margin:14px 0 4px}.hero-cta .btn{width:100%}}

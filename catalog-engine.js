@@ -1,8 +1,8 @@
 export const defaults = {heating:null,vibration:null,cruise:null,brand:'',series:'',branch:'',model:'',year:'',availability:'all',sort:'recommended',budget:'',q:''};
 export const featureLabels = {
  heating:{yes:'С подогревом',no:'Без подогрева',unknown:'Подогрев — уточнить'},
- vibration:{yes:'Сохранить вибрацию',no:'Вибрация не нужна',unknown:'Вибрация — уточнить'},
- cruise:{standard:'Обычный круиз',adaptive:'Адаптивный круиз',none:'Без круиза',unknown:'Круиз — уточнить'}
+ vibration:{yes:'Нужна вибрация',no:'Вибрация не нужна',unknown:'Вибрация — уточнить'},
+ cruise:{yes:'Нужен круиз',no:'Круиз не нужен',unknown:'Круиз — уточнить'}
 };
 export const keyOf = p => p.availability+':'+p.id;
 export const brandOf = p => p.series==='Mercedes'?'Mercedes-Benz':'BMW';
