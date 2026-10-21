@@ -15,5 +15,6 @@
 @media(max-width:400px){.choice{font-size:11px;padding:12px 7px}.product-meta h2{font-size:13px}.compare-toggle{font-size:9px}.card-link{font-size:10px}.product-topline{font-size:9px}}
 
 /* Кнопка «Выбрать руль» под верхним блоком (владелец 21.10.2026) */
-.hero-cta{display:flex;justify-content:center;margin:18px 0 6px}.hero-cta .btn{min-width:260px;font-size:15px}
+.hero-cta{display:flex;justify-content:center;margin:18px 0 6px}.hero-cta .btn{min-width:300px;font-size:16px}
+.hero-btn{background:#1b1e22;color:#fff;border-radius:19px;min-height:64px;letter-spacing:.2px}.hero-btn:hover{background:#2a2e34}.hero-btn svg{color:#b9c9ff}.hero-btn .mini-lines{margin-right:2px}
 @media(max-width:700px){.hero-cta{margin:14px 0 4px}.hero-cta .btn{width:100%}}
