@@ -18,3 +18,27 @@
 .hero-cta{display:flex;justify-content:center;margin:18px 0 6px}.hero-cta .btn{min-width:300px;font-size:16px}
 .hero-btn{background:#1b1e22;color:#fff;border-radius:19px;min-height:64px;letter-spacing:.2px}.hero-btn:hover{background:#2a2e34}.hero-btn svg{color:#b9c9ff}.hero-btn .mini-lines{margin-right:2px}
 @media(max-width:700px){.hero-cta{margin:14px 0 4px}.hero-cta .btn{width:100%}}
+
+/* Выбор марки и кузова под кнопкой «Выбрать руль» (владелец 21.10.2026) */
+.hero-picker{margin:4px 0 26px;padding:22px;border-radius:22px;background:#fff;border:1px solid var(--line);box-shadow:0 18px 40px -28px rgba(20,24,30,.45);animation:pickIn .28s ease}
+@keyframes pickIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.pick-step{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;letter-spacing:.3px;margin:4px 0 12px;color:var(--ink)}
+.pick-step:not(:first-child){margin-top:22px}
+.pick-num{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#1b1e22;color:#b9c9ff;font-size:11px}
+.pick-brands{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.pick-group{margin-bottom:14px}
+.pick-group-title{font-size:10px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);margin:6px 2px 8px}
+.pick-chip{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);text-align:left;cursor:pointer;transition:border-color .15s,background .15s,transform .15s}
+.pick-chip strong{font-size:14px;font-weight:800;letter-spacing:.2px}
+.pick-chip small{font-size:11px;color:var(--muted)}
+.pick-chip:hover{border-color:#1b1e22;transform:translateY(-1px)}
+.pick-chip[aria-pressed="true"]{background:#1b1e22;border-color:#1b1e22;color:#fff}
+.pick-chip[aria-pressed="true"] small{color:#b9c9ff}
+.pick-brand{padding:16px 18px}.pick-brand strong{font-size:17px}
+.pick-unknown{display:inline-flex;align-items:center;gap:8px;margin-top:6px;padding:10px 2px;background:none;border:0;color:var(--blue);font-size:13px;font-weight:700;cursor:pointer}
+.pick-unknown svg{width:16px;height:16px}
+@media(max-width:700px){.hero-picker{padding:16px;border-radius:18px}.pick-grid{grid-template-columns:repeat(2,1fr)}.pick-chip{padding:11px 12px}.pick-chip strong{font-size:13px}}
+.pick-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:14px;background:var(--paper);border:1px solid var(--line);margin-bottom:12px}
+.pick-tab{padding:10px 6px;border:0;border-radius:10px;background:transparent;font-size:13px;font-weight:800;color:var(--muted);cursor:pointer;transition:background .15s,color .15s}
+.pick-tab[aria-selected="true"]{background:#1b1e22;color:#fff}
