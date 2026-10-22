@@ -176,3 +176,16 @@ body.is-home .header-contact{display:none!important}
 .brand-long .brand-tile{border-radius:16px;min-height:76px;padding:12px 18px}
 .brand-long .brand-emblem{width:46px;height:46px}
 .brand-long .brand-tile strong{font-size:19px}
+
+/* v62 */
+.home-slogan{padding:4px 2px 16px}
+.home-slogan .eyebrow{color:var(--blue);font-size:10px;letter-spacing:1.6px;font-weight:800;margin-bottom:10px}
+.home-slogan h1{margin:0;font-size:40px;line-height:1.05;letter-spacing:-1.6px;font-weight:750;color:var(--ink)}
+.home-slogan h1 span{color:var(--blue)}
+.top-cta{margin:0 0 16px}
+.pick-main-btn{min-height:84px;padding:0 18px}
+.pick-main-btn span{display:block;width:100%;text-align:center;font-size:clamp(30px,10vw,46px);font-weight:800;letter-spacing:-.5px;line-height:1;white-space:nowrap}
+.brand-long .brand-tile{min-height:88px;padding:14px 22px;gap:20px}
+.brand-long .brand-emblem{width:56px;height:56px}
+.brand-long .brand-tile strong{font-size:22px}
+.brand-tiles.brand-long{gap:14px}
