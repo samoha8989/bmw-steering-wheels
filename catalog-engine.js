@@ -62,7 +62,7 @@ export function buildRequest(products,s,origin,branches={}){
   lines.push(`${brandOf(p)} № ${p.displayNumber} · ${p.availability==='stock'?'В наличии':'Под заказ'}`,`Цена в каталоге: ${amount} (${price.caption})`);
   lines.push(`${origin}/#/wheel/${p.availability}/${encodeURIComponent(p.id)}/${branches[keyOf(p)]||(p.series==='E'?(['E60','Eother'].includes(s.branch)?s.branch:'E'):p.series)}`);
  }
- lines.push('',`Автомобиль: ${[brandName(s.brand),s.model||(!ONE(s.series)?s.series:''),s.year].filter(Boolean).join(' · ')||'помогите определить'}`);
+ lines.push('');
  for(const k of ['heating','vibration','cruise'])lines.push(({heating:'Подогрев',vibration:'Вибрация',cruise:'Круиз-контроль'})[k]+': '+(featureLabels[k][s[k]]||'помогите определить'));
  return lines.join('\n');
 }

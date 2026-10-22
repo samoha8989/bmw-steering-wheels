@@ -246,3 +246,26 @@ body.is-home .header-contact{display:none!important}
 }
 @media(min-width:501px) and (max-width:860px){.hh-slides{aspect-ratio:4/3}}
 .pick-avail .btn{margin:0}
+
+/* v67: без логотипа в шапке, компактный первый экран, плавное появление */
+.site-header{justify-content:flex-end}
+.desktop-nav{margin-right:auto}
+@media(max-width:860px){
+ body.is-home .site-header{display:none}
+ body.is-home main{padding-top:calc(8px + var(--safe-top,0px))}
+ .home-shell{padding-top:0}
+ .hh-copy{padding:20px 18px 2px}
+ .hh-copy .eyebrow{margin-bottom:10px;font-size:10px}
+ .hh-copy h1{font-size:32px}
+ .hh-copy p{font-size:13px;margin-top:8px;line-height:1.5}
+ .hh-main{margin-top:14px;min-height:52px}
+ .hh-visual{margin:12px 10px 10px;gap:8px}
+ .hh-slides{aspect-ratio:5/4}
+ .hh-caption{padding:9px 12px}
+}
+.home-hero{animation:heroBox .8s cubic-bezier(.2,.7,.2,1) both}
+@keyframes heroBox{from{opacity:0;transform:translateY(24px) scale(.985)}to{opacity:1;transform:none}}
+.hh-visual{animation:heroIn .9s cubic-bezier(.2,.7,.2,1) .25s both}
+.hh-copy>*:nth-child(1){animation-delay:.15s}.hh-copy>*:nth-child(2){animation-delay:.25s}.hh-copy>*:nth-child(3){animation-delay:.35s}.hh-copy>*:nth-child(4){animation-delay:.45s}
+.hh-caption{animation:capIn .5s ease both}
+@media(prefers-reduced-motion:reduce){.home-hero,.hh-visual{animation:none}}
