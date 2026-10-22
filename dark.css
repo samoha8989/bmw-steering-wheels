@@ -269,3 +269,9 @@ body.is-home .header-contact{display:none!important}
 .hh-copy>*:nth-child(1){animation-delay:.15s}.hh-copy>*:nth-child(2){animation-delay:.25s}.hh-copy>*:nth-child(3){animation-delay:.35s}.hh-copy>*:nth-child(4){animation-delay:.45s}
 .hh-caption{animation:capIn .5s ease both}
 @media(prefers-reduced-motion:reduce){.home-hero,.hh-visual{animation:none}}
+
+/* v68 */
+.header-contact{display:none!important}
+@media(max-width:860px){.site-header{display:none!important}main{padding-top:calc(8px + var(--safe-top,0px))}}
+.detail-info .primary-buy{min-height:62px;font-size:18px;border-radius:16px}
+.detail-info .primary-buy svg{width:20px;height:20px}
