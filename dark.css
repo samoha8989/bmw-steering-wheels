@@ -131,7 +131,7 @@ a{color:inherit}
 .hh-btn svg{width:18px;height:18px}
 .hh-visual{position:relative;min-height:420px}
 .hh-slides{position:absolute;inset:16px 16px 16px 0;border-radius:18px;overflow:hidden;background:var(--photo-bg)}
-.hh-slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;display:block}
+.hh-slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;display:block}
 .hh-slide.active{opacity:1;z-index:1}
 .hh-slide img{width:100%;height:100%;object-fit:contain;transform:scale(1.04);transition:transform 6s ease}
 .hh-slide.active img{transform:scale(1)}
