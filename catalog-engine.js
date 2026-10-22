@@ -1,4 +1,4 @@
-export const defaults = {heating:'no',vibration:'no',cruise:'no',brand:'',series:'',branch:'',model:'',year:'',availability:'all',sort:'recommended',budget:'',q:''};
+export const defaults = {heating:'unknown',vibration:'unknown',cruise:'unknown',brand:'',series:'',branch:'',model:'',year:'',availability:'all',sort:'recommended',budget:'',q:''};
 export const featureLabels = {
  heating:{yes:'С подогревом',no:'Без подогрева',unknown:'Подогрев — уточнить'},
  vibration:{yes:'Нужна вибрация',no:'Вибрация не нужна',unknown:'Вибрация — уточнить'},
