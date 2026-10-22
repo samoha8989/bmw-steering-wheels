@@ -189,3 +189,11 @@ body.is-home .header-contact{display:none!important}
 .brand-long .brand-emblem{width:56px;height:56px}
 .brand-long .brand-tile strong{font-size:22px}
 .brand-tiles.brand-long{gap:14px}
+
+/* v63 */
+.home-slogan{border:2px solid var(--blue);border-radius:16px;padding:18px 20px;margin:4px 0 14px;background:#fff}
+.home-slogan .eyebrow{font-size:9px;margin-bottom:8px}
+.home-slogan h1{font-size:28px;letter-spacing:-.8px;line-height:1.1}
+.top-cta{margin:0 0 16px}
+.pick-main-btn{min-height:68px;border-radius:16px}
+.pick-main-btn span{font-size:21px;font-weight:700;letter-spacing:.09em;white-space:nowrap}
