@@ -36,7 +36,7 @@ export function priceInfo(p,s={},branchOverride){
   else for(const k of ['unheated','heated'])if(Number.isFinite(option[k]))values.push(option[k]);
  }
  const min=values.length?Math.min(...values):null,max=values.length?Math.max(...values):null;
- let caption=unknown?'Кузов и комплектацию уточним':selected==='heated'?(p.series==='Mercedes'?'Подогрев + вибрация':'С подогревом'):selected==='unheated'?'Без подогрева':'Без подогрева / с подогревом';
+ let caption=unknown?'Кузов и комплектацию уточним':selected==='heated'?(p.series==='Mercedes'?'Подогрев + вибрация':'С подогревом'):selected==='unheated'?'Без подогрева':options.every(o=>!Number.isFinite(o.heated))?'Без подогрева':options.every(o=>!Number.isFinite(o.unheated))?'С подогревом':'Без подогрева / с подогревом';
  if(options.length>1)caption='Цена зависит от кузова'+(s.heating==='yes'?' · подогрев уточним':'');
  return {min,max,range:min!==null&&min!==max,unknown,caption,selected};
 }
@@ -60,6 +60,7 @@ export function buildRequest(products,s,origin,branches={}){
  for(const p of products){
   const price=priceInfo(p,s,branches[keyOf(p)]); const amount=price.min==null?'уточнить':new Intl.NumberFormat('ru-RU').format(price.min)+(price.range?'–'+new Intl.NumberFormat('ru-RU').format(price.max):'')+' ₽';
   lines.push(`${brandOf(p)} № ${p.displayNumber} · ${p.availability==='stock'?'В наличии':'Под заказ'}`,`Цена в каталоге: ${amount} (${price.caption})`);
+  if(p.photos?.[0])lines.push(`Фото: ${origin}/${p.photos[0]}`);
   lines.push(`${origin}/#/wheel/${p.availability}/${encodeURIComponent(p.id)}/${branches[keyOf(p)]||(p.series==='E'?(['E60','Eother'].includes(s.branch)?s.branch:'E'):p.series)}`);
  }
  lines.push('');
