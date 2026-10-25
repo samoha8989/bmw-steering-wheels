@@ -5,7 +5,7 @@ export const featureLabels = {
  cruise:{yes:'Нужен круиз',no:'Круиз не нужен',unknown:'Круиз — уточнить'}
 };
 export const keyOf = p => p.availability+':'+p.id;
-export const BRANDS=['Mercedes','Porsche','Lexus','Audi'];
+export const BRANDS=['Mercedes','Porsche','Toyota','Audi'];
 export const ONE = b => BRANDS.includes(b)
 export const brandName = b => b==='Mercedes'?'Mercedes-Benz':b
 export const brandKey = p => ONE(p.series)?p.series:'BMW'
