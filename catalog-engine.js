@@ -5,16 +5,17 @@ export const featureLabels = {
  cruise:{yes:'Нужен круиз',no:'Круиз не нужен',unknown:'Круиз — уточнить'}
 };
 export const keyOf = p => p.availability+':'+p.id;
-export const ONE = b => b==='Mercedes'||b==='Porsche'
+export const BRANDS=['Mercedes','Porsche','Lexus','Audi'];
+export const ONE = b => BRANDS.includes(b)
 export const brandName = b => b==='Mercedes'?'Mercedes-Benz':b
 export const brandKey = p => ONE(p.series)?p.series:'BMW'
-export const brandOf = p => p.series==='Mercedes'?'Mercedes-Benz':p.series==='Porsche'?'Porsche':'BMW';
+export const brandOf = p => p.series==='Mercedes'?'Mercedes-Benz':ONE(p.series)?p.series:'BMW';
 export function cleanState(value={}){
  const s={...defaults};
  for(const k of ['heating','vibration','cruise'])if(Object.hasOwn(featureLabels[k],value[k]))s[k]=value[k];
- if(['BMW','Mercedes','Porsche'].includes(value.brand))s.brand=value.brand;
- if(['E','F','G','Mercedes','Porsche'].includes(value.series))s.series=value.series;
- if(['E60','Eother','Fsmall','Flarge','E','F','G','Mercedes','Porsche'].includes(value.branch))s.branch=value.branch;
+ if(['BMW',...BRANDS].includes(value.brand))s.brand=value.brand;
+ if(['E','F','G',...BRANDS].includes(value.series))s.series=value.series;
+ if(['E60','Eother','Fsmall','Flarge','E','F','G',...BRANDS].includes(value.branch))s.branch=value.branch;
  for(const k of ['model','year','q'])if(typeof value[k]==='string')s[k]=value[k].slice(0,k==='year'?4:100);
  if(['all','order','stock'].includes(value.availability))s.availability=value.availability;
  if(['recommended','price-asc','price-desc','photos'].includes(value.sort))s.sort=value.sort;
