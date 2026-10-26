@@ -314,3 +314,14 @@ body.is-home .header-contact{display:none!important}
 .series-letter{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:var(--surface-2);border:2px solid #4a5260;font-size:26px;font-weight:800;line-height:1;color:var(--ink)}
 .brand-tile[aria-pressed="true"] .series-letter{background:var(--blue);border-color:#9db5ff;color:#fff}
 .pick-series{margin-bottom:16px}
+/* 26.10: спортивные кнопки кузова в стиле M */
+.pick-series{gap:10px!important}
+.pick-series .brand-tile{position:relative;overflow:hidden;border:1px solid #2f3846!important;border-radius:16px!important;background:linear-gradient(135deg,#1d222b 0%,#1d222b 58%,#16233f 58%,#13203a 100%)!important;box-shadow:inset 0 1px 0 #ffffff0d!important;transition:border-color .2s,background .2s,transform .12s}
+.pick-series .brand-tile:after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#4fa3e0 0 33.3%,#1c3f94 33.3% 66.6%,#e4202e 66.6% 100%);opacity:.45;transition:opacity .2s}
+.pick-series .series-letter{background:linear-gradient(160deg,#2b3240,#161a21)!important;border:1px solid #3a4352!important;color:#e9ecf2!important;letter-spacing:.5px}
+.pick-series .brand-tile strong{letter-spacing:.3px}
+.pick-series .brand-tile:hover{border-color:#4f7bff!important}
+.pick-series .brand-tile:active{transform:scale(.98)}
+.pick-series .brand-tile[aria-pressed="true"]{background:linear-gradient(135deg,#2a5bd7 0%,#1d47b8 58%,#11286b 58%,#0d1f55 100%)!important;border-color:#7fa2ff!important;box-shadow:0 8px 22px -10px #2f62ff,inset 0 1px 0 #ffffff26!important}
+.pick-series .brand-tile[aria-pressed="true"]:after{opacity:1}
+.pick-series .brand-tile[aria-pressed="true"] .series-letter{background:#ffffff!important;border-color:#ffffff!important;color:#1c3f94!important}
