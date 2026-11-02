@@ -65,6 +65,7 @@ export function buildRequest(products,s,origin,branches={}){
   lines.push(`${origin}/#/wheel/${p.availability}/${encodeURIComponent(p.id)}/${branches[keyOf(p)]||(p.series==='E'?(['E60','Eother'].includes(s.branch)?s.branch:'E'):p.series)}`);
  }
  lines.push('');
+ if(s.brand==='BMW'&&s.model)lines.push('Автомобиль: BMW · '+s.model);
  for(const k of ['heating','vibration','cruise'])lines.push(({heating:'Подогрев',vibration:'Вибрация',cruise:'Круиз-контроль'})[k]+': '+(featureLabels[k][s[k]]||'помогите определить'));
  return lines.join('\n');
 }
