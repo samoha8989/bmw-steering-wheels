@@ -48,7 +48,7 @@ export function filterProducts(catalog,s){
   if(s.series&&!(p.compatibleSeries||[p.series]).includes(s.series))return false;
   if(p.groups&&['Fsmall','Flarge'].includes(s.branch)&&!p.groups.includes(s.branch))return false;
   if(s.availability&&s.availability!=='all'&&p.availability!==s.availability)return false;
-  if(q&&!`${p.displayNumber} ${p.material||''} ${brandOf(p)} ${p.series}`.toLowerCase().includes(q))return false;
+  if(q&&!`${p.displayNumber} ${uNum(p,s)} ${p.material||''} ${brandOf(p)} ${p.series}`.toLowerCase().includes(q))return false;
   const info=priceInfo(p,s);
   if(s.budget&&(info.min==null||info.min>Number(s.budget)))return false;
   return true;
@@ -56,11 +56,12 @@ export function filterProducts(catalog,s){
  return result.sort((a,b)=>s.sort==='price-asc'?(priceInfo(a,s).min??Infinity)-(priceInfo(b,s).min??Infinity):s.sort==='price-desc'?(priceInfo(b,s).min??-1)-(priceInfo(a,s).min??-1):s.sort==='photos'?b.photos.length-a.photos.length:Number(b.availability==='stock')-Number(a.availability==='stock'));
 }
 export function requestedFeatures(s){return ['heating','vibration','cruise'].map(k=>featureLabels[k][s[k]]).filter(Boolean);}
+export const uNum=(p,s)=>s&&s.series==='G'&&s.model==='U кузов'&&p.series==='G'?String(p.displayNumber).replace(/^G/,'U'):p.displayNumber;
 export function buildRequest(products,s,origin,branches={}){
  const lines=[products.length>1?'Здравствуйте! Помогите выбрать между этими рулями:':products.length?'Здравствуйте! Хочу заказать руль:':'Здравствуйте! Помогите подобрать руль.'];
  for(const p of products){
   const price=priceInfo(p,s,branches[keyOf(p)]); const amount=price.min==null?'уточнить':new Intl.NumberFormat('ru-RU').format(price.min)+(price.range?'–'+new Intl.NumberFormat('ru-RU').format(price.max):'')+' ₽';
-  lines.push(`${brandOf(p)} № ${p.displayNumber} · ${p.availability==='stock'?'В наличии':'Под заказ'}`,`Цена в каталоге: ${amount} (${price.caption})`);
+  lines.push(`${brandOf(p)} № ${uNum(p,s)} · ${p.availability==='stock'?'В наличии':'Под заказ'}`,`Цена в каталоге: ${amount} (${price.caption})`);
   if(p.photos?.[0])lines.push(`Фото: ${origin}/${p.photos[0]}`);
   lines.push(`${origin}/#/wheel/${p.availability}/${encodeURIComponent(p.id)}/${branches[keyOf(p)]||(p.series==='E'?(['E60','Eother'].includes(s.branch)?s.branch:'E'):p.series)}`);
  }
