@@ -11,11 +11,13 @@ const write = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch
 let st = read();
 let stepIndex = 0;
 
-// Пример — настоящее фото руля из каталога (номер для подписи).
-const EX = {
-  round: { src: 'photos/e02-1.jpg', num: 'E02' },
-  anatomy: { src: 'photos/135-1.jpg', num: 'F01' },
-};
+// Живое превью (BMW): настоящие фото рулей E01/E02 (круглый) и E04/E05 (анатомия),
+// вырезаны локальной нейросетью BiRefNet. Вставка — слой с фото хромовой версии,
+// строчка — перекрашенные настоящие стежки, метка и чёрно-белая эмблема — слои поверх.
+// Координаты слоёв: x, y, w, h в кадре 900×900 (site_clone/builder_tools, layers.json).
+const PV = 'builder/', PV_V = '1';
+const LAYERS = {"round":{"chrome":[275,391,360,440],"emblem-bw":[425,426,66,66],"stitch-red":[102,93,701,705],"stitch-blue":[102,93,701,705],"stitch-white":[102,93,701,705],"stitch-grey":[102,93,701,705],"stitch-yellow":[102,93,701,705],"stitch-tricolor":[102,93,701,705],"mark-red":[432,16,36,93],"mark-blue":[432,16,36,93],"mark-white":[432,16,36,93],"mark-yellow":[432,16,36,93],"mark-tricolor":[432,16,36,93]},"anatomy":{"chrome":[268,398,365,436],"emblem-bw":[419,439,67,73],"stitch-red":[93,96,713,699],"stitch-blue":[93,96,713,699],"stitch-white":[93,96,713,699],"stitch-grey":[93,96,713,699],"stitch-yellow":[93,96,713,699],"stitch-tricolor":[93,96,713,699],"mark-red":[431,21,40,88],"mark-blue":[431,21,40,88],"mark-white":[431,21,40,88],"mark-yellow":[431,21,40,88],"mark-tricolor":[431,21,40,88]}};
+const SHAPE_NUM = { round: 'E01/E02', anatomy: 'E04/E05' };
 
 const CARS = [
   ['BMW-E', 'BMW · E-кузов'],
@@ -31,13 +33,13 @@ const SWATCH = { red: '#d3302f', blue: '#2f6fe0', white: '#f4f4f4', grey: '#8d92
 
 const STEPS = [
   { key: 'car', title: 'Для какой машины?', sub: 'От кузова зависят эмблема, функции и цена.', options: () => CARS.map(([v, l]) => ({ v, l })) },
-  { key: 'shape', title: 'Форма руля', sub: 'Круглый или анатомия — на выбор. Фото — настоящие рули из каталога.', options: () => [
-    { v: 'round', l: 'Круглый', ex: EX.round },
-    { v: 'anatomy', l: 'Анатомия', ex: EX.anatomy },
+  { key: 'shape', title: 'Форма руля', sub: 'Круглый или анатомия — на выбор.', options: () => [
+    { v: 'round', l: 'Круглый', thumb: 'round' },
+    { v: 'anatomy', l: 'Анатомия', thumb: 'anatomy' },
   ] },
-  { key: 'insert', title: 'Цвет вставки', sub: 'Вставка — накладка на спицах руля.', options: () => [
-    { v: 'chrome', l: 'Хром', sw: 'chrome', ex: EX.round },
-    { v: 'gloss', l: 'Чёрный глянец', sw: 'gloss', ex: EX.anatomy },
+  { key: 'insert', title: 'Цвет вставки', sub: 'Вставка — накладка вокруг подушки и на нижней спице.', options: () => [
+    { v: 'gloss', l: 'Чёрный глянец', sw: 'gloss' },
+    { v: 'chrome', l: 'Хром', sw: 'chrome' },
   ] },
   { key: 'stitch', title: 'Цвет строчки', sub: 'Нитки по ободу руля. Меняем бесплатно.', options: () => [
     { v: 'red', l: 'Красная', sw: 'red' },
@@ -150,10 +152,41 @@ function message(catalog) {
 
 function optionCard(s, o) {
   const on = st[s.key] === o.v;
-  const media = o.ex
-    ? `<span class="bd-photo"><img src="${esc(o.ex.src)}" alt="" loading="lazy"><em>пример: руль № ${esc(o.ex.num)}</em></span>`
+  const media = o.thumb
+    ? `<span class="bd-photo"><img src="${PV}${o.thumb}.webp?v=${PV_V}" alt="" loading="lazy"></span>`
     : o.sw ? `<span class="bd-swatch" style="background:${SWATCH[o.sw]}"></span>` : '';
-  return `<button type="button" class="bd-opt ${o.ex ? 'has-photo' : ''}" data-bd-key="${s.key}" data-bd-val="${esc(o.v)}" aria-pressed="${on}">${media}<span class="bd-opt-text"><b>${esc(o.l)}</b>${o.note ? `<small>${esc(o.note)}</small>` : ''}</span><span class="bd-check" aria-hidden="true"></span></button>`;
+  return `<button type="button" class="bd-opt ${o.thumb ? 'has-photo' : ''}" data-bd-key="${s.key}" data-bd-val="${esc(o.v)}" aria-pressed="${on}">${media}<span class="bd-opt-text"><b>${esc(o.l)}</b>${o.note ? `<small>${esc(o.note)}</small>` : ''}</span><span class="bd-check" aria-hidden="true"></span></button>`;
+}
+
+// ---- живое превью ----
+const hasPreview = () => isBMW();
+const shapeNow = () => st.shape || 'round';
+function activeLayers() {
+  const on = new Set();
+  if (st.insert === 'chrome') on.add('chrome');
+  if (st.mark && st.mark !== 'none') on.add('mark-' + st.mark);
+  if (st.stitch) on.add('stitch-' + st.stitch);
+  if (st.emblem === 'bmw-bw') on.add('emblem-bw');
+  return on;
+}
+// Порядок слоёв: руль → вставка → метка → строчка → эмблема
+const ORDER = k => k === 'chrome' ? 1 : k.startsWith('mark') ? 2 : k.startsWith('stitch') ? 3 : 4;
+function wheelHTML() {
+  const sh = shapeNow(), on = activeLayers();
+  const layers = Object.entries(LAYERS[sh]).sort((a, b) => ORDER(a[0]) - ORDER(b[0]));
+  const pct = n => (n / 9).toFixed(3) + '%';
+  const g = st.car === 'BMW-G' || st.car === 'BMW-U';
+  return `<figure class="bd-wheel" id="bd-wheel" data-shape="${sh}">
+    <div class="bd-wheel-img"><img class="bd-base" src="${PV}${sh}.webp?v=${PV_V}" alt="Руль: ${esc(LABEL('shape', sh) || '')}" decoding="async">
+    ${layers.map(([k, [x, y, w, h]]) => `<img class="bd-layer ${on.has(k) ? 'on' : ''}" data-layer="${k}" src="${PV}${sh}-${k}.webp?v=${PV_V}" alt="" decoding="async" style="left:${pct(x)};top:${pct(y)};width:${pct(w)};height:${pct(h)}">`).join('')}</div>
+    <figcaption>${g ? 'Пример на руле F-кузова: у рулей G-кузова спицы другой формы.' : 'Настоящие фото рулей № ' + SHAPE_NUM[sh] + '. Детали меняются по Вашему выбору.'}</figcaption>
+  </figure>`;
+}
+function syncWheel() {
+  const el = document.getElementById('bd-wheel');
+  if (!el) return;
+  const on = activeLayers();
+  el.querySelectorAll('.bd-layer').forEach(img => img.classList.toggle('on', on.has(img.dataset.layer)));
 }
 
 function stepBody(catalog) {
@@ -170,7 +203,7 @@ function stepBody(catalog) {
       <p class="bd-hint">Откроется чат в Telegram: все детали уже будут в сообщении. Совместимость проверим по фото Вашего руля.</p></div>`;
   }
   const opts = s.options();
-  return `<div class="bd-options ${opts.some(o => o.ex) ? 'bd-photos' : ''}">${opts.map(o => optionCard(s, o)).join('')}</div>`;
+  return `<div class="bd-options ${opts.some(o => o.thumb) ? 'bd-photos' : ''}">${opts.map(o => optionCard(s, o)).join('')}</div>`;
 }
 
 function ready(i) {
@@ -189,7 +222,8 @@ export function builderPage(catalog) {
     <div class="bd-head"><div class="eyebrow">Конструктор руля</div><h1>Соберите свой руль</h1></div>
     <div class="bd-progress" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${Math.min(stepIndex, total)}"><span style="width:${Math.min(stepIndex, total) / total * 100}%"></span></div>
     <nav class="bd-dots" aria-label="Шаги">${STEPS.map((x, i) => `<button type="button" data-bd-go="${i}" class="${i === stepIndex ? 'active' : ''} ${i < stepIndex || (x.key !== 'done' && st[x.key]) ? 'done' : ''}" ${i > stepIndex && !STEPS.slice(0, i).every((_, j) => ready(j)) ? 'disabled' : ''} aria-label="Шаг ${i + 1}: ${esc(x.title)}">${i + 1}</button>`).join('')}</nav>
-    <div class="bd-layout">
+    <div class="bd-layout ${hasPreview() ? 'has-preview' : ''}">
+      ${hasPreview() ? `<div class="bd-preview">${wheelHTML()}</div>` : ''}
       <section class="bd-step ${last ? 'bd-last' : ''}" aria-live="polite">
         <div class="bd-step-head"><span>${last ? 'Готово' : `Шаг ${stepIndex + 1} из ${total}`}</span><h2>${esc(s.title)}</h2><p>${esc(s.sub)}</p></div>
         ${stepBody(catalog)}
@@ -203,8 +237,16 @@ export function builderPage(catalog) {
 function repaint(catalog, scroll) {
   const root = document.getElementById('bd-root');
   if (!root) return;
+  const old = document.getElementById('bd-wheel');
   root.outerHTML = builderPage(catalog);
-  if (scroll) document.querySelector('.bd-step')?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  // тот же руль — оставляем загруженные картинки, меняем только слои (без мигания)
+  const neu = document.getElementById('bd-wheel');
+  if (old && neu && old.dataset.shape === neu.dataset.shape) { neu.replaceWith(old); old.querySelector('figcaption').outerHTML = neu.querySelector('figcaption').outerHTML; }
+  syncWheel();
+  if (scroll) {
+    const target = window.matchMedia('(max-width:900px)').matches && document.getElementById('bd-wheel') ? document.querySelector('.bd-layout') : document.querySelector('.bd-step');
+    target?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
 }
 
 export function builderClick(event, catalog) {
