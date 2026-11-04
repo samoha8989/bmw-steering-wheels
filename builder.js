@@ -9,15 +9,15 @@ const read = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
 const write = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
 
 let st = read();
+if (st.paddles === 'yes') st.paddles = 'std'; // старое значение
 let stepIndex = 0;
 
-// Живое превью (BMW): настоящие фото рулей E01/E02 (круглый) и E04/E05 (анатомия),
-// вырезаны локальной нейросетью BiRefNet. Вставка — слой с фото хромовой версии,
-// строчка — перекрашенные настоящие стежки, метка и чёрно-белая эмблема — слои поверх.
+// Живое превью (BMW): основа — настоящие фото E01 (круглый) и E04 (анатомия), вырезка локальной BiRefNet.
+// Детали — с рулей каталога: хром E02/E05, крашеные вставки F30/F31/F51/F78/F28, накладка карбон F11 и кованый F55,
+// метки E10/F17/F36/F14/F20/E11, строчка — перекрашенные настоящие стежки, лепестки — материал F70/F62/F65/F78 на форме родного.
 // Координаты слоёв: x, y, w, h в кадре 900×900 (site_clone/builder_tools, layers.json).
-const PV = 'builder/', PV_V = '1';
-const LAYERS = {"round":{"chrome":[275,391,360,440],"emblem-bw":[425,426,66,66],"stitch-red":[102,93,701,705],"stitch-blue":[102,93,701,705],"stitch-white":[102,93,701,705],"stitch-grey":[102,93,701,705],"stitch-yellow":[102,93,701,705],"stitch-tricolor":[102,93,701,705],"mark-red":[432,16,36,93],"mark-blue":[432,16,36,93],"mark-white":[432,16,36,93],"mark-yellow":[432,16,36,93],"mark-tricolor":[432,16,36,93]},"anatomy":{"chrome":[268,398,365,436],"emblem-bw":[419,439,67,73],"stitch-red":[93,96,713,699],"stitch-blue":[93,96,713,699],"stitch-white":[93,96,713,699],"stitch-grey":[93,96,713,699],"stitch-yellow":[93,96,713,699],"stitch-tricolor":[93,96,713,699],"mark-red":[431,21,40,88],"mark-blue":[431,21,40,88],"mark-white":[431,21,40,88],"mark-yellow":[431,21,40,88],"mark-tricolor":[431,21,40,88]}};
-const SHAPE_NUM = { round: 'E01/E02', anatomy: 'E04/E05' };
+const PV = 'builder/', PV_V = '3';
+const LAYERS = {"round":{"chrome":[275,391,360,440],"emblem-bw":[425,425,66,67],"paint-blue":[280,389,356,438],"paint-red":[281,389,352,437],"paint-yellow":[279,386,353,440],"paint-purple":[280,383,353,440],"paint-tricolor":[281,387,351,441],"cover-carbon":[258,409,394,458],"cover-forged":[258,409,394,454],"stitch-red":[102,93,701,705],"stitch-blue":[102,93,701,705],"stitch-white":[102,93,701,705],"stitch-grey":[102,93,701,705],"stitch-yellow":[102,93,701,705],"stitch-tricolor":[102,93,701,705],"mark-red":[429,16,42,93],"mark-blue":[426,16,46,92],"mark-lightblue":[422,16,55,93],"mark-white":[428,16,43,93],"mark-yellow":[427,16,48,93],"mark-tricolor":[429,16,41,87],"paddle-std":[149,346,606,79],"paddle-silver":[149,346,606,79],"paddle-carbon":[149,346,606,79],"paddle-red":[149,346,606,79],"paddle-forged-blue":[149,346,606,79],"paddle-purple":[149,346,606,79],"paddle-black-long":[149,300,607,126],"paddle-carbon-long":[149,300,607,126],"paddle-forged-blue-long":[149,300,607,126],"paddle-forged-red-long":[149,300,607,126],"paddle-purple-long":[149,300,607,126]},"anatomy":{"chrome":[268,398,365,436],"emblem-bw":[418,443,69,69],"paint-blue":[270,404,365,425],"paint-red":[270,403,362,425],"paint-yellow":[269,402,362,426],"paint-purple":[269,399,362,426],"paint-tricolor":[270,403,361,427],"cover-carbon":[256,423,391,441],"cover-forged":[256,423,391,438],"stitch-red":[93,96,713,699],"stitch-blue":[93,96,713,699],"stitch-white":[93,96,713,699],"stitch-grey":[93,96,713,699],"stitch-yellow":[93,96,713,699],"stitch-tricolor":[93,96,713,699],"mark-red":[431,21,40,88],"mark-blue":[428,21,44,88],"mark-lightblue":[423,21,56,88],"mark-white":[430,21,42,88],"mark-yellow":[429,21,46,88],"mark-tricolor":[431,21,39,83],"paddle-std":[140,351,627,86],"paddle-silver":[140,351,627,86],"paddle-carbon":[140,351,627,86],"paddle-red":[140,351,627,86],"paddle-forged-blue":[140,351,627,86],"paddle-purple":[140,351,627,86],"paddle-black-long":[140,298,627,139],"paddle-carbon-long":[140,298,627,139],"paddle-forged-blue-long":[140,298,627,139],"paddle-forged-red-long":[140,298,627,139],"paddle-purple-long":[140,298,627,139]}};
 
 const CARS = [
   ['BMW-E', 'BMW · E-кузов'],
@@ -29,7 +29,7 @@ const CARS = [
 const isBMW = () => String(st.car || '').startsWith('BMW');
 const isE = () => st.car === 'BMW-E';
 
-const SWATCH = { red: '#d3302f', blue: '#2f6fe0', white: '#f4f4f4', grey: '#8d9299', yellow: '#f2c230', black: '#111', chrome: 'linear-gradient(135deg,#f6f7f9,#9aa0a8 45%,#eef0f2 60%,#7d838b)', gloss: 'linear-gradient(135deg,#3a3d42,#050506 50%,#2a2c30)', tricolor: 'linear-gradient(90deg,#4aa3ff 0 33%,#1b3a8a 33% 66%,#e2231a 66%)' };
+const SWATCH = { red: '#d3302f', blue: '#2f6fe0', white: '#f4f4f4', grey: '#8d9299', yellow: '#f2c230', black: '#111', chrome: 'linear-gradient(135deg,#f6f7f9,#9aa0a8 45%,#eef0f2 60%,#7d838b)', gloss: 'linear-gradient(135deg,#3a3d42,#050506 50%,#2a2c30)', tricolor: 'linear-gradient(90deg,#4aa3ff 0 33%,#1b3a8a 33% 66%,#e2231a 66%)', purple: '#5b3d9e', lightblue: '#3fb4f0', bluered: 'linear-gradient(90deg,#1e4fd0 0 50%,#d6262a 50%)', carbon: 'repeating-linear-gradient(45deg,#2a2c30 0 3px,#121315 3px 6px)', forged: 'radial-gradient(circle at 30% 30%,#9aa3b0 0 12%,transparent 13%),radial-gradient(circle at 70% 60%,#5f6b80 0 15%,transparent 16%),#16181c', forgedred: 'radial-gradient(circle at 30% 30%,#c0393b 0 12%,transparent 13%),radial-gradient(circle at 70% 60%,#7d2a2b 0 15%,transparent 16%),#16181c' };
 
 const STEPS = [
   { key: 'car', title: 'Для какой машины?', sub: 'От кузова зависят эмблема, функции и цена.', options: () => CARS.map(([v, l]) => ({ v, l })) },
@@ -37,10 +37,20 @@ const STEPS = [
     { v: 'round', l: 'Круглый', thumb: 'round' },
     { v: 'anatomy', l: 'Анатомия', thumb: 'anatomy' },
   ] },
-  { key: 'insert', title: 'Цвет вставки', sub: 'Вставка — накладка вокруг подушки и на нижней спице.', options: () => [
+  { key: 'insert', title: 'Цвет вставки', sub: 'Кольцо вокруг подушки и полоски на нижней спице.', options: () => [
     { v: 'gloss', l: 'Чёрный глянец', sw: 'gloss' },
     { v: 'chrome', l: 'Хром', sw: 'chrome' },
-  ] },
+    { v: 'blue', l: 'Синяя', sw: 'blue' },
+    { v: 'red', l: 'Красная', sw: 'red' },
+    { v: 'yellow', l: 'Жёлтая', sw: 'yellow' },
+    { v: 'purple', l: 'Фиолетовая', sw: 'purple' },
+    { v: 'tricolor', l: 'Синяя + красная', sw: 'bluered' },
+  ].filter(o => isBMW() || ['gloss', 'chrome'].includes(o.v)) },
+  { key: 'cover', title: 'Накладка спицы', sub: 'Деталь вокруг вставки и на нижней спице.', options: () => [
+    { v: 'leather', l: 'Чёрная, как на фото', sw: 'black' },
+    { v: 'carbon', l: 'Карбон', sw: 'carbon' },
+    { v: 'forged', l: 'Кованый карбон', sw: 'forged' },
+  ].filter(o => isBMW() || o.v !== 'forged') },
   { key: 'stitch', title: 'Цвет строчки', sub: 'Нитки по ободу руля. Меняем бесплатно.', options: () => [
     { v: 'red', l: 'Красная', sw: 'red' },
     { v: 'blue', l: 'Синяя', sw: 'blue' },
@@ -60,6 +70,7 @@ const STEPS = [
     { v: 'none', l: 'Без метки' },
     { v: 'red', l: 'Красная', sw: 'red' },
     { v: 'blue', l: 'Синяя', sw: 'blue' },
+    { v: 'lightblue', l: 'Голубая', sw: 'lightblue' },
     { v: 'white', l: 'Белая', sw: 'white' },
     { v: 'yellow', l: 'Жёлтая', sw: 'yellow' },
     { v: 'tricolor', l: 'M-метка (триколор)', sw: 'tricolor' },
@@ -70,10 +81,19 @@ const STEPS = [
     { v: 'carbon', l: 'Кожа + карбон', note: 'На карбоне подогрев не греет' },
   ] },
   { key: 'paddles', title: 'Лепестки', sub: 'Лепестки работают. Если их не было с завода — нужно закодировать.', options: () => [
-    { v: 'yes', l: 'С лепестками' },
-    { v: 'carbon', l: 'Карбоновые лепестки' },
+    { v: 'std', l: 'Стандартные', sw: 'black' },
+    { v: 'silver', l: 'Серебристые', sw: 'chrome' },
+    { v: 'carbon', l: 'Карбон, красный «+»', sw: 'carbon' },
+    { v: 'red', l: 'Красные', sw: 'red' },
+    { v: 'forged-blue', l: 'Кованый карбон', sw: 'forged' },
+    { v: 'purple', l: 'Фиолетовые', sw: 'purple' },
+    { v: 'black-long', l: 'Удлинённые чёрные', sw: 'black' },
+    { v: 'carbon-long', l: 'Удлинённые карбон', sw: 'carbon' },
+    { v: 'forged-blue-long', l: 'Удлинённые кованые, синие вкрапления', sw: 'forged' },
+    { v: 'forged-red-long', l: 'Удлинённые кованые, красные вкрапления', sw: 'forgedred' },
+    { v: 'purple-long', l: 'Удлинённые фиолетовые', sw: 'purple' },
     { v: 'no', l: 'Без лепестков', note: 'Цена не меняется' },
-  ] },
+  ].filter(o => isBMW() || ['std', 'carbon', 'no'].includes(o.v)) },
   { key: 'functions', title: 'Функции', sub: 'Работают, если такая функция была в Вашей машине.', multi: true },
   { key: 'done', title: 'Ваш руль', sub: 'Проверьте выбор и отправьте — менеджер назовёт точную цену и срок.' },
 ];
@@ -114,11 +134,11 @@ function priceFrom(catalog) {
   const prices = catalog.filter(p => p.series === ser).flatMap(p => Object.values(p.prices || {}));
   const pick = prices.map(o => ser === 'E' ? o.single : f.heat ? o.heated : o.unheated).filter(n => typeof n === 'number');
   if (!pick.length) return null;
-  const extra = [f.vib && 'вибромотор', f.cruise && 'круиз', st.rim && st.rim !== 'leather' && LABEL('rim', st.rim).toLowerCase()].filter(Boolean);
+  const extra = [f.vib && 'вибромотор', f.cruise && 'круиз', st.rim && st.rim !== 'leather' && LABEL('rim', st.rim).toLowerCase(), (st.cover === 'carbon' || st.cover === 'forged') && 'накладка: ' + LABEL('cover', st.cover).toLowerCase()].filter(Boolean);
   return { sum: Math.min(...pick), extra: extra.length ? extra.join(', ') + ' — цену уточним' : '' };
 }
 
-const SUMLABEL = { car: 'Машина', shape: 'Форма', insert: 'Вставка', stitch: 'Строчка', emblem: 'Эмблема', mark: 'Метка', rim: 'Обод', paddles: 'Лепестки' };
+const SUMLABEL = { car: 'Машина', shape: 'Форма', insert: 'Вставка', cover: 'Накладка', stitch: 'Строчка', emblem: 'Эмблема', mark: 'Метка', rim: 'Обод', paddles: 'Лепестки' };
 function summaryRows() {
   const rows = [];
   for (const s of STEPS) {
@@ -139,7 +159,7 @@ function message(catalog) {
   const l = k => L(k).replace(/^([А-ЯЁ])(?=[а-яё])/, c => c.toLowerCase()); // «Красная» → «красная», BMW/M не трогаем
   const f = funcs(), yes = (k, a = 'нужен', b = 'не нужен') => f[k] ? a : b;
   const lines = ['Хочу узнать цену руля из конструктора', 'Под заказ',
-    'Машина: ' + L('car'), 'Форма: ' + l('shape'), 'Вставка: ' + l('insert'),
+    'Машина: ' + L('car'), 'Форма: ' + l('shape'), 'Вставка: ' + l('insert'), 'Накладка спицы: ' + l('cover'),
     'Строчка: ' + l('stitch'), 'Эмблема: ' + l('emblem'), 'Метка на 12 часов: ' + l('mark'),
     'Обод: ' + l('rim'), 'Кожа: чёрная', 'Лепестки: ' + l('paddles')];
   if (!isE()) lines.push('Подогрев: ' + yes('heat'));
@@ -164,22 +184,24 @@ const shapeNow = () => st.shape || 'round';
 function activeLayers() {
   const on = new Set();
   if (st.insert === 'chrome') on.add('chrome');
+  else if (st.insert && st.insert !== 'gloss') on.add('paint-' + st.insert);
+  if (st.cover === 'carbon' || st.cover === 'forged') on.add('cover-' + st.cover);
+  const pd = st.paddles || 'std';
+  if (pd !== 'no') on.add('paddle-' + (LAYERS.round['paddle-' + pd] ? pd : 'std'));
   if (st.mark && st.mark !== 'none') on.add('mark-' + st.mark);
   if (st.stitch) on.add('stitch-' + st.stitch);
   if (st.emblem === 'bmw-bw') on.add('emblem-bw');
   return on;
 }
-// Порядок слоёв: руль → вставка → метка → строчка → эмблема
-const ORDER = k => k === 'chrome' ? 1 : k.startsWith('mark') ? 2 : k.startsWith('stitch') ? 3 : 4;
+// Порядок слоёв: руль → лепестки → накладка → вставка → метка → строчка → эмблема
+const ORDER = k => k.startsWith('paddle') ? 0 : k.startsWith('cover') ? 0.5 : (k === 'chrome' || k.startsWith('paint')) ? 1 : k.startsWith('mark') ? 2 : k.startsWith('stitch') ? 3 : 4;
 function wheelHTML() {
   const sh = shapeNow(), on = activeLayers();
   const layers = Object.entries(LAYERS[sh]).sort((a, b) => ORDER(a[0]) - ORDER(b[0]));
   const pct = n => (n / 9).toFixed(3) + '%';
-  const g = st.car === 'BMW-G' || st.car === 'BMW-U';
   return `<figure class="bd-wheel" id="bd-wheel" data-shape="${sh}">
     <div class="bd-wheel-img"><img class="bd-base" src="${PV}${sh}.webp?v=${PV_V}" alt="Руль: ${esc(LABEL('shape', sh) || '')}" decoding="async">
     ${layers.map(([k, [x, y, w, h]]) => `<img class="bd-layer ${on.has(k) ? 'on' : ''}" data-layer="${k}" src="${PV}${sh}-${k}.webp?v=${PV_V}" alt="" decoding="async" style="left:${pct(x)};top:${pct(y)};width:${pct(w)};height:${pct(h)}">`).join('')}</div>
-    <figcaption>${g ? 'Пример на руле F-кузова: у рулей G-кузова спицы другой формы.' : 'Настоящие фото рулей № ' + SHAPE_NUM[sh] + '. Детали меняются по Вашему выбору.'}</figcaption>
   </figure>`;
 }
 function syncWheel() {
@@ -241,7 +263,7 @@ function repaint(catalog, scroll) {
   root.outerHTML = builderPage(catalog);
   // тот же руль — оставляем загруженные картинки, меняем только слои (без мигания)
   const neu = document.getElementById('bd-wheel');
-  if (old && neu && old.dataset.shape === neu.dataset.shape) { neu.replaceWith(old); old.querySelector('figcaption').outerHTML = neu.querySelector('figcaption').outerHTML; }
+  if (old && neu && old.dataset.shape === neu.dataset.shape) { neu.replaceWith(old); }
   syncWheel();
   if (scroll) {
     const target = window.matchMedia('(max-width:900px)').matches && document.getElementById('bd-wheel') ? document.querySelector('.bd-layout') : document.querySelector('.bd-step');
