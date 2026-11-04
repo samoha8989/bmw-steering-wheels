@@ -1,4 +1,4 @@
-import {builderPage,builderClick,builderEnter} from './builder.js?v=127';
+import {builderPage,builderClick,builderEnter} from './builder.js?v=132';
 import {ONE,brandName,brandKey,defaults,cleanState,keyOf,brandOf,priceInfo,filterProducts,featureLabels,requestedFeatures,buildRequest,uNum} from './catalog-engine.js?v=109';
 const main=document.getElementById('main'),dock=document.getElementById('action-dock');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
