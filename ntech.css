@@ -172,3 +172,6 @@ body.is-home .site-header{display:flex!important}
  .nt-hero .nt-kick{display:none}
  .nt-cta .nt-btn{min-height:54px}
 }
+.nt-hero-photo .hh-slides{aspect-ratio:1/1!important}
+.nt-hero-photo .hh-slide img{object-position:50% 50%!important}
+@media(max-width:900px){.nt-hero-photo .hh-slides{aspect-ratio:1/1!important}}
