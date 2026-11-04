@@ -84,6 +84,7 @@
 .bd-wheel-img img{position:absolute;display:block;max-width:none;pointer-events:none;user-select:none}
 .bd-base{inset:0;width:100%;height:100%}
 .bd-layer{opacity:0;transition:opacity .35s ease}
+.bd-wheel-img:not(.ready) .bd-layer{visibility:hidden}
 .bd-layer.on{opacity:1}
 .bd-wheel figcaption{margin-top:10px;text-align:center;font-size:11px;line-height:1.4;color:#7a7e86}
 .bd-opt.has-photo .bd-photo{background:#fff}
