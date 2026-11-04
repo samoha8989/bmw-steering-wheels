@@ -159,3 +159,16 @@ body.is-home .site-header{display:flex!important}
 .nt-card-foot{flex-direction:column;align-items:stretch;gap:10px}.nt-card-foot .nt-btn{width:100%}
 .nt-home .product-meta h2{font-size:21px;font-weight:700;text-transform:none;letter-spacing:-.01em;line-height:1.15;margin:6px 0 4px;color:var(--ink)}
 .nt-home .nt-dark .product-card{height:auto}
+/* hero: подпись под фото, компактно; без шапки на телефоне */
+.nt-hero-photo.hh-visual{aspect-ratio:auto!important;display:flex!important;flex-direction:column;background:#fff}
+.nt-hero-photo .hh-slides{position:relative!important;inset:auto!important;aspect-ratio:4/3!important;width:100%;flex:none}
+.nt-hero-photo .hh-caption{position:static!important;padding:8px 14px!important;background:#0e0e0e!important;border-top:1px solid #262626}
+.nt-hero-photo .hh-caption b{font-size:12px!important}.nt-hero-photo .hh-caption em{font-size:11px!important}.nt-hero-photo .hh-caption strong{font-size:13px!important}
+.nt-hero h1{font-size:clamp(28px,5vw,52px)}
+@media(max-width:900px){
+ body.is-home .site-header,.site-header{display:none!important}
+ .nt-hero{padding:12px 14px 28px}
+ .nt-hero-photo .hh-slides{aspect-ratio:5/4!important}
+ .nt-hero .nt-kick{display:none}
+ .nt-cta .nt-btn{min-height:54px}
+}
