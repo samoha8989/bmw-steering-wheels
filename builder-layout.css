@@ -1,0 +1,35 @@
+/* Конструктор на телефоне: руль слева (закреплён), шаги справа с прокруткой, панель с ценой прижата к низу экрана.
+   Подключается последним, после ntech.css. */
+@media (max-width: 900px) {
+  /* нижняя панель вплотную к низу, без зазора, в котором просвечивает страница */
+  .bd-bar { bottom: 0 !important; padding-bottom: env(safe-area-inset-bottom, 0px); background: #000; }
+  .bd-bar-in { padding: 8px 12px !important; gap: 10px !important; align-items: center; }
+  .bd-bar-price { flex: 1 1 auto; min-width: 0; }
+  .bd-bar-price span { font-size: 10px !important; }
+  .bd-bar-price b { font-size: 17px !important; line-height: 1.15; overflow-wrap: anywhere; }
+  .bd-bar-price small { font-size: 10px !important; line-height: 1.3; display: block; max-height: 2.6em; overflow: hidden; }
+  .bd-send { flex: 0 0 auto !important; min-height: 48px !important; padding: 0 12px !important; font-size: 11px !important; max-width: 46%; line-height: 1.2; text-align: center; }
+  .bd-page { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important; }
+
+  /* руль слева, список шагов справа */
+  .bd-layout.has-preview { grid-template-columns: 42% minmax(0, 1fr) !important; gap: 10px !important; align-items: start !important; }
+  .bd-preview { position: sticky !important; top: 10px !important; z-index: 5; height: auto !important; min-height: 0 !important; max-height: none !important; aspect-ratio: 1 / 1; width: 100%; border-radius: 8px; align-self: start; }
+  .bd-preview .bd-wheel { height: auto !important; width: 100%; }
+  .bd-wheel-img { height: auto !important; aspect-ratio: 1 / 1; }
+  .bd-nopv { padding: 12px; font-size: 12px; }
+
+  /* карточки шагов в узкой правой колонке */
+  .bd-sec { padding: 12px 10px !important; margin-bottom: 8px !important; }
+  .bd-sec-h { gap: 8px; }
+  .bd-sec-h span { font-size: 11px; }
+  .bd-sec-h h2 { font-size: 12px !important; letter-spacing: .05em !important; line-height: 1.25; }
+  .bd-sub { font-size: 11px !important; margin: 6px 0 10px !important; line-height: 1.4; }
+  .bd-options, .bd-options.bd-photos, .bd-options.bd-list { grid-template-columns: 1fr !important; gap: 6px !important; }
+  .bd-options.bd-photos { grid-template-columns: 1fr 1fr !important; }
+  .bd-opt { padding: 8px !important; gap: 8px !important; min-height: 44px; }
+  .bd-opt-text b { font-size: 12px !important; line-height: 1.25; }
+  .bd-opt-text small { font-size: 10px !important; line-height: 1.3; }
+  .bd-swatch { width: 22px !important; height: 22px !important; flex: none; }
+  .bd-opt .bd-check { width: 14px !important; height: 14px !important; flex: none; }
+  .bd-opt.has-photo { padding: 6px 6px 8px !important; }
+}
