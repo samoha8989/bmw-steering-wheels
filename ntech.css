@@ -175,3 +175,5 @@ body.is-home .site-header{display:flex!important}
 .nt-hero-photo .hh-slides{aspect-ratio:1/1!important}
 .nt-hero-photo .hh-slide img{object-position:50% 50%!important}
 @media(max-width:900px){.nt-hero-photo .hh-slides{aspect-ratio:1/1!important}}
+.nt-hero-photo.hh-visual{background:#0e0e0e!important}
+.nt-hero-photo .hh-caption{border-radius:0!important;border:0!important;box-shadow:none!important}
