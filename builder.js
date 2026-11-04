@@ -5,8 +5,10 @@
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const money = n => new Intl.NumberFormat('ru-RU').format(n) + ' ₽';
 const KEY = 'bmw.builder.v1';
-const read = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
-const write = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
+// Выбор живёт только в текущем заходе (вкладке): при новом заходе на сайт руль собирается с нуля.
+try { localStorage.removeItem(KEY); } catch {}
+const read = () => { try { return JSON.parse(sessionStorage.getItem(KEY)) || {}; } catch { return {}; } };
+const write = v => { try { sessionStorage.setItem(KEY, JSON.stringify(v)); } catch {} };
 
 let st = read();
 if (st.paddles === 'yes') st.paddles = 'std'; // старое значение
@@ -241,7 +243,7 @@ export function builderPage(catalog) {
   const pr = st.car ? priceFrom(catalog) : null;
   const last = s.key === 'done';
   return `<div class="page-shell bd-page" id="bd-root">
-    <div class="bd-head"><div class="eyebrow">Конструктор руля</div><h1>Соберите свой руль</h1></div>
+    <div class="bd-head"><div><div class="eyebrow">Конструктор руля</div><h1>Соберите свой руль</h1></div>${Object.keys(st).length ? '<button type="button" class="btn ghost bd-reset-top" data-bd-reset>Сбросить</button>' : ''}</div>
     <div class="bd-progress" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${Math.min(stepIndex, total)}"><span style="width:${Math.min(stepIndex, total) / total * 100}%"></span></div>
     <nav class="bd-dots" aria-label="Шаги">${STEPS.map((x, i) => `<button type="button" data-bd-go="${i}" class="${i === stepIndex ? 'active' : ''} ${i < stepIndex || (x.key !== 'done' && st[x.key]) ? 'done' : ''}" ${i > stepIndex && !STEPS.slice(0, i).every((_, j) => ready(j)) ? 'disabled' : ''} aria-label="Шаг ${i + 1}: ${esc(x.title)}">${i + 1}</button>`).join('')}</nav>
     <div class="bd-layout ${hasPreview() ? 'has-preview' : ''}">
