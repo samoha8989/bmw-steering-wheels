@@ -184,7 +184,7 @@ function optionCard(s, o) {
 }
 
 // ---- живое превью ----
-const hasPreview = () => isBMW();
+const hasPreview = () => !st.car || isBMW();
 const shapeNow = () => st.shape || 'round';
 function activeLayers() {
   const on = new Set();
@@ -219,86 +219,63 @@ function syncWheel() {
   el.querySelectorAll('.bd-layer').forEach(img => img.classList.toggle('on', on.has(img.dataset.layer)));
 }
 
-function stepBody(catalog) {
-  const s = STEPS[stepIndex];
+function stepBody(catalog, s) {
   if (s.key === 'functions') {
     const f = funcs();
     return `<div class="bd-options bd-list">${FUNCS.map(x => { const off = x.off && x.off(); return `<button type="button" class="bd-opt bd-switch" data-bd-func="${x.k}" role="switch" aria-checked="${!!f[x.k] && !off}" ${off ? 'disabled' : ''}><span class="bd-opt-text"><b>${x.l}</b><small>${esc(x.note())}</small></span><span class="bd-toggle" aria-hidden="true"></span></button>`; }).join('')}</div>`;
-  }
-  if (s.key === 'done') {
-    const pr = priceFrom(catalog);
-    return `<div class="bd-final"><dl class="bd-sum">${summaryRows().map(([a, b]) => `<div><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join('')}</dl>
-      ${pr ? `<div class="bd-price"><span>Цена в каталоге</span><b>от ${money(pr.sum)}</b>${pr.extra ? `<small>${esc(pr.extra)}</small>` : ''}</div>` : ''}
-      <a class="btn blue bd-send" href="${esc(message(catalog))}" target="_blank" rel="noopener" data-telegram>Узнать цену</a>
-      <p class="bd-hint">Откроется чат в Telegram: все детали уже будут в сообщении. Совместимость проверим по фото Вашего руля.</p></div>`;
   }
   const opts = s.options();
   return `<div class="bd-options ${opts.some(o => o.thumb) ? 'bd-photos' : ''}">${opts.map(o => optionCard(s, o)).join('')}</div>`;
 }
 
-function ready(i) {
-  const s = STEPS[i];
-  if (s.key === 'functions') return true;
-  if (s.key === 'done') return STEPS.slice(0, -1).every((x, j) => j === i || ready(j));
-  return !!st[s.key];
+const secs = () => STEPS.filter(x => x.key !== 'done');
+function panelHTML(catalog) {
+  return secs().map((s, i) => `<section class="bd-sec" id="bd-sec-${s.key}"><div class="bd-sec-h"><span>${String(i + 1).padStart(2, '0')}</span><h2>${esc(s.title)}</h2></div><p class="bd-sub">${esc(s.sub)}</p>${stepBody(catalog, s)}</section>`).join('');
 }
-
-export function builderPage(catalog) {
-  if (stepIndex >= STEPS.length) stepIndex = 0;
-  const s = STEPS[stepIndex], total = STEPS.length - 1;
+function barHTML(catalog) {
   const pr = st.car ? priceFrom(catalog) : null;
-  const last = s.key === 'done';
-  return `<div class="page-shell bd-page" id="bd-root">
-    <div class="bd-head"><div><div class="eyebrow">Конструктор руля</div><h1>Соберите свой руль</h1></div>${Object.keys(st).length ? '<button type="button" class="btn ghost bd-reset-top" data-bd-reset>Сбросить</button>' : ''}</div>
-    <div class="bd-progress" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${Math.min(stepIndex, total)}"><span style="width:${Math.min(stepIndex, total) / total * 100}%"></span></div>
-    <nav class="bd-dots" aria-label="Шаги">${STEPS.map((x, i) => `<button type="button" data-bd-go="${i}" class="${i === stepIndex ? 'active' : ''} ${i < stepIndex || (x.key !== 'done' && st[x.key]) ? 'done' : ''}" ${i > stepIndex && !STEPS.slice(0, i).every((_, j) => ready(j)) ? 'disabled' : ''} aria-label="Шаг ${i + 1}: ${esc(x.title)}">${i + 1}</button>`).join('')}</nav>
-    <div class="bd-layout ${hasPreview() ? 'has-preview' : ''}">
-      ${hasPreview() ? `<div class="bd-preview">${wheelHTML()}</div>` : ''}
-      <section class="bd-step ${last ? 'bd-last' : ''}" aria-live="polite">
-        <div class="bd-step-head"><span>${last ? 'Готово' : `Шаг ${stepIndex + 1} из ${total}`}</span><h2>${esc(s.title)}</h2><p>${esc(s.sub)}</p></div>
-        ${stepBody(catalog)}
-        <div class="bd-nav">${stepIndex ? '<button type="button" class="btn ghost bd-back" data-bd-prev>Назад</button>' : '<a class="btn ghost bd-back" href="#/">На главную</a>'}${last ? '<button type="button" class="btn ghost" data-bd-reset>Собрать заново</button>' : `<button type="button" class="btn blue" data-bd-next ${ready(stepIndex) ? '' : 'disabled'}>${stepIndex === total - 1 ? 'Посмотреть итог' : 'Далее'}</button>`}</div>
-      </section>
-      ${last ? '' : `<aside class="bd-side"><div class="eyebrow">Ваш выбор</div>${summaryRows().length ? `<dl class="bd-sum">${summaryRows().map(([a, b]) => `<div><dt>${esc(a)}</dt><dd>${esc(b)}</dd></div>`).join('')}</dl>` : '<p class="bd-empty">Пока ничего не выбрано.</p>'}${pr ? `<div class="bd-price small"><span>Цена в каталоге</span><b>от ${money(pr.sum)}</b></div>` : ''}</aside>`}
-    </div>
+  return `<div class="bd-bar-price"><span>Цена</span><b>${pr ? 'от ' + money(pr.sum) : 'выберите машину'}</b>${pr && pr.extra ? `<small>${esc(pr.extra)}</small>` : ''}</div>
+    <a class="nt-btn red bd-send" href="${esc(message(catalog))}" target="_blank" rel="noopener" data-telegram>Узнать цену в Telegram <i>→</i></a>`;
+}
+export function builderPage(catalog) {
+  return `<div class="bd-page" id="bd-root">
+    <div class="bd-wrap"><div class="bd-head"><div><span class="nt-kick">Конструктор руля</span><h1>Соберите свой руль</h1></div><button type="button" class="nt-btn line bd-reset-top" data-bd-reset>Сбросить</button></div>
+    <div class="bd-layout has-preview">
+      <div class="bd-preview">${hasPreview() ? wheelHTML() : '<div class="bd-nopv"><b>Превью пока для BMW</b><span>Для Mercedes выберите опции справа: цену и сообщение соберём так же.</span></div>'}</div>
+      <div class="bd-panel" id="bd-panel">${panelHTML(catalog)}</div>
+    </div></div>
+    <div class="bd-bar" id="bd-bar"><div class="bd-bar-in">${barHTML(catalog)}</div></div>
   </div>`;
 }
 
-function repaint(catalog, scroll) {
+function repaint(catalog) {
   const root = document.getElementById('bd-root');
   if (!root) return;
-  const old = document.getElementById('bd-wheel');
-  root.outerHTML = builderPage(catalog);
-  // тот же руль — оставляем загруженные картинки, меняем только слои (без мигания)
-  const neu = document.getElementById('bd-wheel');
-  if (old && neu && old.dataset.shape === neu.dataset.shape) { neu.replaceWith(old); }
+  const y = window.scrollY;
+  const pv = root.querySelector('.bd-preview'), old = document.getElementById('bd-wheel');
+  if (hasPreview()) {
+    if (!old) pv.innerHTML = wheelHTML();
+    else if (old.dataset.shape !== shapeNow()) pv.innerHTML = wheelHTML();
+  } else pv.innerHTML = '<div class="bd-nopv"><b>Превью пока для BMW</b><span>Для Mercedes выберите опции справа: цену и сообщение соберём так же.</span></div>';
+  document.getElementById('bd-panel').innerHTML = panelHTML(catalog);
+  root.querySelector('.bd-bar-in').innerHTML = barHTML(catalog);
   syncWheel();
-  if (scroll) {
-    const target = window.matchMedia('(max-width:900px)').matches && document.getElementById('bd-wheel') ? document.querySelector('.bd-layout') : document.querySelector('.bd-step');
-    target?.scrollIntoView({ block: 'start', behavior: 'smooth' });
-  }
+  window.scrollTo(0, y);
 }
 
 export function builderClick(event, catalog) {
-  const t = event.target.closest('[data-bd-key],[data-bd-func],[data-bd-next],[data-bd-prev],[data-bd-go],[data-bd-reset]');
+  const t = event.target.closest('[data-bd-key],[data-bd-func],[data-bd-reset]');
   if (!t || !t.closest('#bd-root')) return false;
   if (t.dataset.bdKey) {
     const k = t.dataset.bdKey, v = t.dataset.bdVal;
-    if (k === 'car' && st.car !== v) { delete st.emblem; if (v === 'Mercedes') for (const x of ['stitch', 'mark']) if (st[x] === 'tricolor') delete st[x]; } // эмблема и триколор зависят от марки
+    if (k === 'car' && st.car !== v) { delete st.emblem; if (v === 'Mercedes') for (const x of ['stitch', 'mark']) if (st[x] === 'tricolor') delete st[x]; }
     st[k] = v; write(st);
     window.BMWAnalytics?.track?.('builder_pick', { mode: null, series: st.car || null, product: k + ':' + v });
     repaint(catalog);
   } else if (t.dataset.bdFunc) {
     st.functions = { ...funcs(), [t.dataset.bdFunc]: !funcs()[t.dataset.bdFunc] }; write(st); repaint(catalog);
-  } else if ('bdNext' in t.dataset) {
-    if (STEPS[stepIndex].key === 'functions' && !st.functions) { st.functions = {}; write(st); }
-    if (ready(stepIndex)) { stepIndex++; repaint(catalog, true); }
-  } else if ('bdPrev' in t.dataset) {
-    stepIndex = Math.max(0, stepIndex - 1); repaint(catalog, true);
-  } else if (t.dataset.bdGo) {
-    stepIndex = Number(t.dataset.bdGo); repaint(catalog, true);
   } else if ('bdReset' in t.dataset) {
-    st = {}; write(st); stepIndex = 0; repaint(catalog, true);
+    st = {}; write(st); repaint(catalog);
   }
   return true;
 }
