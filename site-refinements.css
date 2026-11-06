@@ -59,3 +59,14 @@
 @media(max-width:420px){.product-meta{padding:11px 10px 12px}.card-price.range{font-size:13px}.product-meta h2{font-size:14px}.product-topline{font-size:9px}.price-caption{font-size:11px;min-height:32px}}
 /* Footer links must wrap on narrow phones instead of widening the page. */
 .footer-links{flex-wrap:wrap;min-width:0}.footer-links a{max-width:100%;overflow-wrap:anywhere}
+
+/* Brand links respond to a touch, mouse hover and keyboard focus. */
+.nt-brand{-webkit-tap-highlight-color:#d33d3d33;transition:background-color .18s,border-color .18s}
+.nt-brand-name{transition:color .18s,text-shadow .18s}
+.nt-brand:active,.nt-brand:focus-visible{background:linear-gradient(90deg,#8f203a45,#8f203a12 70%,transparent);border-bottom-color:#e3575759}
+.nt-brand:active .nt-brand-name,.nt-brand:focus-visible .nt-brand-name{color:#ee5657;text-shadow:0 0 22px #d33d3d77}
+.nt-brand:focus-visible{outline:2px solid #ee5657;outline-offset:-3px}
+@media(hover:hover){
+ .nt-brand:hover{background:linear-gradient(90deg,#8f203a45,#8f203a12 70%,transparent);border-bottom-color:#e3575759}
+ .nt-brand:hover .nt-brand-name{color:#ee5657;text-shadow:0 0 22px #d33d3d77}
+}
