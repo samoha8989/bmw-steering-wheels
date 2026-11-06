@@ -11,20 +11,21 @@
   .bd-send { flex: 0 0 auto !important; min-height: 48px !important; padding: 0 12px !important; font-size: 11px !important; max-width: 46%; line-height: 1.2; text-align: center; }
   .bd-page { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important; }
 
-  /* руль слева, список шагов справа */
-  .bd-layout.has-preview { grid-template-columns: 42% minmax(0, 1fr) !important; gap: 10px !important; align-items: start !important; }
-  .bd-preview { position: sticky !important; top: 10px !important; z-index: 5; height: auto !important; min-height: 0 !important; max-height: none !important; aspect-ratio: 1 / 1; width: 100%; border-radius: 8px; align-self: start; }
-  .bd-preview .bd-wheel { height: auto !important; width: 100%; }
+  /* руль на всю ширину сверху, закреплён; шаги листаются под ним на всю ширину */
+  .bd-layout.has-preview { grid-template-columns: 1fr !important; grid-template-areas: "pv" "step" "side" !important; gap: 10px !important; align-items: start !important; }
+  .bd-preview { position: sticky !important; top: 0 !important; z-index: 5; height: auto !important; min-height: 0 !important; max-height: 52vh !important; width: 100%; border-radius: 0 0 14px 14px; align-self: start; background: var(--paper); padding: 8px 10px 10px; margin: 0 -16px; }
+  .bd-preview .bd-wheel { height: auto !important; width: min(100%, 78vw); max-width: 320px; margin: 0 auto; }
   .bd-wheel-img { height: auto !important; aspect-ratio: 1 / 1; }
   .bd-nopv { padding: 12px; font-size: 12px; }
 
-  /* карточки шагов в узкой правой колонке */
+  /* карточки шагов на всю ширину под рулём */
   .bd-sec { padding: 12px 10px !important; margin-bottom: 8px !important; }
   .bd-sec-h { gap: 8px; }
   .bd-sec-h span { font-size: 11px; }
   .bd-sec-h h2 { font-size: 12px !important; letter-spacing: .05em !important; line-height: 1.25; }
   .bd-sub { font-size: 11px !important; margin: 6px 0 10px !important; line-height: 1.4; }
-  .bd-options, .bd-options.bd-photos, .bd-options.bd-list { grid-template-columns: 1fr !important; gap: 6px !important; }
+  .bd-options { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important; gap: 8px !important; }
+  .bd-options.bd-list { grid-template-columns: 1fr !important; }
   .bd-options.bd-photos { grid-template-columns: 1fr 1fr !important; }
   .bd-opt { padding: 8px !important; gap: 8px !important; min-height: 44px; }
   .bd-opt-text b { font-size: 12px !important; line-height: 1.25; }
