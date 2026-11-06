@@ -365,6 +365,104 @@
       "cat": "black"
     },
     {
+      "code": "9864",
+      "name": "Silver Grey",
+      "hex": "#8A8F92",
+      "cat": "grey"
+    },
+    {
+      "code": "9844",
+      "name": "Sand",
+      "hex": "#B0A484",
+      "cat": "beige"
+    },
+    {
+      "code": "9813",
+      "name": "China Red",
+      "hex": "#AB2623",
+      "cat": "red"
+    },
+    {
+      "code": "9817",
+      "name": "Bordeaux",
+      "hex": "#682829",
+      "cat": "red"
+    },
+    {
+      "code": "9811",
+      "name": "Saffron",
+      "hex": "#E87214",
+      "cat": "orange"
+    },
+    {
+      "code": "919-633",
+      "name": "Gold",
+      "hex": "#CCAB12",
+      "cat": "yellow"
+    },
+    {
+      "code": "9822",
+      "name": "Cognac",
+      "hex": "#A05A27",
+      "cat": "brown"
+    },
+    {
+      "code": "9807",
+      "name": "Aqua Blue",
+      "hex": "#A4BDD6",
+      "cat": "blue"
+    },
+    {
+      "code": "9808",
+      "name": "Sky Blue",
+      "hex": "#1461AF",
+      "cat": "blue"
+    },
+    {
+      "code": "9809",
+      "name": "Violet Blue",
+      "hex": "#1A305E",
+      "cat": "blue"
+    },
+    {
+      "code": "9849",
+      "name": "Aqua",
+      "hex": "#70C6BF",
+      "cat": "green"
+    },
+    {
+      "code": "9829",
+      "name": "Emerald",
+      "hex": "#274746",
+      "cat": "green"
+    },
+    {
+      "code": "9842",
+      "name": "Plum",
+      "hex": "#472C46",
+      "cat": "purple"
+    }
+  ],
+  "black": {
+    "code": "9860",
+    "name": "Piano Black",
+    "hex": "#0E0F12",
+    "cat": "black"
+  },
+  "topColor": {
+    "code": "9861",
+    "name": "Raven",
+    "hex": "#1A1C20",
+    "cat": "black"
+  },
+  "leathers": [
+    {
+      "code": "9860",
+      "name": "Piano Black",
+      "hex": "#0E0F12",
+      "cat": "black"
+    },
+    {
       "code": "9800",
       "name": "Jet Black",
       "hex": "#17181B",
@@ -605,6 +703,12 @@
       "cat": "orange"
     },
     {
+      "code": "9812",
+      "name": "Amber",
+      "hex": "#D75D1B",
+      "cat": "orange"
+    },
+    {
       "code": "9818",
       "name": "Mustard",
       "hex": "#BF853B",
@@ -814,17 +918,5 @@
       "hex": "#472C46",
       "cat": "purple"
     }
-  ],
-  "black": {
-    "code": "9860",
-    "name": "Piano Black",
-    "hex": "#0E0F12",
-    "cat": "black"
-  },
-  "topColor": {
-    "code": "9861",
-    "name": "Raven",
-    "hex": "#1A1C20",
-    "cat": "black"
-  }
+  ]
 }
