@@ -2,6 +2,7 @@ name: Publish website
 on:
   push:
     branches: [main]
+    paths-ignore: ['.github/**']
   workflow_dispatch:
 permissions:
   contents: read
@@ -37,7 +38,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 15
     permissions:
       pages: write
       id-token: write
@@ -49,4 +50,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
         with:
-          timeout: '1800000'
+          timeout: '600000'
