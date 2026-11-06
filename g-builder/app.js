@@ -1,4 +1,5 @@
-import {renderMaterial} from './material-renderer.js?v=136';
+import {enhancePanels,refreshPanels} from '../builder-panels.js?v=145';
+import {renderMaterial} from './material-renderer.js?v=145';
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ASSET=new URL('./',import.meta.url),imgCache=new Map(),tintCache=new Map();
 const MATERIALS=[['perforated','Перфорированная кожа'],['alcantara','Алькантара'],['smooth','Гладкая кожа']];
@@ -29,7 +30,7 @@ function controls(){
  field('12','Подогрев',choices('heat',[['no','Без подогрева'],['yes','С подогревом']]))+
  field('13','Вибро',choices('vibration',[['no','Без вибро'],['yes','С вибро']]))+
  field('14','Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Работу функций проверим по Вашему автомобилю.</p>');
- $('#options').elements.markerMode.value='none';sync();
+ $('#options').elements.markerMode.value='none';enhancePanels($('#options'));sync();
 }
 function rows(){return [['Автомобиль','BMW G'],['Форма','Круглый'],['Зона хвата',label(MATERIALS,state.side)],['Цвет зоны хвата','Чёрный глянец · 9860'],['Строчка в зоне хвата',RU[state.sideStitch]],['Верх и низ',label([...MATERIALS,...CARBONS],state.top)],...(!isCarbon()?[['Цвет верха и низа','Вороново крыло · 9861'],['Строчка сверху и снизу',RU[state.topStitch]]]:[]),['Накладка на спицы',label(TRIMS,state.trim)],['Подушка',label(AIRBAGS,state.airbag)],...(state.airbag!=='original'?[['Цвет подушки','Чёрный глянец · 9860'],['Строчка на подушке',RU[state.airbagStitch]]]:[]),['Метка на 12 часов',state.marker==='none'?'Без метки':MRU[marker(state.marker).name]||marker(state.marker).name],['Подогрев',state.heat==='yes'?'С подогревом':'Без подогрева'],['Вибро',state.vibration==='yes'?'С вибро':'Без вибро'],['Адаптивный круиз-контроль',state.acc==='yes'?'С адаптивным круизом':'Без адаптивного круиза']];}
 function isCarbon(){return CARBONS.some(([id])=>id===state.top);}
@@ -37,7 +38,7 @@ function sync(){
  $('#top-stitch').hidden=isCarbon();$('#top-color-field').hidden=isCarbon();$('#carbon-note').hidden=!isCarbon();
  $('#airbag-stitch').hidden=state.airbag==='original';$('#original-note').hidden=state.airbag!=='original';$('#marker-colors').hidden=state.marker==='none';
  for(const el of document.querySelectorAll('[data-picked]')){const key=el.dataset.picked;el.textContent=key==='marker'?(state.marker==='none'?'':`${MRU[marker(state.marker).name]||marker(state.marker).name} · ${state.marker}`):RU[state[key]];}
- $('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
+ refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
  const prices=catalog.filter(p=>p.series==='G').flatMap(p=>Object.values(p.prices||{})).map(p=>state.heat==='yes'?p.heated:p.unheated).filter(n=>typeof n==='number'&&Number.isFinite(n));
  $('#price').textContent=prices.length?'от '+new Intl.NumberFormat('ru-RU').format(Math.min(...prices))+' ₽':'Уточним стоимость';
  const message=['Здравствуйте! Хочу узнать цену руля по конфигурации:',...rows().map(([k,v])=>`${k}: ${v}`),'','Подписывайся на наш лайв-канал: https://t.me/bmw_steeringwheels'].join('\n');
@@ -50,7 +51,7 @@ function stitchLayer(im,hex,material){const c=document.createElement('canvas');c
 async function grip(s){const key='grip:'+s.side+':'+s.sideStitch;if(tintCache.has(key))return tintCache.get(key);const im=await load(`grips/round-side-${s.side}-map.webp`),c=document.createElement('canvas');c.width=c.height=1254;const ctx=c.getContext('2d',{willReadFrequently:true});draw(ctx,im);ctx.putImageData(renderMaterial(ctx.getImageData(0,0,1254,1254),data.calibration[`round-side-${s.side}`],data.black.hex,stitch(s.sideStitch).hex),0,0);tintCache.set(key,c);if(tintCache.size>14)tintCache.delete(tintCache.keys().next().value);return c;}
 async function topMaterial(s){const key='top:'+s.top+':'+s.topStitch;if(tintCache.has(key))return tintCache.get(key);const im=await load(`grips/round-tb-${s.top}-map.webp`),c=document.createElement('canvas');c.width=c.height=1254;const ctx=c.getContext('2d',{willReadFrequently:true});draw(ctx,im);ctx.putImageData(renderMaterial(ctx.getImageData(0,0,1254,1254),data.calibration[`round-tb-${s.top}`],data.topColor.hex,stitch(s.topStitch).hex),0,0);tintCache.set(key,c);if(tintCache.size>14)tintCache.delete(tintCache.keys().next().value);return c;}
 async function airbag(s){const key=s.airbag+s.airbagStitch;if(tintCache.has(key))return tintCache.get(key);const im=await load(`grips/airbag-${s.airbag}-map.webp`),c=document.createElement('canvas');c.width=c.height=1254;const ctx=c.getContext('2d',{willReadFrequently:true});draw(ctx,im);const out=renderMaterial(ctx.getImageData(0,0,1254,1254),data.calibration[`airbag-${s.airbag}`],data.black.hex,stitch(s.airbagStitch).hex);ctx.putImageData(out,0,0);tintCache.set(key,c);if(tintCache.size>14)tintCache.delete(tintCache.keys().next().value);return c;}
-async function render(){const id=++serial,s={...state};rendering=true;ready=false;$('#save').disabled=true;$('#status').textContent='Обновляем превью…';try{
+async function render(){const id=++serial,s={...state};rendering=true;ready=false;$('#save').disabled=true;$('#order').setAttribute('aria-disabled','true');$('#status').textContent='Обновляем превью…';try{
  const paths=['round.webp',`grips/round-side-${s.side}-map.webp`,'stitch/round-side.webp',CARBONS.some(([v])=>v===s.top)?`cf/round-${s.top}.webp`:`grips/round-tb-${s.top}-map.webp`];
  if(!CARBONS.some(([v])=>v===s.top))paths.push('stitch/round-tb.webp');if(s.trim!=='original')paths.push(`trims/${s.trim}.webp`);
  if(s.airbag!=='original')paths.push(`neutral/airbag-${s.airbag}-logo.webp`);if(s.marker!=='none')paths.push('marker/round.webp');
@@ -60,14 +61,14 @@ async function render(){const id=++serial,s={...state};rendering=true;ready=fals
 
  if(s.trim!=='original')draw(ctx,await load(`trims/${s.trim}.webp`));if(bag){draw(ctx,bag);draw(ctx,await load(`neutral/airbag-${s.airbag}-logo.webp`));}
  if(s.marker!=='none')draw(ctx,recolor(await load('marker/round.webp'),marker(s.marker).hex,'marker'));
- if(id!==serial)return;$('#wheel').getContext('2d').drawImage(c,0,0);ready=true;$('#status').textContent='';
+ if(id!==serial)return;$('#wheel').getContext('2d').drawImage(c,0,0);ready=true;$('#order').setAttribute('aria-disabled','false');$('#status').textContent='';
  }catch(e){if(id===serial){$('#status').textContent='Не удалось обновить превью. Выберите вариант ещё раз.';console.error(e);}}finally{if(id===serial){rendering=false;$('#save').disabled=!ready;}}}
 $('#options').addEventListener('submit',e=>e.preventDefault());
 $('#options').addEventListener('change',e=>{const {name,value}=e.target;if(name==='markerMode'){state.marker=value==='none'?'none':'white';if(value!=='none')$('#options').querySelector('input[name="marker"][value="white"]').checked=true;}else if(name in state)state[name]=value;else return;sync();render();});
 $('#options').addEventListener('input',e=>{if(!e.target.matches('.palette-search'))return;const q=e.target.value.trim().toLowerCase();for(const c of document.querySelectorAll('[data-palette="marker"] label'))c.hidden=!c.dataset.colorName.includes(q);});
 $('#reset').addEventListener('click',()=>{state=defaults();controls();render();});
 $('#save').addEventListener('click',()=>{if(!ready||rendering)return;$('#wheel').toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='BMW-G-моя-конфигурация.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},'image/png');});
-try{const response=await fetch(new URL('options.json?v=143',ASSET));if(!response.ok)throw Error('Options missing');data=await response.json();try{const r=await fetch('catalog.json?v=136');if(r.ok)catalog=await r.json();}catch{}controls();await render();}catch(e){$('#status').textContent='Не удалось загрузить конструктор. Обновите страницу.';$('#options').innerHTML='<p>Варианты временно недоступны.</p>';console.error(e);}
+try{const response=await fetch(new URL('options.json?v=145',ASSET));if(!response.ok)throw Error('Options missing');data=await response.json();try{const r=await fetch('catalog.json?v=145');if(r.ok)catalog=await r.json();}catch{}controls();await render();}catch(e){$('#status').textContent='Не удалось загрузить конструктор. Обновите страницу.';$('#options').innerHTML='<p>Варианты временно недоступны.</p>';console.error(e);}
 // Like the reference, give the option panel more room once the visitor scrolls.
 function compactPreview(){document.body.classList.toggle('is-compact',matchMedia('(max-width:760px)').matches&&window.scrollY>80);}
 window.addEventListener('scroll',compactPreview,{passive:true});window.addEventListener('resize',compactPreview);compactPreview();

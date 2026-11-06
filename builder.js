@@ -323,11 +323,11 @@ function barHTML(catalog) {
 export function builderPage(catalog) {
   if (!st.car) {
     const models = [
-      ['BMW F-Series M Performance','BMW · F-серия','wheel-builder/assets/bmw/card.webp','wheel-builder.html?model=bmw-fseries&v=144'],
-      ['BMW G-Series M Performance','BMW · G-серия','g-builder/round.webp','g-builder.html?v=144'],
-      ['Mercedes-AMG Performance','AMG Performance','wheel-builder/assets/mercedes-amg/card.webp','wheel-builder.html?model=mercedes-amg&v=144'],
-      ['Mercedes-Benz · дизайн 2024+','C · E · S · GLC · GLE · GLS · G · CLS','wheel-builder/assets/mercedes-2015/card.webp','wheel-builder.html?model=mercedes-2015&v=144'],
-      ['Mercedes-Benz · дизайн 2019+','C · E · S · GLC · GLE','wheel-builder/assets/mercedes-2019/card.webp','wheel-builder.html?model=mercedes-2019&v=144']
+      ['BMW F-Series M Performance','BMW · F-серия','wheel-builder/assets/bmw/card.webp','wheel-builder.html?model=bmw-fseries&v=145'],
+      ['BMW G-Series M Performance','BMW · G-серия','g-builder/round.webp','g-builder.html?v=145'],
+      ['Mercedes-AMG Performance','AMG Performance','wheel-builder/assets/mercedes-amg/card.webp','wheel-builder.html?model=mercedes-amg&v=145'],
+      ['Mercedes-Benz · дизайн 2024+','C · E · S · GLC · GLE · GLS · G · CLS','wheel-builder/assets/mercedes-2015/card.webp','wheel-builder.html?model=mercedes-2015&v=145'],
+      ['Mercedes-Benz · дизайн 2019+','C · E · S · GLC · GLE','wheel-builder/assets/mercedes-2019/card.webp','wheel-builder.html?model=mercedes-2019&v=145']
     ];
     return `<section class="bd-model-picker" id="bd-root"><span class="nt-kick">Конструктор руля</span><h1>Начните с Вашего руля.</h1><p>Выберите дизайн, настройте материалы и цвета. Совместимость с Вашим автомобилем уточним по фото штатного руля.</p><div class="bd-model-grid">${models.map(([title,desc,img,url])=>`<a class="bd-model-card" href="${url}"><img src="${img}" alt="${esc(title)}" loading="lazy"><div><h2>${esc(title)}</h2><p>${esc(desc)}</p><span>Собрать свой руль →</span></div></a>`).join('')}</div><div class="bd-legacy"><span>Другие кузова:</span><button type="button" data-bd-key="car" data-bd-val="BMW-E">BMW · E-кузов</button><button type="button" data-bd-key="car" data-bd-val="BMW-U">BMW · U-кузов</button></div></section>`;
   }
@@ -362,7 +362,7 @@ export function builderClick(event, catalog) {
   if (!t || !t.closest('#bd-root')) return false;
   if (t.dataset.bdKey) {
     const k = t.dataset.bdKey, v = t.dataset.bdVal;
-    if (k === 'car' && ['BMW-F','BMW-G','Mercedes'].includes(v)) { const url = v === 'BMW-G' ? 'g-builder.html?v=144' : 'wheel-builder.html?model=' + (v === 'BMW-F' ? 'bmw-fseries' : 'mercedes-amg'); location.href = new URL(url + (url.includes('v=144') ? '' : '&v=144'), location.href).href; return true; }
+    if (k === 'car' && ['BMW-F','BMW-G','Mercedes'].includes(v)) { const url = v === 'BMW-G' ? 'g-builder.html?v=145' : 'wheel-builder.html?model=' + (v === 'BMW-F' ? 'bmw-fseries' : 'mercedes-amg'); location.href = new URL(url + (url.includes('v=144') ? '' : '&v=145'), location.href).href; return true; }
     if (k === 'rim' && v !== 'carbon' && st.mark === 'tricolor') delete st.mark; // триколор только на карбоне
     if (k === 'car' && st.car !== v) {
       // смена кузова — у G своя форма и свой набор деталей, у остальных своя: начинаем шаги заново

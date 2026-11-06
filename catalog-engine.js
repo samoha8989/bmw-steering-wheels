@@ -44,7 +44,7 @@ export function priceInfo(p,s={},branchOverride){
 export function filterProducts(catalog,s){
  const q=(s.q||'').trim().toLowerCase().replace(/^[№#\s]+/,'');
  const result=catalog.filter(p=>{
-  if(s.brand&&((p.series==='Mercedes')!==(s.brand==='Mercedes')))return false;
+  if(s.brand&&brandKey(p)!==s.brand)return false;
   if(s.series&&!(p.compatibleSeries||[p.series]).includes(s.series))return false;
   if(p.groups&&['Fsmall','Flarge'].includes(s.branch)&&!p.groups.includes(s.branch))return false;
   if(s.availability&&s.availability!=='all'&&p.availability!==s.availability)return false;
@@ -57,16 +57,20 @@ export function filterProducts(catalog,s){
 }
 export function requestedFeatures(s){return ['heating','vibration','cruise'].map(k=>featureLabels[k][s[k]]).filter(Boolean);}
 export const uNum=(p,s)=>s&&s.series==='G'&&s.model==='U кузов'&&p.series==='G'?String(p.displayNumber).replace(/^G/,'U'):p.displayNumber;
+export function siteBase(address){const url=new URL(address);url.hash='';url.search='';if(!url.pathname.endsWith('/'))url.pathname=/\.[a-z0-9]+$/i.test(url.pathname)?url.pathname.replace(/[^/]*$/,''):url.pathname+'/';return url;}
+export const CHANNEL_LINE='Подписывайся на наш лайв-канал: https://t.me/bmw_steeringwheels';
 export function buildRequest(products,s,origin,branches={}){
+ const base=siteBase(origin);
  const lines=[products.length>1?'Здравствуйте! Помогите выбрать между этими рулями:':products.length?'Здравствуйте! Хочу заказать руль:':'Здравствуйте! Помогите подобрать руль.'];
  for(const p of products){
   const price=priceInfo(p,s,branches[keyOf(p)]); const amount=price.min==null?'уточнить':new Intl.NumberFormat('ru-RU').format(price.min)+(price.range?'–'+new Intl.NumberFormat('ru-RU').format(price.max):'')+' ₽';
   lines.push(`${brandOf(p)} № ${uNum(p,s)} · ${p.availability==='stock'?'В наличии':'Под заказ'}`,`Цена в каталоге: ${amount} (${price.caption})`);
-  if(p.photos?.[0])lines.push(`Фото: ${origin}/${p.photos[0]}`);
-  lines.push(`${origin}/#/wheel/${p.availability}/${encodeURIComponent(p.id)}/${branches[keyOf(p)]||(p.series==='E'?(['E60','Eother'].includes(s.branch)?s.branch:'E'):p.series)}`);
+  if(p.photos?.[0])lines.push(`Фото: ${new URL(p.photos[0],base).href}`);
+  lines.push(`${base.href}#/wheel/${p.availability}/${encodeURIComponent(p.id)}/${branches[keyOf(p)]||(p.series==='E'?(['E60','Eother'].includes(s.branch)?s.branch:'E'):p.series)}`);
  }
  lines.push('');
  if(s.brand==='BMW'&&s.model)lines.push('Автомобиль: BMW · '+s.model);
  for(const k of ['heating','vibration','cruise'])lines.push(({heating:'Подогрев',vibration:'Вибрация',cruise:'Круиз-контроль'})[k]+': '+(featureLabels[k][s[k]]||'помогите определить'));
+ lines.push('',CHANNEL_LINE);
  return lines.join('\n');
 }

@@ -1,0 +1,52 @@
+name: Publish website
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check JavaScript and catalogue
+        run: |
+          for file in studio.js catalog-engine.js builder.js builder-panels.js g-builder/app.js g-builder/material-renderer.js wheel-builder/app.js; do
+            node --check "$file"
+          done
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          products = json.loads(Path('catalog.json').read_text())
+          assert products
+          for p in products:
+              assert p.get('photos'), p['id']
+              for photo in p['photos']:
+                  assert Path(photo).is_file(), photo
+          for name in ['wheel-builder/models.json', 'g-builder/options.json']:
+              json.loads(Path(name).read_text())
+          print(f'Checked {len(products)} products and their photo paths')
+          PY
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: .
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+        with:
+          timeout: '1800000'
