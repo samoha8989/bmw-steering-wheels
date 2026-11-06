@@ -49,3 +49,13 @@
  .nt-hero{padding:12px 14px 28px}.nt-hero-in{gap:14px}.nt-hero .nt-kick{display:none}
  .nt-hero .nt-cta .nt-btn{min-height:54px}
 }
+
+/* Product photographs retain their original proportions and remain fully visible. */
+.product-image-wrap .image-frame img,.main-photo .image-frame img{object-fit:contain;transform:none;width:100%;height:100%;left:0;top:0}
+.product-meta{display:flex;flex-direction:column;min-width:0;height:auto}
+.product-meta .card-price{white-space:normal;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.product-bottom{margin-top:auto;padding-top:12px}
+.product-card{display:flex;flex-direction:column}.product-card>.product-meta{flex:1}
+@media(max-width:420px){.product-meta{padding:11px 10px 12px}.card-price.range{font-size:13px}.product-meta h2{font-size:14px}.product-topline{font-size:9px}.price-caption{font-size:11px;min-height:32px}}
+/* Footer links must wrap on narrow phones instead of widening the page. */
+.footer-links{flex-wrap:wrap;min-width:0}.footer-links a{max-width:100%;overflow-wrap:anywhere}

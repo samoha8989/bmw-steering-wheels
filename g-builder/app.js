@@ -1,5 +1,5 @@
-import {enhancePanels,refreshPanels} from '../builder-panels.js?v=148';
-import {renderMaterial} from './material-renderer.js?v=148';
+import {enhancePanels,refreshPanels} from '../builder-panels.js?v=151';
+import {renderMaterial} from './material-renderer.js?v=151';
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ASSET=new URL('./',import.meta.url),imgCache=new Map(),tintCache=new Map();
 const MATERIALS=[['perforated','Перфорированная кожа'],['alcantara','Алькантара'],['smooth','Гладкая кожа']];
@@ -67,7 +67,7 @@ $('#options').addEventListener('change',e=>{const {name,value}=e.target;if(name=
 $('#options').addEventListener('input',e=>{if(!e.target.matches('.palette-search'))return;const q=e.target.value.trim().toLowerCase();for(const c of document.querySelectorAll('[data-palette="marker"] label'))c.hidden=!c.dataset.colorName.includes(q);});
 $('#reset').addEventListener('click',()=>{state=defaults();controls();render();});
 $('#save').addEventListener('click',()=>{if(!ready||rendering)return;$('#wheel').toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='BMW-G-моя-конфигурация.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},'image/png');});
-try{const response=await fetch(new URL('options.json?v=148',ASSET));if(!response.ok)throw Error('Options missing');data=await response.json();try{const r=await fetch('catalog.json?v=148');if(r.ok)catalog=await r.json();}catch{}controls();await render();}catch(e){$('#status').textContent='Не удалось загрузить конструктор. Обновите страницу.';$('#options').innerHTML='<p>Варианты временно недоступны.</p>';console.error(e);}
+try{const response=await fetch(new URL('options.json?v=151',ASSET));if(!response.ok)throw Error('Options missing');data=await response.json();try{const r=await fetch('catalog.json?v=151');if(r.ok)catalog=await r.json();}catch{}controls();await render();}catch(e){$('#status').textContent='Не удалось загрузить конструктор. Обновите страницу.';$('#options').innerHTML='<p>Варианты временно недоступны.</p>';console.error(e);}
 // Like the reference, give the option panel more room once the visitor scrolls.
 function compactPreview(){document.body.classList.toggle('is-compact',matchMedia('(max-width:760px)').matches&&window.scrollY>80);}
 window.addEventListener('scroll',compactPreview,{passive:true});window.addEventListener('resize',compactPreview);compactPreview();
