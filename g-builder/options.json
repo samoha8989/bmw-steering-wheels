@@ -816,9 +816,15 @@
     }
   ],
   "black": {
-    "code": "9800",
-    "name": "Jet Black",
-    "hex": "#17181B",
+    "code": "9860",
+    "name": "Piano Black",
+    "hex": "#0E0F12",
+    "cat": "black"
+  },
+  "topColor": {
+    "code": "9861",
+    "name": "Raven",
+    "hex": "#1A1C20",
     "cat": "black"
   }
 }

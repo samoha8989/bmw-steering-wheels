@@ -155,6 +155,7 @@ const FUNCS = [
   { k: 'heat', l: 'Подогрев', note: () => isE() ? 'На E-кузова рули с подогревом не делаем' : 'Работает, если подогрев был в машине изначально', off: () => isE() },
   { k: 'vib', l: 'Вибромотор', note: () => 'Работает, если вибрация была в машине' },
   { k: 'cruise', l: 'Кнопка круиза', note: () => 'Работает, если круиз был в машине' },
+  { k: 'acc', l: 'Адаптивный круиз-контроль', note: () => 'Совместимость уточним по Вашему автомобилю' },
 ];
 
 const LABEL = (key, v) => {
@@ -187,7 +188,7 @@ function priceFrom(catalog) {
   const prices = catalog.filter(p => p.series === ser).flatMap(p => Object.values(p.prices || {}));
   const pick = prices.map(o => ser === 'E' ? o.single : f.heat ? o.heated : o.unheated).filter(n => typeof n === 'number');
   if (!pick.length) return null;
-  const extra = [f.vib && 'вибромотор', f.cruise && 'круиз',
+  const extra = [f.vib && 'вибромотор', f.cruise && 'круиз', f.acc && 'адаптивный круиз',
     st.rim && !['smooth', 'perf', 'leather'].includes(st.rim) && 'обод: ' + LABEL('rim', st.rim).toLowerCase(),
     !isG() && (st.cover === 'carbon' || st.cover === 'forged') && 'накладка: ' + LABEL('cover', st.cover).toLowerCase(),
     isG() && st.trim && st.trim !== 'none' && 'накладка кнопок: ' + LABEL('trim', st.trim).toLowerCase(),
@@ -227,7 +228,7 @@ function message(catalog) {
       'Метка на 12 часов: ' + l('mark'), 'Обод: ' + l('rim'), 'Кожа: чёрная', 'Лепестки: ' + l('paddles'));
   }
   if (!isE()) lines.push('Подогрев: ' + yes('heat'));
-  lines.push('Вибромотор: ' + yes('vib'), 'Кнопка круиза: ' + yes('cruise', 'нужна', 'не нужна'));
+  lines.push('Вибромотор: ' + yes('vib'), 'Кнопка круиза: ' + yes('cruise', 'нужна', 'не нужна'), 'Адаптивный круиз-контроль: ' + yes('acc'));
   const pr = priceFrom(catalog);
   if (pr) lines.push('Цена в каталоге: от ' + money(pr.sum));
   lines.push('', 'Подписывайся на наш лайв-канал: @bmw_steeringwheels');

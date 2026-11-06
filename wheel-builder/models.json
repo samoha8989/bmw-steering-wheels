@@ -28,55 +28,6 @@
         "tbToken": "tb",
         "marker": "round"
       },
-      "yoke": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "bottom": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [
-          "side",
-          "bottom"
-        ],
-        "tbToken": "bottom"
-      },
-      "flat-flat": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "tb": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [
-          "side",
-          "tb"
-        ],
-        "tbToken": "tb",
-        "marker": "flat-flat"
-      },
       "flat-round": {
         "zones": {
           "side": [
@@ -114,11 +65,7 @@
       "stitched": true
     },
     "lowerTrim": true,
-    "paddles": [
-      "glossy",
-      "matte",
-      "forged"
-    ],
+    "paddles": [],
     "title": "BMW F-Series M Performance",
     "calibration": {
       "round-side-alcantara": {
@@ -444,55 +391,6 @@
         ],
         "tbToken": "tb",
         "marker": "round"
-      },
-      "yoke": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "bottom": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [
-          "side",
-          "bottom"
-        ],
-        "tbToken": "bottom"
-      },
-      "flat-flat": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "tb": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [
-          "side",
-          "tb"
-        ],
-        "tbToken": "tb",
-        "marker": "flat-flat"
       },
       "flat-round": {
         "zones": {
@@ -853,56 +751,6 @@
         "led": "round",
         "marker": "round"
       },
-      "yoke": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "bottom": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [
-          "side",
-          "bottom"
-        ],
-        "tbToken": "bottom"
-      },
-      "flat-flat": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "tb": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [
-          "side",
-          "tb"
-        ],
-        "tbToken": "tb",
-        "led": "flat-flat",
-        "marker": "flat-flat"
-      },
       "flat-round": {
         "zones": {
           "side": [
@@ -1255,56 +1103,6 @@
         "tbToken": "tb",
         "led": "round",
         "marker": "round"
-      },
-      "yoke": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "bottom": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [
-          "side",
-          "bottom"
-        ],
-        "tbToken": "bottom"
-      },
-      "flat-flat": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "tb": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [
-          "side",
-          "tb"
-        ],
-        "tbToken": "tb",
-        "led": "flat-flat",
-        "marker": "flat-flat"
       },
       "flat-round": {
         "zones": {
