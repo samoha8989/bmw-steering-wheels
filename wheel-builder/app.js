@@ -1,3 +1,4 @@
+import {configurationLink,readConfiguration,requestText,telegramLink,bindRequest} from '../builder-request.js?v=154';
 import {enhancePanels,refreshPanels} from '../builder-panels.js?v=153';
 import {renderMaterial} from '../g-builder/material-renderer.js?v=153';
 import {RU,MRU} from './labels.js?v=153';
@@ -38,7 +39,7 @@ function sync(){for(const input of $('#options').querySelectorAll('input[type=ra
 for(const id of ['top-color-field'])$('#'+id).hidden=isCarbon();for(const id of ['bag-color-field','bag-stitch-field'])if($('#'+id))$('#'+id).hidden=state.airbag==='original';if($('#marker-colors'))$('#marker-colors').hidden=state.marker==='none';
  for(const el of document.querySelectorAll('[data-picked]')){const key=el.dataset.picked;el.textContent=key==='marker'?(state.marker==='none'?'':`${ru(marker(state.marker))} · ${state.marker}`):key.endsWith('Color')?`${ru(color(state[key]))} · ${state[key]}`:RU[state[key]];}
  refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');const p=price();$('#price').textContent=p==null?'Уточним стоимость':'от '+new Intl.NumberFormat('ru-RU').format(p)+' ₽';$('#model-name').textContent=model.title+' · '+name(SHAPES,state.shape).toLowerCase();
- const message=['Здравствуйте! Хочу узнать цену руля по конфигурации:',...rows().map(([k,v])=>`${k}: ${v}`),'','Подписывайся на наш лайв-канал: https://t.me/bmw_steeringwheels'].join('\n');$('#order').href='https://t.me/samoha8989?text='+encodeURIComponent(message);$('#order').setAttribute('aria-disabled','false');}
+ $('#order').href=telegramLink(currentRequest().message);}
 async function load(path,optional=false){const url=asset(path).href;if(!images.has(url))images.set(url,(async()=>{const im=new Image();im.src=url;await im.decode();return im;})().catch(e=>{images.delete(url);throw e;}));try{return await images.get(url);}catch(e){if(optional)return null;throw e;}}
 function canvas(){const c=document.createElement('canvas');c.width=c.height=SIZE;return c;}
 function draw(ctx,im){if(!im)return;const ratio=im.width/im.height;let w=SIZE,h=SIZE;if(ratio>1)h=SIZE/ratio;else w=SIZE*ratio;ctx.drawImage(im,(SIZE-w)/2,(SIZE-h)/2,w,h);}
@@ -56,13 +57,28 @@ async function zone(s,id,car){
  const seams=await load(`stitch/${s.shape}-${token}.webp`),c=canvas(),ctx=c.getContext('2d'),clip=canvas(),cc=clip.getContext('2d');
  draw(ctx,materialImage);draw(cc,recolor(seams,stitch(st).hex,'stitch'));cc.globalCompositeOperation='destination-in';draw(cc,materialImage);draw(ctx,clip);return c;
 }
-async function render(){const id=++serial,s={...state},car=model,sh=car.shapes[s.shape];ready=false;$('#save').disabled=true;$('#order').setAttribute('aria-disabled','true');$('#status').textContent='Обновляем превью…';try{
+async function render(){const id=++serial,s={...state},car=model,sh=car.shapes[s.shape];ready=false;requestSharing.invalidate();$('#save').disabled=true;$('#order').setAttribute('aria-disabled','true');$('#status').textContent='Обновляем превью…';try{
  const base=await load(s.shape+'.webp');const [side,top]=await Promise.all([zone(s,'side',car),zone(s,'top',car)]);let bag=null,logo=null;if(s.airbag!=='original'&&car.airbag){const key=car.airbag.perShape?`airbag-${s.shape}-${s.airbag}`:`airbag-${s.airbag}`;bag=await material(key,s.airbagColor,s.airbagStitch,car);logo=await load(`neutral/${key}-logo.webp`,true);}
  const trim=car.lowerTrim&&s.trim!=='original'?await load(`trims/${s.trim}.webp`):null;
  const mark=sh.marker&&s.led!=='yes'&&s.marker!=='none'?recolor(await load(`marker/${sh.marker}.webp`),marker(s.marker).hex,'marker'):null;
  const led=sh.led&&s.led==='yes'?await load(`led/${sh.led}.webp`):null,over=sh.over?await load(`over/${sh.over}.webp`):null;
  if(id!==serial)return;const c=canvas(),ctx=c.getContext('2d');draw(ctx,base);draw(ctx,side);draw(ctx,top);draw(ctx,trim);draw(ctx,bag);draw(ctx,logo);draw(ctx,mark);draw(ctx,led);draw(ctx,over);const output=$('#wheel').getContext('2d');output.clearRect(0,0,1254,1254);output.drawImage(c,0,0);ready=true;$('#order').setAttribute('aria-disabled','false');$('#status').textContent='';
- }catch(e){if(id===serial){$('#status').textContent='Не удалось загрузить превью. Выберите вариант ещё раз.';console.error(e);}}finally{if(id===serial)$('#save').disabled=!ready;}}
+ }catch(e){if(id===serial){$('#status').textContent='Не удалось загрузить превью. Выберите вариант ещё раз.';console.error(e);}}finally{if(id===serial){$('#save').disabled=!ready;if(ready)requestSharing.preparePhoto();}}}
+function currentRequest(){const summary=rows(),link=configurationLink(model.id,state);return {modelId:model.id,rows:summary,link,message:requestText(summary,link)};}
+function allowedOption(key,s){
+ const sh=model.shapes[s.shape];if(key==='shape')return Object.keys(model.shapes);if(!sh)return [];
+ if(key==='side')return sh.zones.side;
+ if(key==='top')return [...sh.zones[sh.tbToken],...sh.carbons];
+ if(key==='trim')return model.lowerTrim?['original',...CARBONS.map(([id])=>id)]:['original'];
+ if(key==='airbag')return ['original',...(model.airbag?.materials||[])];
+ if(key==='airbagColor')return model.series==='F'?['9860']:palette.airbagColors.map(c=>c.code);
+ if(key.endsWith('Color'))return palette.leathers.map(c=>c.code);
+ if(key.endsWith('Stitch'))return palette.stitches.map(c=>c.key);
+ if(key==='marker')return ['none',...(sh.marker?palette.markers.map(c=>c.code):[])];
+ if(key==='led')return sh.led?['no','yes']:['no'];
+ return ['no','yes'];
+}
+const requestSharing=bindRequest({canvas:$('#wheel'),order:$('#order'),shareButton:$('#share-photo'),note:$('#share-note'),getRequest:currentRequest,isReady:()=>ready});
 $('#options').addEventListener('submit',e=>e.preventDefault());
 $('#options').addEventListener('change',e=>{
  const {name,value}=e.target;
@@ -77,8 +93,8 @@ $('#options').addEventListener('change',e=>{
  }else sync();render();
 });
 $('#options').addEventListener('input',e=>{if(!e.target.matches('.palette-search'))return;const q=e.target.value.trim().toLowerCase(),key=e.target.dataset.search;for(const el of document.querySelectorAll(`[data-palette="${key}"] label`))el.hidden=!el.dataset.colorName.includes(q);});
-$('#reset').addEventListener('click',()=>{state=defaults();controls();render();});
-$('#model-select').addEventListener('change',e=>{location.href='wheel-builder.html?model='+encodeURIComponent(e.target.value)+'&v=153';});
+$('#reset').addEventListener('click',()=>{state=defaults();history.replaceState(null,'',location.pathname+location.search);$('#shared-note').textContent='';controls();render();});
+$('#model-select').addEventListener('change',e=>{location.href='wheel-builder.html?model='+encodeURIComponent(e.target.value)+'&v=154';});
 $('#save').addEventListener('click',()=>{if(!ready)return;$('#wheel').toBlob(blob=>{if(!blob)return;const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=model.id+'-моя-конфигурация.png';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);},'image/png');});
 function compact(){document.body.classList.toggle('is-compact',matchMedia('(max-width:760px)').matches&&window.scrollY>80);}window.addEventListener('scroll',compact,{passive:true});window.addEventListener('resize',compact);
-try{const responses=await Promise.all([fetch(new URL('models.json?v=153',BASE)),fetch(new URL('palette.json?v=153',BASE)),fetch('catalog.json?v=153')]);for(const r of responses)if(!r.ok)throw Error('Не удалось загрузить данные конструктора');[models,palette,catalog]=await Promise.all(responses.map(r=>r.json()));const requested=new URLSearchParams(location.search).get('model')||'bmw-fseries';model=models.find(m=>m.id===requested)||models[0];state=defaults();$('#model-select').innerHTML=models.map(m=>`<option value="${m.id}" ${m.id===model.id?'selected':''}>${esc(m.title)}</option>`).join('');document.title=model.title+' — конструктор BMW Steering Wheels';controls();compact();await render();}catch(e){$('#status').textContent='Не удалось загрузить конструктор. Обновите страницу.';console.error(e);}
+try{const responses=await Promise.all([fetch(new URL('models.json?v=153',BASE)),fetch(new URL('palette.json?v=153',BASE)),fetch('catalog.json?v=153')]);for(const r of responses)if(!r.ok)throw Error('Не удалось загрузить данные конструктора');[models,palette,catalog]=await Promise.all(responses.map(r=>r.json()));const requested=new URLSearchParams(location.search).get('model')||'bmw-fseries';model=models.find(m=>m.id===requested)||models[0];const restored=readConfiguration(location.hash,model.id,defaults(),allowedOption);state=restored.state;$('#shared-note').textContent=restored.error?'Ссылка на конфигурацию повреждена. Показаны начальные параметры.':restored.shared?'Открыта конфигурация по ссылке.':'';$('#model-select').innerHTML=models.map(m=>`<option value="${m.id}" ${m.id===model.id?'selected':''}>${esc(m.title)}</option>`).join('');document.title=model.title+' — конструктор BMW Steering Wheels';controls();compact();await render();}catch(e){$('#status').textContent='Не удалось загрузить конструктор. Обновите страницу.';console.error(e);}

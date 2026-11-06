@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v7
       - name: Check JavaScript and catalogue
         run: |
-          for file in studio.js catalog-engine.js builder.js builder-panels.js g-builder/app.js g-builder/material-renderer.js wheel-builder/app.js; do
+          for file in studio.js catalog-engine.js builder.js builder-panels.js builder-request.js g-builder/app.js g-builder/material-renderer.js wheel-builder/app.js; do
             node --check "$file"
           done
           python3 - <<'PY'
