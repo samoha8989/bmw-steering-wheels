@@ -19,8 +19,8 @@ let stepIndex = 0;
 // Детали — с рулей каталога: хром E02/E05, крашеные вставки F30/F31/F51/F78/F28, накладка карбон F11 и кованый F55,
 // метки E10/F17/F36/F14/F20/E11, строчка — перекрашенные настоящие стежки, лепестки — материал F70/F62/F65/F78 на форме родного.
 // Координаты слоёв: x, y, w, h в кадре 900×900 (site_clone/builder_tools, layers.json).
-const PV = 'builder/', PV_V = '12';
-const LAYERS = {"round":{"chrome":[275,391,360,440],"emblem-bw":[425,425,66,67],"paint-blue":[281,399,348,426],"paint-red":[281,399,348,426],"paint-yellow":[281,399,348,426],"paint-purple":[281,399,348,426],"paint-tricolor":[281,399,348,426],"cover-carbon":[257,407,396,469],"cover-forged":[257,407,395,457],"stitch-red":[102,93,701,705],"stitch-blue":[102,93,701,705],"stitch-white":[102,93,701,705],"stitch-grey":[102,93,701,705],"stitch-yellow":[102,93,701,705],"stitch-tricolor":[102,93,701,705],"mark-red":[429,16,42,93],"mark-blue":[429,16,42,93],"mark-lightblue":[429,16,42,93],"mark-white":[429,16,42,93],"mark-yellow":[429,16,42,93],"mark-tricolor":[429,16,41,87],"paddle-std":[149,346,606,79],"paddle-silver":[149,346,606,79],"paddle-carbon":[149,346,606,79],"paddle-red":[149,346,606,79],"paddle-forged-blue":[149,346,606,79],"paddle-purple":[149,346,606,79],"paddle-black-long":[149,300,607,126],"paddle-carbon-long":[149,300,607,126],"paddle-forged-blue-long":[149,300,607,126],"paddle-forged-red-long":[149,300,607,126],"paddle-purple-long":[149,300,607,126],"rim-alcgrip":[15,133,870,675],"rim-alcfull":[15,16,870,864],"rim-carbon-grip":[15,133,870,675],"rim-perf":[15,133,870,675],"rimtop-carbon":[154,16,619,864]},"anatomy":{"chrome":[268,398,365,436],"emblem-bw":[418,443,69,69],"paint-blue":[273,404,355,424],"paint-red":[273,404,355,424],"paint-yellow":[273,404,355,424],"paint-purple":[273,404,355,424],"paint-tricolor":[273,404,355,424],"cover-carbon":[256,422,391,451],"cover-forged":[256,422,391,439],"stitch-red":[93,96,713,699],"stitch-blue":[93,96,713,699],"stitch-white":[93,96,713,699],"stitch-grey":[93,96,713,699],"stitch-yellow":[93,96,713,699],"stitch-tricolor":[93,96,713,699],"mark-red":[431,21,40,88],"mark-blue":[431,21,40,88],"mark-lightblue":[431,21,40,88],"mark-white":[431,21,40,88],"mark-yellow":[431,21,40,88],"mark-tricolor":[431,21,39,83],"paddle-std":[140,351,627,86],"paddle-silver":[140,351,627,86],"paddle-carbon":[140,351,627,86],"paddle-red":[140,351,627,86],"paddle-forged-blue":[140,351,627,86],"paddle-purple":[140,351,627,86],"paddle-black-long":[140,298,627,139],"paddle-carbon-long":[140,298,627,139],"paddle-forged-blue-long":[140,298,627,139],"paddle-forged-red-long":[140,298,627,139],"paddle-purple-long":[140,298,627,139],"rim-alcgrip":[15,267,871,558],"rim-alcfull":[15,21,871,857],"rim-carbon-grip":[15,267,871,558],"rim-smooth":[15,267,871,558],"rimtop-carbon":[59,21,782,857]},"g-a":{"insert-carbon-g11":[407,628,95,186],"insert-carbon-g10":[403,620,96,194],"insert-silver-g07":[405,621,94,193],"trim-l":[82,371,223,204],"trim-r":[616,390,209,181],"mbutton-l":[208,356,73,42],"mbutton-r":[630,367,67,34],"rim-alcgrip":[15,252,872,550],"rim-alcfull":[13,28,875,844],"rim-carbon":[81,31,743,837],"mark-red":[453,29,24,67],"mark-tricolor":[446,29,37,67],"stitch-red":[100,104,701,690],"stitch-blue":[100,104,701,690],"stitch-white":[100,104,701,690],"stitch-grey":[100,104,701,690],"stitch-yellow":[100,104,701,690],"stitch-tricolor":[100,104,701,690],"paddle-std-l":[154,342,76,78],"paddle-std-r":[671,352,68,62],"paddle-carbonred-l":[159,330,66,85],"paddle-carbonred-r":[682,340,57,74],"paddle-silver-l":[164,345,72,75],"paddle-silver-r":[670,350,69,64],"trim-wide-carbon":[312,599,255,230],"trim-wide-chrome":[344,602,266,253],"trim-slim-chrome":[405,619,92,220]},"g-c":{"rim-carbon":[67,674,764,181],"rim-alcantara":[43,285,831,150],"mark-blue":[442,29,25,86],"mark-tricolor":[449,29,24,86],"mark-white":[458,29,19,87],"paddle-std-l":[178,358,108,78],"paddle-std-r":[657,365,82,55]}};
+const PV = 'builder/', PV_V = '13';
+const LAYERS = {"round":{"chrome":[275,391,360,440],"emblem-bw":[425,425,66,67],"paint-blue":[281,399,348,426],"paint-red":[281,399,348,426],"paint-yellow":[281,399,348,426],"paint-purple":[281,399,348,426],"paint-tricolor":[281,399,348,426],"cover-carbon":[257,407,396,469],"cover-forged":[257,407,395,457],"stitch-red":[102,93,701,705],"stitch-blue":[102,93,701,705],"stitch-white":[102,93,701,705],"stitch-grey":[102,93,701,705],"stitch-yellow":[102,93,701,705],"stitch-tricolor":[102,93,701,705],"mark-red":[429,16,42,93],"mark-blue":[429,16,42,93],"mark-lightblue":[429,16,42,93],"mark-white":[429,16,42,93],"mark-yellow":[429,16,42,93],"mark-tricolor":[429,16,41,87],"paddle-std":[149,346,606,79],"paddle-silver":[149,346,606,79],"paddle-carbon":[149,346,606,79],"paddle-red":[149,346,606,79],"paddle-forged-blue":[149,346,606,79],"paddle-purple":[149,346,606,79],"paddle-black-long":[149,300,607,126],"paddle-carbon-long":[149,300,607,126],"paddle-forged-blue-long":[149,300,607,126],"paddle-forged-red-long":[149,300,607,126],"paddle-purple-long":[149,300,607,126],"rim-alcgrip":[15,133,870,675],"rim-alcfull":[15,16,870,864],"rim-carbon-grip":[15,133,870,675],"rim-perf":[15,133,870,675],"rimtop-carbon":[154,16,619,864]},"anatomy":{"chrome":[268,398,365,436],"emblem-bw":[418,443,69,69],"paint-blue":[273,404,355,424],"paint-red":[273,404,355,424],"paint-yellow":[273,404,355,424],"paint-purple":[273,404,355,424],"paint-tricolor":[273,404,355,424],"cover-carbon":[256,422,391,451],"cover-forged":[256,422,391,439],"stitch-red":[93,96,713,699],"stitch-blue":[93,96,713,699],"stitch-white":[93,96,713,699],"stitch-grey":[93,96,713,699],"stitch-yellow":[93,96,713,699],"stitch-tricolor":[93,96,713,699],"mark-red":[431,21,40,88],"mark-blue":[431,21,40,88],"mark-lightblue":[431,21,40,88],"mark-white":[431,21,40,88],"mark-yellow":[431,21,40,88],"mark-tricolor":[431,21,39,83],"paddle-std":[140,351,627,86],"paddle-silver":[140,351,627,86],"paddle-carbon":[140,351,627,86],"paddle-red":[140,351,627,86],"paddle-forged-blue":[140,351,627,86],"paddle-purple":[140,351,627,86],"paddle-black-long":[140,298,627,139],"paddle-carbon-long":[140,298,627,139],"paddle-forged-blue-long":[140,298,627,139],"paddle-forged-red-long":[140,298,627,139],"paddle-purple-long":[140,298,627,139],"rim-alcgrip":[15,267,871,558],"rim-alcfull":[15,21,871,857],"rim-carbon-grip":[15,267,871,558],"rim-smooth":[15,267,871,558],"rimtop-carbon":[59,21,782,857]},"g-a":{"insert-carbon-g11":[407,628,95,186],"insert-carbon-g10":[403,620,96,194],"insert-silver-g07":[405,621,94,193],"trim-l":[82,371,223,204],"trim-r":[616,390,209,181],"mbutton-l":[208,356,73,42],"mbutton-r":[630,367,67,34],"rim-alcgrip":[15,252,872,550],"rim-alcfull":[13,28,875,844],"rim-carbon":[81,31,743,837],"mark-red":[453,29,24,67],"mark-tricolor":[446,29,37,67],"stitch-red":[100,104,701,690],"stitch-blue":[100,104,701,690],"stitch-white":[100,104,701,690],"stitch-grey":[100,104,701,690],"stitch-yellow":[100,104,701,690],"stitch-tricolor":[100,104,701,690],"paddle-std-l":[154,342,76,78],"paddle-std-r":[671,352,68,62],"paddle-carbonred-l":[159,330,66,85],"paddle-carbonred-r":[682,340,57,74],"paddle-silver-l":[164,345,72,75],"paddle-silver-r":[670,350,69,64],"trim-wide-carbon":[312,599,255,230],"trim-wide-chrome":[344,602,266,253],"trim-slim-chrome":[405,619,92,220],"rim-leather":[14,29,872,842],"buttons-grey-l":[96,349,209,222],"buttons-grey-r":[596,356,212,219],"buttons-black-l":[73,358,202,195],"buttons-black-r":[624,367,198,190],"mark-blue":[428,29,58,90],"mbutton-blue-l":[168,341,113,66],"mbutton-blue-r":[626,355,111,62],"insert-carbon-forged":[408,628,93,185]},"g-c":{"rim-carbon":[67,674,764,181],"rim-alcantara":[43,285,831,150],"mark-blue":[442,29,25,86],"mark-tricolor":[449,29,24,86],"mark-white":[458,29,19,87],"paddle-std-l":[178,358,108,78],"paddle-std-r":[657,365,82,55]}};
 
 const CARS = [
   ['BMW-E', 'BMW · E-кузов'],
@@ -48,6 +48,7 @@ const STEPS = [
   { key: 'insert', title: 'Цвет вставки', sub: 'Кольцо вокруг подушки и полоски на нижней спице.', show: () => !isG() || gShape() === 'g-a', options: () => isG() ? [
     { v: 'carbon-g11', l: 'Карбон', thumb: 'g-a-insert-carbon-g11' },
     { v: 'carbon-g10', l: 'Карбон, другая плетёнка', thumb: 'g-a-insert-carbon-g10' },
+    { v: 'carbon-forged', l: 'Карбон, кручёный (forged)', thumb: 'g-a-insert-carbon-forged' },
     { v: 'silver-g07', l: 'Серебро', thumb: 'g-a-insert-silver-g07' },
   ] : [
     { v: 'gloss', l: 'Чёрный глянец', sw: 'gloss' },
@@ -66,12 +67,18 @@ const STEPS = [
     { v: 'none', l: 'Без накладки' },
     { v: 'carbon', l: 'Узкая карбоновая полоска', sw: 'carbon' },
     { v: 'carbon-m', l: 'Узкая + красные M1/M2', sw: 'carbon', note: 'Кнопки запоминания настроек подвески/руля' },
+    { v: 'carbon-m-blue', l: 'Узкая + синие M1/M2', sw: 'carbon', note: 'Кнопки запоминания настроек подвески/руля' },
     { v: 'wide-carbon', l: 'Широкая, кручёный карбон', sw: 'carbon' },
     { v: 'wide-chrome', l: 'Широкая, хром', sw: 'chrome' },
     { v: 'slim-chrome', l: 'Узкая хромированная', sw: 'chrome' },
   ] },
+  { key: 'buttons', title: 'Цвет кнопок на спицах', sub: 'Рамка вокруг кнопок RESUME/CANCEL и громкости.', show: () => isG() && gShape() === 'g-a', options: () => [
+    { v: 'black', l: 'Чёрная (как на фото)' },
+    { v: 'grey', l: 'Серая/серебристая', sw: 'silver' },
+  ] },
   { key: 'rim', title: 'Отделка обода', sub: 'Кожа — чёрная Напа. Алькантара и карбон настоящие.', options: () => isG() ? (gShape() === 'g-a' ? [
-    { v: 'leather', l: 'Кожа, как на фото', sw: 'black' },
+    { v: 'carbon', l: 'Карбон, как на фото', sw: 'carbon' },
+    { v: 'leather', l: 'Гладкая кожа (без карбона)', sw: 'black' },
     { v: 'alcgrip', l: 'Алькантара на хвате', sw: 'alc' },
     { v: 'alcfull', l: 'Вся алькантара (чёрная)', sw: 'alc' },
   ] : [
@@ -102,6 +109,7 @@ const STEPS = [
   { key: 'mark', title: 'Метка на 12 часов', sub: 'Полоса сверху на ободе. Меняем бесплатно.', options: () => isG() ? (gShape() === 'g-a' ? [
     { v: 'none', l: 'Без метки' },
     { v: 'red', l: 'Красная', sw: 'red' },
+    { v: 'blue', l: 'Синяя', sw: 'blue' },
     { v: 'tricolor', l: 'M-метка (триколор)', sw: 'tricolor' },
   ] : [
     { v: 'none', l: 'Без метки' },
@@ -187,7 +195,7 @@ function priceFrom(catalog) {
   return { sum: Math.min(...pick), extra: extra.length ? extra.join(', ') + ' — цену уточним' : '' };
 }
 
-const SUMLABEL = { car: 'Машина', shape: 'Форма', insert: 'Вставка', cover: 'Накладка', trim: 'Накладка кнопок', stitch: 'Строчка', emblem: 'Эмблема', mark: 'Метка', rim: 'Обод', paddles: 'Лепестки' };
+const SUMLABEL = { car: 'Машина', shape: 'Форма', insert: 'Вставка', cover: 'Накладка', trim: 'Накладка кнопок', buttons: 'Цвет кнопок', stitch: 'Строчка', emblem: 'Эмблема', mark: 'Метка', rim: 'Обод', paddles: 'Лепестки' };
 function summaryRows() {
   const rows = [];
   for (const s of STEPS) {
@@ -242,11 +250,15 @@ function activeLayers() {
   if (isG()) {
     if (gShape() === 'g-a') {
       if (st.insert) on.add('insert-' + st.insert);
-      if (st.trim === 'carbon' || st.trim === 'carbon-m') { on.add('trim-l'); on.add('trim-r'); }
+      if (st.trim === 'carbon' || st.trim === 'carbon-m' || st.trim === 'carbon-m-blue') { on.add('trim-l'); on.add('trim-r'); }
       if (st.trim === 'carbon-m') { on.add('mbutton-l'); on.add('mbutton-r'); }
+      if (st.trim === 'carbon-m-blue') { on.add('mbutton-blue-l'); on.add('mbutton-blue-r'); }
       if (st.trim === 'wide-carbon' || st.trim === 'wide-chrome' || st.trim === 'slim-chrome') on.add('trim-' + st.trim);
       if (st.rim === 'alcgrip') on.add('rim-alcgrip');
       else if (st.rim === 'alcfull') on.add('rim-alcfull');
+      else if (st.rim === 'leather') on.add('rim-leather');
+      if (st.buttons === 'grey') { on.add('buttons-grey-l'); on.add('buttons-grey-r'); }
+      else if (st.buttons === 'black') { on.add('buttons-black-l'); on.add('buttons-black-r'); }
       if (st.stitch) on.add('stitch-' + st.stitch);
       const pd = st.paddles || 'std';
       if (pd !== 'no') { on.add('paddle-' + pd + '-l'); on.add('paddle-' + pd + '-r'); }
@@ -341,7 +353,7 @@ export function builderClick(event, catalog) {
     if (k === 'rim' && v !== 'carbon' && st.mark === 'tricolor') delete st.mark; // триколор только на карбоне
     if (k === 'car' && st.car !== v) {
       // смена кузова — у G своя форма и свой набор деталей, у остальных своя: начинаем шаги заново
-      for (const x of ['shape', 'insert', 'cover', 'trim', 'rim', 'stitch', 'emblem', 'mark', 'paddles']) delete st[x];
+      for (const x of ['shape', 'insert', 'cover', 'trim', 'buttons', 'rim', 'stitch', 'emblem', 'mark', 'paddles']) delete st[x];
     }
     st[k] = v; write(st);
     window.BMWAnalytics?.track?.('builder_pick', { mode: null, series: st.car || null, product: k + ':' + v });
