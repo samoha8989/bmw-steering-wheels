@@ -1,0 +1,15 @@
+/* A restrained wine / plum backdrop. Product photographs keep their original colours. */
+:root{--site-night:#100c10;--site-wine:#542038;--site-plum:#30203f}
+body,body.legal-document{
+ background-color:var(--site-night);
+ background-image:radial-gradient(ellipse at 5% 5%,#54203866 0,transparent 58%),radial-gradient(ellipse at 100% 65%,#30203f66 0,transparent 62%);
+ background-size:100% 100vh;
+ background-attachment:fixed;
+}
+.nt-hero,.nt-brands,.nt-dark,.bd-page{background:transparent}
+.site-footer,.legal-footer{background:linear-gradient(115deg,#1b1018,#120e18);border-top-color:#ffffff14}
+.site-header,body:has(#wheel)>header{background:linear-gradient(115deg,#1b1018,#120e18)}
+.mobile-nav,.mobile-action-dock,.orderbar,.bd-bar{background:linear-gradient(115deg,#1b1018,#120e18)}
+.controls{background:linear-gradient(135deg,#1a1319,#131117)}
+.nt-hero .nt-cta .nt-btn.line{background:#20131b70;border-color:#84647480}
+.nt-hero .nt-cta .nt-btn.line:hover{background:#38202f}

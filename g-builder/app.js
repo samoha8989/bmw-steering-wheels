@@ -1,4 +1,4 @@
-import {configurationLink,readConfiguration,requestText,telegramLink,bindRequest} from '../builder-request.js?v=154';
+import {configurationLink,readConfiguration,requestText,telegramLink,bindRequest} from '../builder-request.js?v=155';
 import {enhancePanels,refreshPanels} from '../builder-panels.js?v=153';
 import {renderMaterial} from './material-renderer.js?v=153';
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

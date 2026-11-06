@@ -3,7 +3,7 @@ const FIELDS=['shape','side','sideColor','sideStitch','top','topColor','trim','a
 const CHANNEL='Подписывайся на наш лайв-канал: https://t.me/bmw_steeringwheels';
 export function configurationLink(modelId,state,base=location.href){
  const token=btoa(JSON.stringify([1,modelId,...FIELDS.map(k=>state[k]??null)])).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
- const url=new URL(base);url.search='';if(modelId!=='bmw-gseries')url.searchParams.set('model',modelId);url.searchParams.set('v','154');url.hash='c='+token;return url.href;
+ const url=new URL(base);url.search='';if(modelId!=='bmw-gseries')url.searchParams.set('model',modelId);url.searchParams.set('v','155');url.hash='c='+token;return url.href;
 }
 export function readConfiguration(hash,modelId,defaults,allowed){
  if(!hash.startsWith('#c='))return {state:{...defaults},shared:false};

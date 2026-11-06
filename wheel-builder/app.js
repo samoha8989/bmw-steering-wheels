@@ -1,4 +1,4 @@
-import {configurationLink,readConfiguration,requestText,telegramLink,bindRequest} from '../builder-request.js?v=154';
+import {configurationLink,readConfiguration,requestText,telegramLink,bindRequest} from '../builder-request.js?v=155';
 import {enhancePanels,refreshPanels} from '../builder-panels.js?v=153';
 import {renderMaterial} from '../g-builder/material-renderer.js?v=153';
 import {RU,MRU} from './labels.js?v=153';
@@ -94,7 +94,7 @@ $('#options').addEventListener('change',e=>{
 });
 $('#options').addEventListener('input',e=>{if(!e.target.matches('.palette-search'))return;const q=e.target.value.trim().toLowerCase(),key=e.target.dataset.search;for(const el of document.querySelectorAll(`[data-palette="${key}"] label`))el.hidden=!el.dataset.colorName.includes(q);});
 $('#reset').addEventListener('click',()=>{state=defaults();history.replaceState(null,'',location.pathname+location.search);$('#shared-note').textContent='';controls();render();});
-$('#model-select').addEventListener('change',e=>{location.href='wheel-builder.html?model='+encodeURIComponent(e.target.value)+'&v=154';});
+$('#model-select').addEventListener('change',e=>{location.href='wheel-builder.html?model='+encodeURIComponent(e.target.value)+'&v=155';});
 $('#save').addEventListener('click',()=>{if(!ready)return;$('#wheel').toBlob(blob=>{if(!blob)return;const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=model.id+'-моя-конфигурация.png';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);},'image/png');});
 function compact(){document.body.classList.toggle('is-compact',matchMedia('(max-width:760px)').matches&&window.scrollY>80);}window.addEventListener('scroll',compact,{passive:true});window.addEventListener('resize',compact);
 try{const responses=await Promise.all([fetch(new URL('models.json?v=153',BASE)),fetch(new URL('palette.json?v=153',BASE)),fetch('catalog.json?v=153')]);for(const r of responses)if(!r.ok)throw Error('Не удалось загрузить данные конструктора');[models,palette,catalog]=await Promise.all(responses.map(r=>r.json()));const requested=new URLSearchParams(location.search).get('model')||'bmw-fseries';model=models.find(m=>m.id===requested)||models[0];const restored=readConfiguration(location.hash,model.id,defaults(),allowedOption);state=restored.state;$('#shared-note').textContent=restored.error?'Ссылка на конфигурацию повреждена. Показаны начальные параметры.':restored.shared?'Открыта конфигурация по ссылке.':'';$('#model-select').innerHTML=models.map(m=>`<option value="${m.id}" ${m.id===model.id?'selected':''}>${esc(m.title)}</option>`).join('');document.title=model.title+' — конструктор BMW Steering Wheels';controls();compact();await render();}catch(e){$('#status').textContent='Не удалось загрузить конструктор. Обновите страницу.';console.error(e);}

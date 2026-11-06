@@ -4,7 +4,7 @@
 .nt-hero-in{max-width:1180px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center}
 .nt-hero-copy{min-width:0}.nt-hero-copy h1{font-size:clamp(32px,4.2vw,56px);line-height:1.1;letter-spacing:-.04em}
 .nt-hero-copy>p{font-size:16px;line-height:1.7;color:#bdbdc4;margin:22px 0 28px;max-width:460px}
-.nt-hero{padding:40px 24px 48px}.nt-hero-photo{max-width:540px}
+.nt-hero{padding:50px 24px 48px}.nt-hero-photo{max-width:540px}
 .nt-cta .nt-btn{min-height:52px;font-size:14px}.nt-home h2{letter-spacing:-.02em;text-transform:none}
 .site-header{gap:24px;padding:0 28px}.site-header .desktop-nav{gap:22px}.site-header .nt-logo{font-size:15px;letter-spacing:.04em}.header-contact{min-height:44px;padding:12px 20px}
 .price-caption{font-size:12px;line-height:1.5;color:#b7b6bf;margin:9px 0 14px;min-height:36px}
@@ -43,10 +43,10 @@
 .nt-hero-in{display:flex;flex-direction:column;max-width:720px;gap:14px;align-items:stretch}
 .nt-hero-photo{max-width:none}
 .nt-hero .nt-cta{display:flex!important;flex-direction:column;gap:10px;margin:0;flex-wrap:nowrap}
-.nt-hero .nt-cta .nt-btn{width:100%;flex:none;border-radius:0;min-height:60px;padding:0 28px;font-size:14px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.nt-hero .nt-cta .nt-btn{width:100%;flex:none;border-radius:18px;min-height:60px;padding:0 28px;font-size:14px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 @media(max-width:900px){
  body.is-home .site-header,.site-header{display:none!important}
- .nt-hero{padding:12px 14px 28px}.nt-hero-in{gap:14px}.nt-hero .nt-kick{display:none}
+ .nt-hero{padding:24px 14px 28px}.nt-hero-in{gap:14px}.nt-hero .nt-kick{display:none}
  .nt-hero .nt-cta .nt-btn{min-height:54px}
 }
 
