@@ -179,6 +179,24 @@ function showResults(){
  if(selection.year&&(!/^\d{4}$/.test(selection.year)||Number(selection.year)<1980||Number(selection.year)>new Date().getFullYear()+1)){notify('Укажите год четырьмя цифрами или оставьте поле пустым.');document.getElementById('car-year')?.focus();return;}
  selection.q='';selection.budget='';visible=12;save();location.hash='#/results';
 }
+let brandGlow=null,brandGlowTimer=0,brandTouch=null,brandTouchFrame=0;
+function lightBrand(el,x,y){
+ if(!el||currentView!=='home')return;
+ clearTimeout(brandGlowTimer);
+ if(brandGlow!==el){brandGlow?.classList.remove('is-lit');brandGlow=el;el.classList.add('is-lit');}
+ const r=el.getBoundingClientRect();
+ el.style.setProperty('--brand-x',Math.max(0,Math.min(100,(x-r.left)/r.width*100))+'%');
+ el.style.setProperty('--brand-y',Math.max(0,Math.min(100,(y-r.top)/r.height*100))+'%');
+}
+function fadeBrand(delay=380){clearTimeout(brandGlowTimer);brandGlowTimer=setTimeout(()=>{brandGlow?.classList.remove('is-lit');brandGlow=null;},delay);}
+function lightBrandAt(x,y){if(currentView!=='home')return;const el=document.elementFromPoint(x,y)?.closest('.nt-brand');if(el)lightBrand(el,x,y);else fadeBrand(120);}
+document.addEventListener('pointerdown',event=>{if(event.pointerType!=='touch'&&event.isPrimary&&event.button===0)lightBrandAt(event.clientX,event.clientY);},{passive:true});
+document.addEventListener('pointermove',event=>{if(event.pointerType!=='touch'&&event.isPrimary)lightBrandAt(event.clientX,event.clientY);},{passive:true});
+document.addEventListener('pointerup',event=>{if(event.pointerType!=='touch')fadeBrand();},{passive:true});
+document.addEventListener('touchstart',event=>{const t=event.touches[0];if(t){brandTouch={x:t.clientX,y:t.clientY};lightBrandAt(t.clientX,t.clientY);}},{passive:true});
+document.addEventListener('touchmove',event=>{const t=event.touches[0];if(t){brandTouch={x:t.clientX,y:t.clientY};lightBrandAt(t.clientX,t.clientY);}},{passive:true});
+for(const event of ['touchend','touchcancel'])document.addEventListener(event,()=>{brandTouch=null;fadeBrand();},{passive:true});
+window.addEventListener('scroll',()=>{if(!brandTouch||brandTouchFrame)return;brandTouchFrame=requestAnimationFrame(()=>{brandTouchFrame=0;if(brandTouch)lightBrandAt(brandTouch.x,brandTouch.y);});},{passive:true});
 document.addEventListener('click',event=>{
  if(builderClick(event,catalog))return;
  const el=event.target.closest('button,a');if(!el)return;

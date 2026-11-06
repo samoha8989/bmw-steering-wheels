@@ -60,13 +60,21 @@
 /* Footer links must wrap on narrow phones instead of widening the page. */
 .footer-links{flex-wrap:wrap;min-width:0}.footer-links a{max-width:100%;overflow-wrap:anywhere}
 
-/* Brand links respond to a touch, mouse hover and keyboard focus. */
-.nt-brand{-webkit-tap-highlight-color:#d33d3d33;transition:background-color .18s,border-color .18s}
-.nt-brand-name{transition:color .18s,text-shadow .18s}
-.nt-brand:active,.nt-brand:focus-visible{background:linear-gradient(90deg,#8f203a45,#8f203a12 70%,transparent);border-bottom-color:#e3575759}
-.nt-brand:active .nt-brand-name,.nt-brand:focus-visible .nt-brand-name{color:#ee5657;text-shadow:0 0 22px #d33d3d77}
-.nt-brand:focus-visible{outline:2px solid #ee5657;outline-offset:-3px}
+/* Soft wine reflections follow touch and hover without borders or hard edges. */
+.nt-brand{--brand-x:50%;--brand-y:50%;width:calc(100% - 40px);margin:0 20px 10px;border:0;border-radius:16px;background:#ffffff03;overflow:hidden;isolation:isolate;-webkit-tap-highlight-color:transparent;scroll-margin-block:90px}
+.nt-brand>*{position:relative;z-index:1}
+.nt-brand::before,.nt-brand::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .32s ease}
+.nt-brand::before{background:radial-gradient(ellipse at var(--brand-x) var(--brand-y),#a62e4f70,transparent 78%),linear-gradient(110deg,#4f1b384d,#6b253b66 52%,#34203b55)}
+.nt-brand::after{inset:-35%;background:radial-gradient(ellipse at 50% 50%,#ef879b26,transparent 65%)}
+.nt-brand .nt-brand-name,.nt-brand:hover .nt-brand-name{color:#fff;text-shadow:none}
+.nt-brand:is(:active,:focus-visible,.is-lit)::before{opacity:1;transition-duration:.12s}
+.nt-brand:is(:active,:focus-visible,.is-lit)::after{opacity:1;animation:brand-reflection 1.8s ease-in-out infinite alternate}
+.nt-brand:focus-visible{outline:0!important}
+@keyframes brand-reflection{from{transform:translateX(-18%) scale(.94)}to{transform:translateX(18%) scale(1.05)}}
 @media(hover:hover){
- .nt-brand:hover{background:linear-gradient(90deg,#8f203a45,#8f203a12 70%,transparent);border-bottom-color:#e3575759}
- .nt-brand:hover .nt-brand-name{color:#ee5657;text-shadow:0 0 22px #d33d3d77}
+ .nt-brand:hover::before{opacity:1}
+ .nt-brand:hover::after{opacity:1;animation:brand-reflection 1.8s ease-in-out infinite alternate}
+ .nt-brand:hover .nt-brand-name{color:#fff;text-shadow:none}
 }
+@media(max-width:520px){.nt-brand{width:calc(100% - 28px);margin-inline:14px;min-height:84px;padding:18px 20px}}
+@media(prefers-reduced-motion:reduce){.nt-brand::before,.nt-brand::after{animation:none!important;transition:none}}
