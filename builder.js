@@ -320,6 +320,17 @@ function barHTML(catalog) {
     <a class="nt-btn red bd-send" href="${esc(message(catalog))}" target="_blank" rel="noopener" data-telegram>Узнать цену в Telegram <i>→</i></a>`;
 }
 export function builderPage(catalog) {
+  if (!st.car) {
+    const models = [
+      ['BMW F-Series M Performance','BMW · F-серия','wheel-builder/assets/bmw/card.webp','wheel-builder.html?model=bmw-fseries'],
+      ['BMW G-Series M Performance','BMW · G-серия','g-builder/round.webp','g-builder.html'],
+      ['Mercedes-AMG Performance','AMG Performance','wheel-builder/assets/mercedes-amg/card.webp','wheel-builder.html?model=mercedes-amg'],
+      ['Mercedes-Benz · дизайн 2024+','C · E · S · GLC · GLE · GLS · G · CLS','wheel-builder/assets/mercedes-2015/card.webp','wheel-builder.html?model=mercedes-2015'],
+      ['Mercedes-Benz · дизайн 2019+','C · E · S · GLC · GLE','wheel-builder/assets/mercedes-2019/card.webp','wheel-builder.html?model=mercedes-2019']
+    ];
+    return `<section class="bd-model-picker" id="bd-root"><span class="nt-kick">Конструктор руля</span><h1>Начните с Вашего руля.</h1><p>Выберите дизайн, настройте материалы и цвета. Совместимость с Вашим автомобилем уточним по фото штатного руля.</p><div class="bd-model-grid">${models.map(([title,desc,img,url])=>`<a class="bd-model-card" href="${url}"><img src="${img}" alt="${esc(title)}" loading="lazy"><div><h2>${esc(title)}</h2><p>${esc(desc)}</p><span>Собрать свой руль →</span></div></a>`).join('')}</div><div class="bd-legacy"><span>Другие кузова:</span><button type="button" data-bd-key="car" data-bd-val="BMW-E">BMW · E-кузов</button><button type="button" data-bd-key="car" data-bd-val="BMW-U">BMW · U-кузов</button></div></section>`;
+  }
+
   return `<div class="bd-page" id="bd-root">
     <div class="bd-wrap"><div class="bd-head"><div><span class="nt-kick">Конструктор руля</span><h1>Соберите свой руль</h1></div><button type="button" class="nt-btn line bd-reset-top" data-bd-reset>Сбросить</button></div>
     <div class="bd-layout has-preview">
@@ -350,6 +361,7 @@ export function builderClick(event, catalog) {
   if (!t || !t.closest('#bd-root')) return false;
   if (t.dataset.bdKey) {
     const k = t.dataset.bdKey, v = t.dataset.bdVal;
+    if (k === 'car' && ['BMW-F','BMW-G','Mercedes'].includes(v)) { const url = v === 'BMW-G' ? 'g-builder.html' : 'wheel-builder.html?model=' + (v === 'BMW-F' ? 'bmw-fseries' : 'mercedes-amg'); location.href = new URL(url, location.href).href; return true; }
     if (k === 'rim' && v !== 'carbon' && st.mark === 'tricolor') delete st.mark; // триколор только на карбоне
     if (k === 'car' && st.car !== v) {
       // смена кузова — у G своя форма и свой набор деталей, у остальных своя: начинаем шаги заново
@@ -357,7 +369,7 @@ export function builderClick(event, catalog) {
     }
     st[k] = v; write(st);
     window.BMWAnalytics?.track?.('builder_pick', { mode: null, series: st.car || null, product: k + ':' + v });
-    repaint(catalog);
+    if (!document.querySelector('#bd-root .bd-preview')) { document.getElementById('bd-root').outerHTML = builderPage(catalog); syncWheel(); } else repaint(catalog);
   } else if (t.dataset.bdFunc) {
     st.functions = { ...funcs(), [t.dataset.bdFunc]: !funcs()[t.dataset.bdFunc] }; write(st); repaint(catalog);
   } else if ('bdReset' in t.dataset) {
@@ -366,4 +378,4 @@ export function builderClick(event, catalog) {
   return true;
 }
 
-export function builderEnter() { stepIndex = 0; }
+export function builderEnter() { stepIndex = 0; st = {}; write(st); }

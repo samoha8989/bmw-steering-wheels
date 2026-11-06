@@ -1,0 +1,1647 @@
+[
+  {
+    "id": "bmw-fseries",
+    "img": "bmw",
+    "shapes": {
+      "round": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "marker": "round"
+      },
+      "yoke": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "bottom": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "bottom"
+        ],
+        "tbToken": "bottom"
+      },
+      "flat-flat": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "marker": "flat-flat"
+      },
+      "flat-round": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "led": "flat-round",
+        "marker": "flat-round"
+      }
+    },
+    "airbag": {
+      "materials": [
+        "alcantara",
+        "smooth"
+      ],
+      "trim": false,
+      "logo": false,
+      "stitched": true
+    },
+    "lowerTrim": true,
+    "paddles": [
+      "glossy",
+      "matte",
+      "forged"
+    ],
+    "title": "BMW F-Series M Performance",
+    "calibration": {
+      "round-side-alcantara": {
+        "dMax": 1.93511,
+        "sMax": 0.18628,
+        "sRef": 0.25984,
+        "dHi": 1.72396,
+        "sHi": 0.09614,
+        "gloss": 1,
+        "albedoHex": "#3b7c52"
+      },
+      "round-side-perforated": {
+        "dMax": 1.66193,
+        "sMax": 0.14784,
+        "sRef": 0.19454,
+        "dHi": 1.4469,
+        "sHi": 0.10671,
+        "gloss": 1,
+        "albedoHex": "#3d674e"
+      },
+      "round-side-smooth": {
+        "dMax": 1.30006,
+        "sMax": 0.2671,
+        "sRef": 0.27769,
+        "dHi": 1.16401,
+        "sHi": 0.14055,
+        "gloss": 0.6,
+        "albedoHex": "#2f7050"
+      },
+      "round-tb-alcantara": {
+        "dMax": 1.49246,
+        "sMax": 0.16613,
+        "sRef": 0.1963,
+        "dHi": 1.35093,
+        "sHi": 0.05327,
+        "gloss": 1,
+        "albedoHex": "#298052"
+      },
+      "round-tb-perforated": {
+        "dMax": 1.27249,
+        "sMax": 0.51621,
+        "sRef": 0.50074,
+        "dHi": 1.16723,
+        "sHi": 0.10513,
+        "gloss": 1,
+        "albedoHex": "#2b7851"
+      },
+      "round-tb-smooth": {
+        "dMax": 1.24231,
+        "sMax": 0.39917,
+        "sRef": 0.39465,
+        "dHi": 1.16938,
+        "sHi": 0.11568,
+        "gloss": 0.6,
+        "albedoHex": "#1b8152"
+      },
+      "flat-flat-side-alcantara": {
+        "dMax": 1.60501,
+        "sMax": 0.14123,
+        "sRef": 0.32707,
+        "dHi": 1.39128,
+        "sHi": 0.05711,
+        "gloss": 1,
+        "albedoHex": "#29744c"
+      },
+      "flat-flat-side-perforated": {
+        "dMax": 1.59732,
+        "sMax": 0.19788,
+        "sRef": 0.24345,
+        "dHi": 1.42052,
+        "sHi": 0.10329,
+        "gloss": 1,
+        "albedoHex": "#307e4e"
+      },
+      "flat-flat-side-smooth": {
+        "dMax": 1.22801,
+        "sMax": 0.33601,
+        "sRef": 0.39592,
+        "dHi": 1.16914,
+        "sHi": 0.09315,
+        "gloss": 0.6,
+        "albedoHex": "#059d4a"
+      },
+      "flat-flat-tb-alcantara": {
+        "dMax": 1.39476,
+        "sMax": 0.18128,
+        "sRef": 0.21191,
+        "dHi": 1.28909,
+        "sHi": 0.08244,
+        "gloss": 1,
+        "albedoHex": "#288251"
+      },
+      "flat-flat-tb-perforated": {
+        "dMax": 1.35574,
+        "sMax": 0.29404,
+        "sRef": 0.27092,
+        "dHi": 1.23476,
+        "sHi": 0.12532,
+        "gloss": 1,
+        "albedoHex": "#139551"
+      },
+      "flat-flat-tb-smooth": {
+        "dMax": 1.19927,
+        "sMax": 0.19803,
+        "sRef": 0.25006,
+        "dHi": 1.14705,
+        "sHi": 0.16935,
+        "gloss": 0.6,
+        "albedoHex": "#0a8e53"
+      },
+      "flat-round-side-alcantara": {
+        "dMax": 1.65958,
+        "sMax": 0.1814,
+        "sRef": 0.20354,
+        "dHi": 1.48313,
+        "sHi": 0.07678,
+        "gloss": 1,
+        "albedoHex": "#297850"
+      },
+      "flat-round-side-perforated": {
+        "dMax": 1.86603,
+        "sMax": 0.36951,
+        "sRef": 0.33016,
+        "dHi": 1.53771,
+        "sHi": 0.11598,
+        "gloss": 1,
+        "albedoHex": "#3f5f4e"
+      },
+      "flat-round-side-smooth": {
+        "dMax": 1.44294,
+        "sMax": 0.23704,
+        "sRef": 0.278,
+        "dHi": 1.24478,
+        "sHi": 0.14638,
+        "gloss": 0.6,
+        "albedoHex": "#2e6c4e"
+      },
+      "flat-round-tb-alcantara": {
+        "dMax": 1.28425,
+        "sMax": 0.16591,
+        "sRef": 0.27331,
+        "dHi": 1.14039,
+        "sHi": 0.04261,
+        "gloss": 1,
+        "albedoHex": "#276b4d"
+      },
+      "flat-round-tb-perforated": {
+        "dMax": 1.36136,
+        "sMax": 0.17414,
+        "sRef": 0.22513,
+        "dHi": 1.21747,
+        "sHi": 0.09689,
+        "gloss": 1,
+        "albedoHex": "#3b6d51"
+      },
+      "flat-round-tb-smooth": {
+        "dMax": 1.17886,
+        "sMax": 0.18684,
+        "sRef": 0.17137,
+        "dHi": 1.10195,
+        "sHi": 0.10731,
+        "gloss": 0.6,
+        "albedoHex": "#277253"
+      },
+      "yoke-side-alcantara": {
+        "dMax": 1.94727,
+        "sMax": 0.35669,
+        "sRef": 0.19454,
+        "dHi": 1.68272,
+        "sHi": 0.13328,
+        "gloss": 1,
+        "albedoHex": "#327050"
+      },
+      "yoke-side-perforated": {
+        "dMax": 1.7074,
+        "sMax": 0.39528,
+        "sRef": 0.24789,
+        "dHi": 1.46,
+        "sHi": 0.15866,
+        "gloss": 1,
+        "albedoHex": "#3c654c"
+      },
+      "yoke-side-smooth": {
+        "dMax": 1.60522,
+        "sMax": 0.38184,
+        "sRef": 0.3184,
+        "dHi": 1.31687,
+        "sHi": 0.18921,
+        "gloss": 0.6,
+        "albedoHex": "#2d7353"
+      },
+      "yoke-bottom-alcantara": {
+        "dMax": 1.17132,
+        "sMax": 0.02255,
+        "sRef": 0.08465,
+        "dHi": 0.98416,
+        "sHi": 0.01156,
+        "gloss": 1,
+        "albedoHex": "#315a42"
+      },
+      "yoke-bottom-perforated": {
+        "dMax": 1.36824,
+        "sMax": 0.08492,
+        "sRef": 0.05763,
+        "dHi": 1.12836,
+        "sHi": 0.04994,
+        "gloss": 1,
+        "albedoHex": "#40594b"
+      },
+      "yoke-bottom-smooth": {
+        "dMax": 1.10261,
+        "sMax": 0.11392,
+        "sRef": 0.11158,
+        "dHi": 1.02591,
+        "sHi": 0.05474,
+        "gloss": 0.6,
+        "albedoHex": "#2a6b4c"
+      },
+      "airbag-alcantara": {
+        "dMax": 2.3764,
+        "sMax": 0.88029,
+        "sRef": 0.59708,
+        "dHi": 1.31945,
+        "sHi": 0.21223,
+        "gloss": 1,
+        "albedoHex": "#37614d"
+      },
+      "airbag-smooth": {
+        "dMax": 2.3764,
+        "sMax": 0.88029,
+        "sRef": 0.59708,
+        "dHi": 1.31945,
+        "sHi": 0.21223,
+        "gloss": 0.6,
+        "albedoHex": "#37614d"
+      }
+    },
+    "series": "F",
+    "assets": [
+      "card.webp",
+      "cf/flat-flat-forged.webp",
+      "cf/flat-flat-glossy.webp",
+      "cf/flat-flat-matte.webp",
+      "cf/flat-round-forged.webp",
+      "cf/flat-round-glossy.webp",
+      "cf/flat-round-matte.webp",
+      "cf/round-forged.webp",
+      "cf/round-glossy.webp",
+      "cf/round-matte.webp",
+      "cf/yoke-forged.webp",
+      "cf/yoke-glossy.webp",
+      "cf/yoke-matte.webp",
+      "flat-flat.webp",
+      "flat-round.webp",
+      "grips/airbag-alcantara-map.webp",
+      "grips/airbag-smooth-map.webp",
+      "grips/flat-flat-side-alcantara-map.webp",
+      "grips/flat-flat-side-perforated-map.webp",
+      "grips/flat-flat-side-smooth-map.webp",
+      "grips/flat-flat-tb-alcantara-map.webp",
+      "grips/flat-flat-tb-perforated-map.webp",
+      "grips/flat-flat-tb-smooth-map.webp",
+      "grips/flat-round-side-alcantara-map.webp",
+      "grips/flat-round-side-perforated-map.webp",
+      "grips/flat-round-side-smooth-map.webp",
+      "grips/flat-round-tb-alcantara-map.webp",
+      "grips/flat-round-tb-perforated-map.webp",
+      "grips/flat-round-tb-smooth-map.webp",
+      "grips/round-side-alcantara-map.webp",
+      "grips/round-side-perforated-map.webp",
+      "grips/round-side-smooth-map.webp",
+      "grips/round-tb-alcantara-map.webp",
+      "grips/round-tb-perforated-map.webp",
+      "grips/round-tb-smooth-map.webp",
+      "grips/yoke-bottom-alcantara-map.webp",
+      "grips/yoke-bottom-perforated-map.webp",
+      "grips/yoke-bottom-smooth-map.webp",
+      "grips/yoke-side-alcantara-map.webp",
+      "grips/yoke-side-perforated-map.webp",
+      "grips/yoke-side-smooth-map.webp",
+      "led/flat-round.webp",
+      "marker/flat-flat.webp",
+      "marker/flat-round.webp",
+      "marker/round.webp",
+      "neutral/airbag-alcantara-logo.webp",
+      "neutral/airbag-smooth-logo.webp",
+      "paddles/forged.webp",
+      "paddles/glossy.webp",
+      "paddles/matte.webp",
+      "round.webp",
+      "trims/forged.webp",
+      "trims/glossy.webp",
+      "trims/matte.webp",
+      "yoke.webp"
+    ],
+    "fallbackPre": []
+  },
+  {
+    "id": "mercedes-amg",
+    "img": "mercedes-amg",
+    "shapes": {
+      "round": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "marker": "round"
+      },
+      "yoke": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "bottom": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "bottom"
+        ],
+        "tbToken": "bottom"
+      },
+      "flat-flat": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "marker": "flat-flat"
+      },
+      "flat-round": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "led": "flat-round",
+        "marker": "flat-round"
+      }
+    },
+    "airbag": {
+      "materials": [
+        "alcantara",
+        "smooth"
+      ],
+      "trim": false,
+      "logo": false,
+      "stitched": true
+    },
+    "lowerTrim": false,
+    "paddles": [
+      "glossy",
+      "matte",
+      "forged"
+    ],
+    "title": "Mercedes-AMG Performance",
+    "calibration": {
+      "flat-round-side-alcantara": {
+        "dMax": 1.64112,
+        "sMax": 0.09546,
+        "sRef": 0.08972,
+        "dHi": 1.41461,
+        "sHi": 0.05047,
+        "gloss": 1,
+        "albedoHex": "#32794b"
+      },
+      "flat-round-side-perforated": {
+        "dMax": 1.74578,
+        "sMax": 0.15915,
+        "sRef": 0.10361,
+        "dHi": 1.43611,
+        "sHi": 0.08643,
+        "gloss": 1,
+        "albedoHex": "#30754d"
+      },
+      "flat-round-side-smooth": {
+        "dMax": 1.37384,
+        "sMax": 0.1729,
+        "sRef": 0.14552,
+        "dHi": 1.24738,
+        "sHi": 0.10812,
+        "gloss": 0.6,
+        "albedoHex": "#376d4b"
+      },
+      "flat-round-tb-alcantara": {
+        "dMax": 1.34434,
+        "sMax": 0.02971,
+        "sRef": 0.04807,
+        "dHi": 1.05624,
+        "sHi": 0.0159,
+        "gloss": 1,
+        "albedoHex": "#4d533f"
+      },
+      "flat-round-tb-perforated": {
+        "dMax": 1.53073,
+        "sMax": 0.09772,
+        "sRef": 0.04047,
+        "dHi": 1.298,
+        "sHi": 0.05294,
+        "gloss": 1,
+        "albedoHex": "#336d48"
+      },
+      "flat-round-tb-smooth": {
+        "dMax": 1.46943,
+        "sMax": 0.28042,
+        "sRef": 0.19058,
+        "dHi": 1.31432,
+        "sHi": 0.17574,
+        "gloss": 0.6,
+        "albedoHex": "#3f6152"
+      },
+      "flat-flat-side-alcantara": {
+        "dMax": 1.78558,
+        "sMax": 0.06872,
+        "sRef": 0.06393,
+        "dHi": 1.4302,
+        "sHi": 0.0395,
+        "gloss": 1,
+        "albedoHex": "#346646"
+      },
+      "flat-flat-side-perforated": {
+        "dMax": 1.61772,
+        "sMax": 0.17217,
+        "sRef": 0.09919,
+        "dHi": 1.37402,
+        "sHi": 0.0988,
+        "gloss": 1,
+        "albedoHex": "#3a6348"
+      },
+      "flat-flat-side-smooth": {
+        "dMax": 1.49486,
+        "sMax": 0.15105,
+        "sRef": 0.11399,
+        "dHi": 1.33953,
+        "sHi": 0.08645,
+        "gloss": 0.6,
+        "albedoHex": "#386946"
+      },
+      "flat-flat-tb-alcantara": {
+        "dMax": 1.68581,
+        "sMax": 0.06923,
+        "sRef": 0.09248,
+        "dHi": 1.40034,
+        "sHi": 0.0297,
+        "gloss": 1,
+        "albedoHex": "#2e702c"
+      },
+      "flat-flat-tb-perforated": {
+        "dMax": 1.51417,
+        "sMax": 0.07958,
+        "sRef": 0.0527,
+        "dHi": 1.30902,
+        "sHi": 0.04219,
+        "gloss": 1,
+        "albedoHex": "#267836"
+      },
+      "flat-flat-tb-smooth": {
+        "dMax": 1.77968,
+        "sMax": 0.18148,
+        "sRef": 0.14388,
+        "dHi": 1.44319,
+        "sHi": 0.07221,
+        "gloss": 0.6,
+        "albedoHex": "#3e5343"
+      },
+      "round-side-alcantara": {
+        "dMax": 1.64516,
+        "sMax": 0.9717,
+        "sRef": 0.09796,
+        "dHi": 1.45815,
+        "sHi": 0.84526,
+        "gloss": 1,
+        "albedoHex": "#3c6d4b"
+      },
+      "round-side-perforated": {
+        "dMax": 1.38864,
+        "sMax": 0.97345,
+        "sRef": 0.0635,
+        "dHi": 1.29494,
+        "sHi": 0.84779,
+        "gloss": 1,
+        "albedoHex": "#2e833c"
+      },
+      "round-side-smooth": {
+        "dMax": 1.51207,
+        "sMax": 0.97345,
+        "sRef": 0.12114,
+        "dHi": 1.36061,
+        "sHi": 0.84687,
+        "gloss": 0.6,
+        "albedoHex": "#3c6849"
+      },
+      "round-tb-perforated": {
+        "dMax": 1.42706,
+        "sMax": 0.16423,
+        "sRef": 0.11562,
+        "dHi": 1.23276,
+        "sHi": 0.08894,
+        "gloss": 1,
+        "albedoHex": "#188c57"
+      },
+      "round-tb-smooth": {
+        "dMax": 1.35974,
+        "sMax": 0.20155,
+        "sRef": 0.19467,
+        "dHi": 1.23475,
+        "sHi": 0.11686,
+        "gloss": 0.6,
+        "albedoHex": "#267f4c"
+      },
+      "yoke-side-alcantara": {
+        "dMax": 1.67788,
+        "sMax": 0.06072,
+        "sRef": 0.08103,
+        "dHi": 1.43694,
+        "sHi": 0.03413,
+        "gloss": 1,
+        "albedoHex": "#376248"
+      },
+      "yoke-side-perforated": {
+        "dMax": 1.582,
+        "sMax": 0.16923,
+        "sRef": 0.05867,
+        "dHi": 1.39746,
+        "sHi": 0.10098,
+        "gloss": 1,
+        "albedoHex": "#3b5f48"
+      },
+      "yoke-side-smooth": {
+        "dMax": 1.73288,
+        "sMax": 0.19407,
+        "sRef": 0.07738,
+        "dHi": 1.50243,
+        "sHi": 0.12609,
+        "gloss": 0.6,
+        "albedoHex": "#376347"
+      },
+      "yoke-bottom-alcantara": {
+        "dMax": 1.43547,
+        "sMax": 0.03109,
+        "sRef": 0.09803,
+        "dHi": 1.1916,
+        "sHi": 0.01465,
+        "gloss": 1,
+        "albedoHex": "#356c4a"
+      },
+      "yoke-bottom-perforated": {
+        "dMax": 1.36947,
+        "sMax": 0.05239,
+        "sRef": 0.04521,
+        "dHi": 1.09766,
+        "sHi": 0.01945,
+        "gloss": 1,
+        "albedoHex": "#445c40"
+      },
+      "yoke-bottom-smooth": {
+        "dMax": 1.32297,
+        "sMax": 0.08449,
+        "sRef": 0.08191,
+        "dHi": 1.06712,
+        "sHi": 0.04622,
+        "gloss": 0.6,
+        "albedoHex": "#41513e"
+      },
+      "airbag-alcantara": {
+        "dMax": 1.12959,
+        "sMax": 0.95597,
+        "sRef": 0.3839,
+        "dHi": 0.89828,
+        "sHi": 0.83654,
+        "gloss": 1,
+        "albedoHex": "#276939"
+      },
+      "airbag-smooth": {
+        "dMax": 1.29514,
+        "sMax": 0.96404,
+        "sRef": 0.41493,
+        "dHi": 1.17014,
+        "sHi": 0.84747,
+        "gloss": 0.6,
+        "albedoHex": "#217c38"
+      }
+    },
+    "series": "Mercedes",
+    "assets": [
+      "card.webp",
+      "cf/flat-flat-forged.webp",
+      "cf/flat-flat-glossy.webp",
+      "cf/flat-flat-matte.webp",
+      "cf/flat-round-forged.webp",
+      "cf/flat-round-glossy.webp",
+      "cf/flat-round-matte.webp",
+      "cf/round-forged.webp",
+      "cf/round-glossy.webp",
+      "cf/round-matte.webp",
+      "cf/yoke-forged.webp",
+      "cf/yoke-glossy.webp",
+      "cf/yoke-matte.webp",
+      "flat-flat.webp",
+      "flat-round.webp",
+      "grips/airbag-alcantara-map.webp",
+      "grips/airbag-smooth-map.webp",
+      "grips/flat-flat-side-alcantara-map.webp",
+      "grips/flat-flat-side-perforated-map.webp",
+      "grips/flat-flat-side-smooth-map.webp",
+      "grips/flat-flat-tb-alcantara-map.webp",
+      "grips/flat-flat-tb-perforated-map.webp",
+      "grips/flat-flat-tb-smooth-map.webp",
+      "grips/flat-round-side-alcantara-map.webp",
+      "grips/flat-round-side-perforated-map.webp",
+      "grips/flat-round-side-smooth-map.webp",
+      "grips/flat-round-tb-alcantara-map.webp",
+      "grips/flat-round-tb-perforated-map.webp",
+      "grips/flat-round-tb-smooth-map.webp",
+      "grips/round-side-alcantara-map.webp",
+      "grips/round-side-perforated-map.webp",
+      "grips/round-side-smooth-map.webp",
+      "grips/round-tb-alcantara-map.webp",
+      "grips/round-tb-perforated-map.webp",
+      "grips/round-tb-smooth-map.webp",
+      "grips/yoke-bottom-alcantara-map.webp",
+      "grips/yoke-bottom-perforated-map.webp",
+      "grips/yoke-bottom-smooth-map.webp",
+      "grips/yoke-side-alcantara-map.webp",
+      "grips/yoke-side-perforated-map.webp",
+      "grips/yoke-side-smooth-map.webp",
+      "led/flat-round.webp",
+      "marker/flat-flat.webp",
+      "marker/flat-round.webp",
+      "marker/round.webp",
+      "neutral/airbag-alcantara-logo.webp",
+      "neutral/airbag-smooth-logo.webp",
+      "paddles/forged.webp",
+      "paddles/glossy.webp",
+      "paddles/matte.webp",
+      "round.webp",
+      "yoke.webp"
+    ],
+    "fallbackPre": [
+      "round-tb-alcantara"
+    ]
+  },
+  {
+    "id": "mercedes-2015",
+    "img": "mercedes-2015",
+    "shapes": {
+      "round": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "led": "round",
+        "marker": "round"
+      },
+      "yoke": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "bottom": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "bottom"
+        ],
+        "tbToken": "bottom"
+      },
+      "flat-flat": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "led": "flat-flat",
+        "marker": "flat-flat"
+      },
+      "flat-round": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "led": "flat-round",
+        "marker": "flat-round"
+      }
+    },
+    "airbag": {
+      "materials": [
+        "alcantara",
+        "smooth"
+      ],
+      "trim": false,
+      "logo": false,
+      "stitched": true
+    },
+    "lowerTrim": false,
+    "title": "Mercedes-Benz · C / E / S / GLC / GLE / GLS / G / CLS · 2024+",
+    "calibration": {
+      "flat-round-side-alcantara": {
+        "dMax": 1.75105,
+        "sMax": 0.27048,
+        "sRef": 0.3736,
+        "dHi": 1.5481,
+        "sHi": 0.08465,
+        "gloss": 1,
+        "albedoHex": "#3a7f58"
+      },
+      "flat-round-side-smooth": {
+        "dMax": 1.57139,
+        "sMax": 0.26253,
+        "sRef": 0.18886,
+        "dHi": 1.38897,
+        "sHi": 0.16727,
+        "gloss": 0.6,
+        "albedoHex": "#376e4e"
+      },
+      "flat-round-tb-alcantara": {
+        "dMax": 1.93963,
+        "sMax": 0.1093,
+        "sRef": 0.17128,
+        "dHi": 1.66476,
+        "sHi": 0.0534,
+        "gloss": 1,
+        "albedoHex": "#547e3a"
+      },
+      "flat-round-tb-perforated": {
+        "dMax": 1.37093,
+        "sMax": 0.22383,
+        "sRef": 0.12555,
+        "dHi": 1.27694,
+        "sHi": 0.17631,
+        "gloss": 1,
+        "albedoHex": "#329b3c"
+      },
+      "flat-round-tb-smooth": {
+        "dMax": 1.59581,
+        "sMax": 0.13012,
+        "sRef": 0.12613,
+        "dHi": 1.47011,
+        "sHi": 0.08747,
+        "gloss": 0.6,
+        "albedoHex": "#427d36"
+      },
+      "flat-flat-side-alcantara": {
+        "dMax": 1.55235,
+        "sMax": 0.34769,
+        "sRef": 0.43981,
+        "dHi": 1.42204,
+        "sHi": 0.11476,
+        "gloss": 1,
+        "albedoHex": "#409750"
+      },
+      "flat-flat-side-perforated": {
+        "dMax": 1.48648,
+        "sMax": 0.31923,
+        "sRef": 0.22525,
+        "dHi": 1.3871,
+        "sHi": 0.1514,
+        "gloss": 1,
+        "albedoHex": "#328b49"
+      },
+      "flat-flat-side-smooth": {
+        "dMax": 1.5326,
+        "sMax": 0.24495,
+        "sRef": 0.35037,
+        "dHi": 1.40422,
+        "sHi": 0.15491,
+        "gloss": 0.6,
+        "albedoHex": "#2f8051"
+      },
+      "flat-flat-tb-alcantara": {
+        "dMax": 2.42316,
+        "sMax": 0.08918,
+        "sRef": 0.11037,
+        "dHi": 1.74614,
+        "sHi": 0.03094,
+        "gloss": 1,
+        "albedoHex": "#406534"
+      },
+      "flat-flat-tb-perforated": {
+        "dMax": 1.59715,
+        "sMax": 0.09618,
+        "sRef": 0.0493,
+        "dHi": 1.40453,
+        "sHi": 0.06829,
+        "gloss": 1,
+        "albedoHex": "#3b6543"
+      },
+      "flat-flat-tb-smooth": {
+        "dMax": 1.61705,
+        "sMax": 0.20851,
+        "sRef": 0.14885,
+        "dHi": 1.4446,
+        "sHi": 0.1218,
+        "gloss": 0.6,
+        "albedoHex": "#3f5548"
+      },
+      "round-side-alcantara": {
+        "dMax": 2.20549,
+        "sMax": 0.92685,
+        "sRef": 0.04021,
+        "dHi": 1.73879,
+        "sHi": 0.8173,
+        "gloss": 1,
+        "albedoHex": "#356e37"
+      },
+      "round-side-perforated": {
+        "dMax": 1.87176,
+        "sMax": 0.88887,
+        "sRef": 0.14352,
+        "dHi": 1.71615,
+        "sHi": 0.75465,
+        "gloss": 1,
+        "albedoHex": "#2e8a2c"
+      },
+      "round-side-smooth": {
+        "dMax": 1.47903,
+        "sMax": 0.89986,
+        "sRef": 0.18892,
+        "dHi": 1.39068,
+        "sHi": 0.7664,
+        "gloss": 0.6,
+        "albedoHex": "#38883e"
+      },
+      "round-tb-alcantara": {
+        "dMax": 1.93066,
+        "sMax": 0.09753,
+        "sRef": 0.13237,
+        "dHi": 1.53064,
+        "sHi": 0.04398,
+        "gloss": 1,
+        "albedoHex": "#386d36"
+      },
+      "round-tb-perforated": {
+        "dMax": 1.6023,
+        "sMax": 0.13151,
+        "sRef": 0.07501,
+        "dHi": 1.45829,
+        "sHi": 0.09679,
+        "gloss": 1,
+        "albedoHex": "#317c3a"
+      },
+      "round-tb-smooth": {
+        "dMax": 1.46343,
+        "sMax": 0.19947,
+        "sRef": 0.19524,
+        "dHi": 1.34388,
+        "sHi": 0.12811,
+        "gloss": 0.6,
+        "albedoHex": "#38764c"
+      },
+      "yoke-side-alcantara": {
+        "dMax": 1.93396,
+        "sMax": 0.09036,
+        "sRef": 0.15382,
+        "dHi": 1.69589,
+        "sHi": 0.04155,
+        "gloss": 1,
+        "albedoHex": "#298e33"
+      },
+      "yoke-side-perforated": {
+        "dMax": 1.62784,
+        "sMax": 0.06897,
+        "sRef": 0.04504,
+        "dHi": 1.49677,
+        "sHi": 0.0473,
+        "gloss": 1,
+        "albedoHex": "#468f1c"
+      },
+      "yoke-side-smooth": {
+        "dMax": 1.35083,
+        "sMax": 0.26733,
+        "sRef": 0.0998,
+        "dHi": 1.27542,
+        "sHi": 0.16602,
+        "gloss": 0.6,
+        "albedoHex": "#589328"
+      },
+      "yoke-bottom-alcantara": {
+        "dMax": 1.52278,
+        "sMax": 0.03139,
+        "sRef": 0.14731,
+        "dHi": 1.28638,
+        "sHi": 0.01333,
+        "gloss": 1,
+        "albedoHex": "#35802a"
+      },
+      "yoke-bottom-perforated": {
+        "dMax": 1.42675,
+        "sMax": 0.10492,
+        "sRef": 0.11566,
+        "dHi": 1.26858,
+        "sHi": 0.05208,
+        "gloss": 1,
+        "albedoHex": "#497f3d"
+      },
+      "yoke-bottom-smooth": {
+        "dMax": 1.25679,
+        "sMax": 0.16155,
+        "sRef": 0.1812,
+        "dHi": 1.17139,
+        "sHi": 0.12248,
+        "gloss": 0.6,
+        "albedoHex": "#437935"
+      },
+      "airbag-alcantara": {
+        "dMax": 1.68261,
+        "sMax": 0.92462,
+        "sRef": 0.3006,
+        "dHi": 1.25452,
+        "sHi": 0.1683,
+        "gloss": 1,
+        "albedoHex": "#3e5944"
+      },
+      "airbag-smooth": {
+        "dMax": 1.54753,
+        "sMax": 0.86543,
+        "sRef": 0.3792,
+        "dHi": 1.34896,
+        "sHi": 0.17917,
+        "gloss": 0.6,
+        "albedoHex": "#3f6147"
+      }
+    },
+    "series": "Mercedes",
+    "assets": [
+      "card.webp",
+      "cf/flat-flat-forged.webp",
+      "cf/flat-flat-glossy.webp",
+      "cf/flat-flat-matte.webp",
+      "cf/flat-round-forged.webp",
+      "cf/flat-round-glossy.webp",
+      "cf/flat-round-matte.webp",
+      "cf/round-forged.webp",
+      "cf/round-glossy.webp",
+      "cf/round-matte.webp",
+      "cf/yoke-forged.webp",
+      "cf/yoke-glossy.webp",
+      "cf/yoke-matte.webp",
+      "flat-flat.webp",
+      "flat-round.webp",
+      "grips/airbag-alcantara-map.webp",
+      "grips/airbag-smooth-map.webp",
+      "grips/flat-flat-side-alcantara-map.webp",
+      "grips/flat-flat-side-perforated-map.webp",
+      "grips/flat-flat-side-smooth-map.webp",
+      "grips/flat-flat-tb-alcantara-map.webp",
+      "grips/flat-flat-tb-perforated-map.webp",
+      "grips/flat-flat-tb-smooth-map.webp",
+      "grips/flat-round-side-alcantara-map.webp",
+      "grips/flat-round-side-perforated-map.webp",
+      "grips/flat-round-side-smooth-map.webp",
+      "grips/flat-round-tb-alcantara-map.webp",
+      "grips/flat-round-tb-perforated-map.webp",
+      "grips/flat-round-tb-smooth-map.webp",
+      "grips/round-side-alcantara-map.webp",
+      "grips/round-side-perforated-map.webp",
+      "grips/round-side-smooth-map.webp",
+      "grips/round-tb-alcantara-map.webp",
+      "grips/round-tb-perforated-map.webp",
+      "grips/round-tb-smooth-map.webp",
+      "grips/yoke-bottom-alcantara-map.webp",
+      "grips/yoke-bottom-perforated-map.webp",
+      "grips/yoke-bottom-smooth-map.webp",
+      "grips/yoke-side-alcantara-map.webp",
+      "grips/yoke-side-perforated-map.webp",
+      "grips/yoke-side-smooth-map.webp",
+      "led/flat-flat.webp",
+      "led/flat-round.webp",
+      "led/round.webp",
+      "marker/flat-flat.webp",
+      "marker/flat-round.webp",
+      "marker/round.webp",
+      "neutral/airbag-alcantara-logo.webp",
+      "neutral/airbag-smooth-logo.webp",
+      "round.webp",
+      "yoke.webp"
+    ],
+    "fallbackPre": [
+      "flat-round-side-perforated"
+    ]
+  },
+  {
+    "id": "mercedes-2019",
+    "img": "mercedes-2019",
+    "shapes": {
+      "round": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "led": "round",
+        "marker": "round"
+      },
+      "yoke": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "bottom": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "bottom"
+        ],
+        "tbToken": "bottom"
+      },
+      "flat-flat": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "led": "flat-flat",
+        "marker": "flat-flat"
+      },
+      "flat-round": {
+        "zones": {
+          "side": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ],
+          "tb": [
+            "perforated",
+            "alcantara",
+            "smooth"
+          ]
+        },
+        "carbons": [
+          "forged",
+          "glossy",
+          "matte"
+        ],
+        "stitched": [
+          "side",
+          "tb"
+        ],
+        "tbToken": "tb",
+        "led": "flat-round",
+        "marker": "flat-round"
+      }
+    },
+    "airbag": {
+      "materials": [
+        "alcantara",
+        "smooth"
+      ],
+      "trim": false,
+      "logo": false,
+      "stitched": true
+    },
+    "lowerTrim": false,
+    "paddles": [
+      "glossy",
+      "matte",
+      "forged"
+    ],
+    "title": "Mercedes-Benz · C / E / S / GLC / GLE · 2019+",
+    "calibration": {
+      "flat-round-side-alcantara": {
+        "dMax": 1.51479,
+        "sMax": 0.03071,
+        "sRef": 0.17515,
+        "dHi": 1.32277,
+        "sHi": 0.0171,
+        "gloss": 1,
+        "albedoHex": "#2c7233"
+      },
+      "flat-round-side-perforated": {
+        "dMax": 1.66595,
+        "sMax": 0.22494,
+        "sRef": 0.13126,
+        "dHi": 1.52634,
+        "sHi": 0.12238,
+        "gloss": 1,
+        "albedoHex": "#4b8533"
+      },
+      "flat-round-side-smooth": {
+        "dMax": 1.37426,
+        "sMax": 0.12544,
+        "sRef": 0.08941,
+        "dHi": 1.25252,
+        "sHi": 0.07859,
+        "gloss": 0.6,
+        "albedoHex": "#3a6c48"
+      },
+      "flat-round-tb-alcantara": {
+        "dMax": 1.68679,
+        "sMax": 0.08786,
+        "sRef": 0.1334,
+        "dHi": 1.47958,
+        "sHi": 0.03538,
+        "gloss": 1,
+        "albedoHex": "#4d7235"
+      },
+      "flat-round-tb-perforated": {
+        "dMax": 1.56521,
+        "sMax": 0.08841,
+        "sRef": 0.0528,
+        "dHi": 1.38168,
+        "sHi": 0.05985,
+        "gloss": 1,
+        "albedoHex": "#3c752f"
+      },
+      "flat-round-tb-smooth": {
+        "dMax": 1.41801,
+        "sMax": 0.15715,
+        "sRef": 0.18909,
+        "dHi": 1.30314,
+        "sHi": 0.11841,
+        "gloss": 0.6,
+        "albedoHex": "#467a38"
+      },
+      "flat-flat-side-alcantara": {
+        "dMax": 1.43054,
+        "sMax": 0.20822,
+        "sRef": 0.33465,
+        "dHi": 1.30249,
+        "sHi": 0.07024,
+        "gloss": 1,
+        "albedoHex": "#2b9645"
+      },
+      "flat-flat-side-perforated": {
+        "dMax": 1.55467,
+        "sMax": 0.11679,
+        "sRef": 0.07152,
+        "dHi": 1.34811,
+        "sHi": 0.07585,
+        "gloss": 1,
+        "albedoHex": "#2d7b37"
+      },
+      "flat-flat-side-smooth": {
+        "dMax": 1.55833,
+        "sMax": 0.18501,
+        "sRef": 0.11844,
+        "dHi": 1.32154,
+        "sHi": 0.10769,
+        "gloss": 0.6,
+        "albedoHex": "#3a5f48"
+      },
+      "flat-flat-tb-alcantara": {
+        "dMax": 1.93307,
+        "sMax": 0.11081,
+        "sRef": 0.1629,
+        "dHi": 1.52757,
+        "sHi": 0.04328,
+        "gloss": 1,
+        "albedoHex": "#46683e"
+      },
+      "flat-flat-tb-perforated": {
+        "dMax": 1.76175,
+        "sMax": 0.09177,
+        "sRef": 0.05913,
+        "dHi": 1.50161,
+        "sHi": 0.05321,
+        "gloss": 1,
+        "albedoHex": "#415240"
+      },
+      "flat-flat-tb-smooth": {
+        "dMax": 1.72389,
+        "sMax": 0.21854,
+        "sRef": 0.09165,
+        "dHi": 1.41825,
+        "sHi": 0.16536,
+        "gloss": 0.6,
+        "albedoHex": "#425140"
+      },
+      "round-side-alcantara": {
+        "dMax": 1.65751,
+        "sMax": 0.05946,
+        "sRef": 0.06594,
+        "dHi": 1.37259,
+        "sHi": 0.03098,
+        "gloss": 1,
+        "albedoHex": "#40822a"
+      },
+      "round-side-perforated": {
+        "dMax": 1.58762,
+        "sMax": 0.27255,
+        "sRef": 0.11303,
+        "dHi": 1.34794,
+        "sHi": 0.11381,
+        "gloss": 1,
+        "albedoHex": "#3b8e26"
+      },
+      "round-side-smooth": {
+        "dMax": 1.33357,
+        "sMax": 0.16559,
+        "sRef": 0.29901,
+        "dHi": 1.22114,
+        "sHi": 0.09639,
+        "gloss": 0.6,
+        "albedoHex": "#318532"
+      },
+      "round-tb-alcantara": {
+        "dMax": 1.73093,
+        "sMax": 0.10091,
+        "sRef": 0.11518,
+        "dHi": 1.4991,
+        "sHi": 0.03527,
+        "gloss": 1,
+        "albedoHex": "#43822c"
+      },
+      "round-tb-perforated": {
+        "dMax": 1.28823,
+        "sMax": 0.21978,
+        "sRef": 0.14383,
+        "dHi": 1.22148,
+        "sHi": 0.1829,
+        "gloss": 1,
+        "albedoHex": "#45ab21"
+      },
+      "round-tb-smooth": {
+        "dMax": 1.31139,
+        "sMax": 0.16658,
+        "sRef": 0.14333,
+        "dHi": 1.23914,
+        "sHi": 0.1312,
+        "gloss": 0.6,
+        "albedoHex": "#549c21"
+      },
+      "yoke-side-alcantara": {
+        "dMax": 1.5458,
+        "sMax": 0.03031,
+        "sRef": 0.13863,
+        "dHi": 1.32371,
+        "sHi": 0.01413,
+        "gloss": 1,
+        "albedoHex": "#1f7827"
+      },
+      "yoke-side-perforated": {
+        "dMax": 1.67361,
+        "sMax": 0.06621,
+        "sRef": 0.04326,
+        "dHi": 1.41126,
+        "sHi": 0.03946,
+        "gloss": 1,
+        "albedoHex": "#3d6239"
+      },
+      "yoke-side-smooth": {
+        "dMax": 1.80446,
+        "sMax": 0.17917,
+        "sRef": 0.17923,
+        "dHi": 1.46347,
+        "sHi": 0.10396,
+        "gloss": 0.6,
+        "albedoHex": "#3e593f"
+      },
+      "yoke-bottom-alcantara": {
+        "dMax": 1.26637,
+        "sMax": 0.02,
+        "sRef": 0.02861,
+        "dHi": 0.98364,
+        "sHi": 0.00581,
+        "gloss": 1,
+        "albedoHex": "#37672d"
+      },
+      "yoke-bottom-perforated": {
+        "dMax": 1.29055,
+        "sMax": 0.05199,
+        "sRef": 0.03926,
+        "dHi": 1.11545,
+        "sHi": 0.03264,
+        "gloss": 1,
+        "albedoHex": "#465b42"
+      },
+      "yoke-bottom-smooth": {
+        "dMax": 1.39213,
+        "sMax": 0.1357,
+        "sRef": 0.13791,
+        "dHi": 1.14695,
+        "sHi": 0.08654,
+        "gloss": 0.6,
+        "albedoHex": "#3e523e"
+      },
+      "airbag-alcantara": {
+        "dMax": 1.50938,
+        "sMax": 0.9745,
+        "sRef": 0.36048,
+        "dHi": 1.2569,
+        "sHi": 0.89391,
+        "gloss": 1,
+        "albedoHex": "#1d7c33"
+      },
+      "airbag-smooth": {
+        "dMax": 1.39662,
+        "sMax": 0.98674,
+        "sRef": 0.44612,
+        "dHi": 1.26268,
+        "sHi": 0.90952,
+        "gloss": 0.6,
+        "albedoHex": "#168d34"
+      }
+    },
+    "series": "Mercedes",
+    "assets": [
+      "card.webp",
+      "cf/flat-flat-forged.webp",
+      "cf/flat-flat-glossy.webp",
+      "cf/flat-flat-matte.webp",
+      "cf/flat-round-forged.webp",
+      "cf/flat-round-glossy.webp",
+      "cf/flat-round-matte.webp",
+      "cf/round-forged.webp",
+      "cf/round-glossy.webp",
+      "cf/round-matte.webp",
+      "cf/yoke-forged.webp",
+      "cf/yoke-glossy.webp",
+      "cf/yoke-matte.webp",
+      "flat-flat.webp",
+      "flat-round.webp",
+      "grips/airbag-alcantara-map.webp",
+      "grips/airbag-smooth-map.webp",
+      "grips/flat-flat-side-alcantara-map.webp",
+      "grips/flat-flat-side-perforated-map.webp",
+      "grips/flat-flat-side-smooth-map.webp",
+      "grips/flat-flat-tb-alcantara-map.webp",
+      "grips/flat-flat-tb-perforated-map.webp",
+      "grips/flat-flat-tb-smooth-map.webp",
+      "grips/flat-round-side-alcantara-map.webp",
+      "grips/flat-round-side-perforated-map.webp",
+      "grips/flat-round-side-smooth-map.webp",
+      "grips/flat-round-tb-alcantara-map.webp",
+      "grips/flat-round-tb-perforated-map.webp",
+      "grips/flat-round-tb-smooth-map.webp",
+      "grips/round-side-alcantara-map.webp",
+      "grips/round-side-perforated-map.webp",
+      "grips/round-side-smooth-map.webp",
+      "grips/round-tb-alcantara-map.webp",
+      "grips/round-tb-perforated-map.webp",
+      "grips/round-tb-smooth-map.webp",
+      "grips/yoke-bottom-alcantara-map.webp",
+      "grips/yoke-bottom-perforated-map.webp",
+      "grips/yoke-bottom-smooth-map.webp",
+      "grips/yoke-side-alcantara-map.webp",
+      "grips/yoke-side-perforated-map.webp",
+      "grips/yoke-side-smooth-map.webp",
+      "led/flat-flat.webp",
+      "led/flat-round.webp",
+      "led/round.webp",
+      "marker/flat-flat.webp",
+      "marker/flat-round.webp",
+      "marker/round.webp",
+      "neutral/airbag-alcantara-logo.webp",
+      "neutral/airbag-smooth-logo.webp",
+      "paddles/forged.webp",
+      "paddles/glossy.webp",
+      "paddles/matte.webp",
+      "round.webp",
+      "yoke.webp"
+    ],
+    "fallbackPre": []
+  }
+]
