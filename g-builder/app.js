@@ -1,5 +1,5 @@
-import {enhancePanels,refreshPanels} from '../builder-panels.js?v=147';
-import {renderMaterial} from './material-renderer.js?v=147';
+import {enhancePanels,refreshPanels} from '../builder-panels.js?v=148';
+import {renderMaterial} from './material-renderer.js?v=148';
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ASSET=new URL('./',import.meta.url),imgCache=new Map(),tintCache=new Map();
 const MATERIALS=[['perforated','Перфорированная кожа'],['alcantara','Алькантара'],['smooth','Гладкая кожа']];
@@ -19,10 +19,9 @@ function controls(){
  $('#options').innerHTML=field('01','Форма руля','<div class="fixed">Круглый руль <span>Выбрано ✓</span></div>')+
  field('02','Материал в зоне хвата',choices('side',MATERIALS))+
  field('03','Цвет зоны хвата','<div class="fixed"><span><i class="blackdot"></i>Чёрный глянец · 9860</span><span>Выбрано ✓</span></div>')+
- field('04','Строчка в зоне хвата',palette('sideStitch',data.stitches))+
+ field('04','Строчка обода',palette('sideStitch',data.stitches))+
  field('05','Материал сверху и снизу',choices('top',[...MATERIALS,...CARBONS]))+
  field('06','Цвет верха и низа','<div class="fixed"><span>Вороново крыло · 9861</span><span>Выбрано ✓</span></div>','top-color-field')+
- field('07','Строчка сверху и снизу',`<div id="top-stitch">${palette('topStitch',data.stitches)}</div><div id="carbon-note" class="fixed" hidden>На карбоновых частях строчки нет</div>`)+
  field('08','Накладка на спицы',choices('trim',TRIMS))+
  field('09','Обивка подушки',choices('airbag',AIRBAGS)+'<p class="picked">Цвет обивки — чёрный глянец</p>')+
  field('10','Строчка на подушке',`<div id="airbag-stitch">${palette('airbagStitch',data.stitches)}</div><div id="original-note" class="fixed">Штатная отделка подушки</div>`)+
@@ -32,10 +31,10 @@ function controls(){
  field('14','Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Работу функций проверим по Вашему автомобилю.</p>');
  $('#options').elements.markerMode.value='none';enhancePanels($('#options'));sync();
 }
-function rows(){return [['Автомобиль','BMW G'],['Форма','Круглый'],['Зона хвата',label(MATERIALS,state.side)],['Цвет зоны хвата','Чёрный глянец · 9860'],['Строчка в зоне хвата',RU[state.sideStitch]],['Верх и низ',label([...MATERIALS,...CARBONS],state.top)],...(!isCarbon()?[['Цвет верха и низа','Вороново крыло · 9861'],['Строчка сверху и снизу',RU[state.topStitch]]]:[]),['Накладка на спицы',label(TRIMS,state.trim)],['Подушка',label(AIRBAGS,state.airbag)],...(state.airbag!=='original'?[['Цвет подушки','Чёрный глянец · 9860'],['Строчка на подушке',RU[state.airbagStitch]]]:[]),['Метка на 12 часов',state.marker==='none'?'Без метки':MRU[marker(state.marker).name]||marker(state.marker).name],['Подогрев',state.heat==='yes'?'С подогревом':'Без подогрева'],['Вибро',state.vibration==='yes'?'С вибро':'Без вибро'],['Адаптивный круиз-контроль',state.acc==='yes'?'С адаптивным круизом':'Без адаптивного круиза']];}
+function rows(){return [['Автомобиль','BMW G'],['Форма','Круглый'],['Зона хвата',label(MATERIALS,state.side)],['Цвет зоны хвата','Чёрный глянец · 9860'],['Строчка обода',RU[state.sideStitch]],['Верх и низ',label([...MATERIALS,...CARBONS],state.top)],...(!isCarbon()?[['Цвет верха и низа','Вороново крыло · 9861']]:[]),['Накладка на спицы',label(TRIMS,state.trim)],['Подушка',label(AIRBAGS,state.airbag)],...(state.airbag!=='original'?[['Цвет подушки','Чёрный глянец · 9860'],['Строчка на подушке',RU[state.airbagStitch]]]:[]),['Метка на 12 часов',state.marker==='none'?'Без метки':MRU[marker(state.marker).name]||marker(state.marker).name],['Подогрев',state.heat==='yes'?'С подогревом':'Без подогрева'],['Вибро',state.vibration==='yes'?'С вибро':'Без вибро'],['Адаптивный круиз-контроль',state.acc==='yes'?'С адаптивным круизом':'Без адаптивного круиза']];}
 function isCarbon(){return CARBONS.some(([id])=>id===state.top);}
 function sync(){
- $('#top-stitch').hidden=isCarbon();$('#top-color-field').hidden=isCarbon();$('#carbon-note').hidden=!isCarbon();
+ $('#top-color-field').hidden=isCarbon();
  $('#airbag-stitch').hidden=state.airbag==='original';$('#original-note').hidden=state.airbag!=='original';$('#marker-colors').hidden=state.marker==='none';
  for(const el of document.querySelectorAll('[data-picked]')){const key=el.dataset.picked;el.textContent=key==='marker'?(state.marker==='none'?'':`${MRU[marker(state.marker).name]||marker(state.marker).name} · ${state.marker}`):RU[state[key]];}
  refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
@@ -64,11 +63,11 @@ async function render(){const id=++serial,s={...state};rendering=true;ready=fals
  if(id!==serial)return;$('#wheel').getContext('2d').drawImage(c,0,0);ready=true;$('#order').setAttribute('aria-disabled','false');$('#status').textContent='';
  }catch(e){if(id===serial){$('#status').textContent='Не удалось обновить превью. Выберите вариант ещё раз.';console.error(e);}}finally{if(id===serial){rendering=false;$('#save').disabled=!ready;}}}
 $('#options').addEventListener('submit',e=>e.preventDefault());
-$('#options').addEventListener('change',e=>{const {name,value}=e.target;if(name==='markerMode'){state.marker=value==='none'?'none':'white';if(value!=='none')$('#options').querySelector('input[name="marker"][value="white"]').checked=true;}else if(name in state)state[name]=value;else return;sync();render();});
+$('#options').addEventListener('change',e=>{const {name,value}=e.target;if(name==='sideStitch')state.topStitch=value;if(name==='markerMode'){state.marker=value==='none'?'none':'white';if(value!=='none')$('#options').querySelector('input[name="marker"][value="white"]').checked=true;}else if(name in state)state[name]=value;else return;sync();render();});
 $('#options').addEventListener('input',e=>{if(!e.target.matches('.palette-search'))return;const q=e.target.value.trim().toLowerCase();for(const c of document.querySelectorAll('[data-palette="marker"] label'))c.hidden=!c.dataset.colorName.includes(q);});
 $('#reset').addEventListener('click',()=>{state=defaults();controls();render();});
 $('#save').addEventListener('click',()=>{if(!ready||rendering)return;$('#wheel').toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='BMW-G-моя-конфигурация.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);},'image/png');});
-try{const response=await fetch(new URL('options.json?v=147',ASSET));if(!response.ok)throw Error('Options missing');data=await response.json();try{const r=await fetch('catalog.json?v=147');if(r.ok)catalog=await r.json();}catch{}controls();await render();}catch(e){$('#status').textContent='Не удалось загрузить конструктор. Обновите страницу.';$('#options').innerHTML='<p>Варианты временно недоступны.</p>';console.error(e);}
+try{const response=await fetch(new URL('options.json?v=148',ASSET));if(!response.ok)throw Error('Options missing');data=await response.json();try{const r=await fetch('catalog.json?v=148');if(r.ok)catalog=await r.json();}catch{}controls();await render();}catch(e){$('#status').textContent='Не удалось загрузить конструктор. Обновите страницу.';$('#options').innerHTML='<p>Варианты временно недоступны.</p>';console.error(e);}
 // Like the reference, give the option panel more room once the visitor scrolls.
 function compactPreview(){document.body.classList.toggle('is-compact',matchMedia('(max-width:760px)').matches&&window.scrollY>80);}
 window.addEventListener('scroll',compactPreview,{passive:true});window.addEventListener('resize',compactPreview);compactPreview();

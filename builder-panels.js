@@ -15,7 +15,7 @@ export function enhancePanels(form){
   if(id==='airbag')for(const el of [...form.children])if(el.tagName==='FIELDSET'&&/Цвет подушки/.test(el.querySelector('legend')?.textContent))fields.push(el);
   if(!fields.length)continue;
   const ordered=[...form.children].filter(el=>fields.includes(el));
-  const details=document.createElement('details');details.className='option-panel';details.dataset.panel=id;details.open=id==='materials';
+  const details=document.createElement('details');details.className='option-panel';details.dataset.panel=id;details.open=true;
   const summary=document.createElement('summary'),label=document.createElement('span'),value=document.createElement('small');label.textContent=title;value.dataset.panelValue='';summary.append(label,value);details.append(summary);
   ordered[0].before(details);const body=document.createElement('div');body.className='option-panel-body';details.append(body);for(const field of ordered)body.append(field);
  }

@@ -39,3 +39,12 @@
 .product-card.reveal{opacity:1;transform:none;transition:none}
 @media(max-width:900px){.site-header .header-contact{white-space:nowrap}.mobile-nav{min-height:calc(68px + max(env(safe-area-inset-bottom,0px),var(--safe-bottom,0px)))}.detail-info>.primary-buy{display:none}}
 @media(max-width:520px){.nt-brand{padding:18px 20px;align-items:center;gap:14px}.nt-brand-name{font-size:34px}.nt-brand small{display:none}.nt-brand img{width:44px;height:44px}}
+/* Keep the original actions at the bottom of the phone's home screen. */
+.site-header .header-contact{font-size:11px!important;letter-spacing:0!important;line-height:1.2;white-space:nowrap;flex-shrink:0;max-width:none;width:auto;justify-content:center}
+.home-actions{display:none}
+@media(max-width:900px){
+ .site-header{gap:8px;padding-inline:12px}.site-header .nt-logo{min-width:0;flex:1;font-size:11px}.site-header .header-contact{font-size:10px!important;padding:9px 10px;min-height:36px}.site-header .brand-russian{font-size:9px}
+ body.is-home .mobile-nav,body.is-home .nt-hero-copy .nt-cta{display:none!important}
+ .home-actions{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;gap:10px;padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px));background:#131316;border-top:1px solid #ffffff20}
+ .home-actions .nt-btn{flex:1;min-width:0;justify-content:center;min-height:46px;font-size:12px;letter-spacing:0;padding:12px 10px}
+}
