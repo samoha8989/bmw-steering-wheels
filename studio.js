@@ -1,4 +1,4 @@
-import {builderPage,builderClick,builderEnter} from './builder.js?v=145';
+import {builderPage,builderClick,builderEnter,syncWheel} from './builder.js?v=146';
 import {ONE,brandName,brandKey,defaults,cleanState,keyOf,brandOf,priceInfo,filterProducts,featureLabels,requestedFeatures,buildRequest,uNum,CHANNEL_LINE} from './catalog-engine.js?v=145';
 const main=document.getElementById('main'),dock=document.getElementById('action-dock');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -159,6 +159,7 @@ function render({keepScroll=false}={}){document.body.classList.remove('filters-o
  currentView=view;
  main.innerHTML=view==='build'?builderPage(catalog):view==='home'?homePage():view==='pick'?pickPage():view==='features'?featuresPage():view==='car'?carPage():view==='catalog'||view==='results'?catalogPage(view==='results'):view==='wheel'?detailPage(currentProduct,detailBranch):view==='favorites'?favoritesPage():view==='compare'?comparePage():`<div class="page-shell"><div class="empty-state"><h2>Начнём с Вашего руля.</h2><a class="btn" href="#/">Перейти к подбору</a></div></div>`;
  if(['catalog','results'].includes(view))paintProducts();
+ if(view==='build')syncWheel();
  document.querySelectorAll('[data-nav]').forEach(el=>el.classList.toggle('active',el.dataset.nav===(view==='build'?'build':['home','pick','features','car'].includes(view)?'configure':view==='results'||view==='wheel'?'catalog':view)));
  updateCounts();paintDock();if(view==='features')updateFeatureUI();if(view==='home')scheduleHero();observeReveal();document.body.classList.toggle('is-home',view==='home');
  document.title=(view==='build'?'Конструктор руля':view==='wheel'?'Руль № '+NUM(currentProduct):view==='compare'?'Сравнение рулей':view==='favorites'?'Избранные рули':view==='car'?'Ваш автомобиль':view==='catalog'||view==='results'?'Каталог рулей':'Руль под Ваш характер')+' | BMW Steering Wheels';

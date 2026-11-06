@@ -291,15 +291,22 @@ function wheelHTML() {
   const layers = Object.entries(LAYERS[sh]).sort((a, b) => ORDER(a[0]) - ORDER(b[0]));
   const pct = n => (n / 9).toFixed(3) + '%';
   return `<figure class="bd-wheel" id="bd-wheel" data-shape="${sh}">
-    <div class="bd-wheel-img"><img class="bd-base" onload="this.parentNode.classList.add('ready')" src="${PV}${sh}.webp?v=${PV_V}" alt="Руль: ${esc(LABEL('shape', sh) || '')}" decoding="async">
+    <div class="bd-wheel-img"><img class="bd-base" src="${PV}${sh}.webp?v=${PV_V}" alt="Руль: ${esc(LABEL('shape', sh) || '')}" decoding="async">
     ${layers.map(([k, [x, y, w, h]]) => `<img class="bd-layer ${on.has(k) ? 'on' : ''}" data-layer="${k}" src="${PV}${sh}-${k}.webp?v=${PV_V}" alt="" decoding="async" style="left:${pct(x)};top:${pct(y)};width:${pct(w)};height:${pct(h)}">`).join('')}</div>
   </figure>`;
 }
-function syncWheel() {
+export function syncWheel() {
   const el = document.getElementById('bd-wheel');
   if (!el) return;
   const on = activeLayers();
   el.querySelectorAll('.bd-layer').forEach(img => img.classList.toggle('on', on.has(img.dataset.layer)));
+  markWheelReady(el);
+}
+function markWheelReady(wheelEl) {
+  const img = wheelEl && wheelEl.querySelector('.bd-base');
+  if (!img) return;
+  const mark = () => img.parentNode.classList.add('ready');
+  if (img.complete) mark(); else img.addEventListener('load', mark, { once: true });
 }
 
 function stepBody(catalog, s) {

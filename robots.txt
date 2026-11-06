@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://samoha8989.github.io/bmw-steering-wheels/sitemap.xml
