@@ -334,7 +334,7 @@ export function builderPage(catalog) {
     let title='Выберите марку автомобиля',cards='';
     if(brand==='bmw'){
       title='Выберите кузов BMW';
-      cards=['E','F','G','U'].map(series=>card('BMW · '+series+'-кузов',series==='E'||series==='F'?'Дизайн M Performance · E / F':'Дизайн BMW G · G / U',series==='E'||series==='F'?'wheel-builder/assets/bmw/card.webp':'g-builder/round.webp',series==='E'||series==='F'?'wheel-builder.html?model=bmw-fseries&v=155':'g-builder.html?v=155')).join('');
+      cards=card('BMW · E / F кузов','Дизайн M Performance','wheel-builder/assets/bmw/card.webp','wheel-builder.html?model=bmw-fseries&v=163')+card('BMW · G / U кузов','Дизайн BMW G','g-builder/round.webp','g-builder.html?v=163');
     }else if(brand==='mercedes'){
       title='Выберите руль Mercedes-Benz';
       cards=[['AMG Performance','Исполнение «Перформанс»','mercedes-amg'],['Mercedes-Benz · 2024+','C · E · S · GLC · GLE · GLS · G · CLS','mercedes-2015'],['Mercedes-Benz · 2019+','C · E · S · GLC · GLE','mercedes-2019']].map(([name,desc,id])=>card(name,desc,'wheel-builder/assets/'+id+'/card.webp','wheel-builder.html?model='+id+'&v=155')).join('');
