@@ -1,0 +1,5 @@
+/* 07.11.2026: на телефоне (Telegram Mini App) нижняя кнопка «Купить готовый» обрезалась снизу - фото чуть выше и ниже. */
+@media (max-width:700px){
+ .nt-hero{padding-top:16px!important}
+ .nt-hero-photo.hh-visual{aspect-ratio:1/.95!important}
+}
