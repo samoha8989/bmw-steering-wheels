@@ -3,3 +3,9 @@
  .nt-hero{padding-top:16px!important}
  .nt-hero-photo.hh-visual{aspect-ratio:1/.95!important}
 }
+
+/* 07.11.2026: фон «вино/слива» рисовался плиткой высотой в экран с background-attachment:fixed. В iOS/Telegram fixed не работает,
+   плитка заканчивалась резкой границей (на уровне Mercedes). Теперь один фиксированный слой на весь экран, без границ и швов. */
+body,body.legal-document{background-image:none!important;background-attachment:scroll!important;background-size:auto!important}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:radial-gradient(ellipse at 5% 5%,#54203866 0,transparent 58%),radial-gradient(ellipse at 100% 65%,#30203f66 0,transparent 62%)}
