@@ -44,6 +44,7 @@ export function priceInfo(p,s={},branchOverride){
 export function filterProducts(catalog,s){
  const q=(s.q||'').trim().toLowerCase().replace(/^[№#\s]+/,'');
  const result=catalog.filter(p=>{
+  if(p.hideInOrder)return false;
   if(s.brand&&brandKey(p)!==s.brand)return false;
   if(s.series&&!(p.compatibleSeries||[p.series]).includes(s.series))return false;
   if(p.groups&&['Fsmall','Flarge'].includes(s.branch)&&!p.groups.includes(s.branch))return false;

@@ -2563,7 +2563,8 @@
   "legacyId": "006",
   "availability": "order",
   "displayNumber": "E03",
-  "thumb": "thumbs/e03-square.webp"
+  "thumb": "thumbs/e03-square.webp",
+  "hideInOrder": true
  },
  {
   "id": "103",
@@ -2977,7 +2978,8 @@
    null,
    null
   ],
-  "displayNumber": "F01"
+  "displayNumber": "F01",
+  "hideInOrder": true
  },
  {
   "id": "134",
@@ -3049,7 +3051,8 @@
   ],
   "legacyId": "034",
   "availability": "order",
-  "displayNumber": "F02"
+  "displayNumber": "F02",
+  "hideInOrder": true
  },
  {
   "id": "116",
@@ -3072,7 +3075,8 @@
   "legacyId": "016",
   "availability": "order",
   "displayNumber": "F03",
-  "thumb": "thumbs/e03-square.webp"
+  "thumb": "thumbs/e03-square.webp",
+  "hideInOrder": true
  },
  {
   "id": "113",
@@ -3185,7 +3189,8 @@
   "legacyId": "028",
   "availability": "order",
   "displayNumber": "F08",
-  "thumb": "thumbs/f32.webp"
+  "thumb": "thumbs/f32.webp",
+  "hideInOrder": true
  },
  {
   "id": "119",
@@ -3736,7 +3741,8 @@
   },
   "legacyId": "055",
   "availability": "order",
-  "displayNumber": "F32"
+  "displayNumber": "F32",
+  "hideInOrder": true
  },
  {
   "id": "156",
