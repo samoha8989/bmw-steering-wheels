@@ -338,8 +338,14 @@ export function builderPage(catalog) {
     }else if(brand==='mercedes'){
       title='Выберите руль Mercedes-Benz';
       cards=[['AMG Performance','Исполнение «Перформанс»','mercedes-amg'],['Mercedes-Benz · 2024+','C · E · S · GLC · GLE · GLS · G · CLS','mercedes-2015'],['Mercedes-Benz · 2019+','C · E · S · GLC · GLE','mercedes-2019']].map(([name,desc,id])=>card(name,desc,'wheel-builder/assets/'+id+'/card.webp','wheel-builder.html?model='+id+'&v=155')).join('');
-    }else cards=card('BMW','E · F · G · U','wheel-builder/assets/bmw/card.webp','#/build/bmw')+card('Mercedes-Benz','Выбрать исполнение','wheel-builder/assets/mercedes-amg/card.webp','#/build/mercedes');
-    return `<section class="bd-model-picker" id="bd-root">${brand?'<a class="back-link" href="#/build">← Выбрать марку</a>':''}<span class="nt-kick">Конструктор руля</span><h1>${title}</h1><div class="bd-model-grid">${cards}</div></section>`;
+    }else if(brand==='porsche'){
+      title='Выберите руль Porsche 911';
+      cards=[['911 · Performance (992)','С 2019 года','porsche-992'],['911 · Performance (991)','2012–2019','porsche-991']].map(([name,desc,id])=>card(name,desc,'wheel-builder/assets/'+id+'/card.webp','wheel-builder.html?model='+id+'&v=165')).join('');
+    }else if(brand==='audi'){
+      title='Выберите руль Audi RS';
+      cards=[['RS · Performance · 2020+','С 2020 года','audi-rs-2020'],['RS · Performance · 2017–2019','2017–2019','audi-rs-2017']].map(([name,desc,id])=>card(name,desc,'wheel-builder/assets/'+id+'/card.webp','wheel-builder.html?model='+id+'&v=165')).join('');
+    }else cards=card('BMW','E · F · G · U','wheel-builder/assets/bmw/card.webp','#/build/bmw')+card('Mercedes-Benz','Выбрать исполнение','wheel-builder/assets/mercedes-amg/card.webp','#/build/mercedes')+card('Porsche','911 · 992 / 991','wheel-builder/assets/porsche-992/card.webp','#/build/porsche')+card('Audi','RS Performance','wheel-builder/assets/audi-rs-2020/card.webp','#/build/audi');
+    return `<section class="bd-model-picker" id="bd-root">${brand?'<a class="back-link" href="#/build">← Выбрать марку</a>':''}<span class="nt-kick">Конструктор руля</span><h1>${title}</h1><div class="bd-model-grid${brand?'':' bd-four'}">${cards}</div></section>`;
   }
 
   return `<div class="bd-page" id="bd-root">
