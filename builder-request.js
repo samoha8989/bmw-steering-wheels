@@ -20,9 +20,22 @@ export function readConfiguration(hash,modelId,defaults,allowed){
 }
 export function requestText(rows,link){return ['Здравствуйте! Подскажите цену этого руля:','',...rows.map(([k,v])=>`${k}: ${v}`),'','Посмотреть мой собранный руль:',link,'',CHANNEL].join('\n');}
 export function telegramLink(message){return 'https://t.me/samoha8989?text='+encodeURIComponent(message);}
+const ORDER_ENDPOINT='https://wheel-orders.vserul-wheels.workers.dev';
 export function bindRequest({canvas,order,shareButton,note,getRequest,isReady}){
- let photo=null,generation=0;
- order.addEventListener('click',event=>{if(!isReady()){event.preventDefault();return;}order.href=telegramLink(getRequest().message);});
+ let photo=null,generation=0,sending=false;
+ // Пока клиент нажимает кнопку, фото руля и текст заявки уходят владельцу; затем открывается чат с готовым текстом.
+ order.addEventListener('click',async event=>{
+  if(!isReady()){event.preventDefault();return;}
+  const request=getRequest(),href=telegramLink(request.message);order.href=href;
+  if(!photo)return;
+  event.preventDefault();if(sending)return;sending=true;
+  try{
+   const body=new FormData();body.set('photo',photo);body.set('text',request.message);
+   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
+   try{await fetch(ORDER_ENDPOINT,{method:'POST',body,signal:controller.signal});}finally{clearTimeout(timer);}
+  }catch{/* если отправка не удалась, клиент всё равно попадает в чат с готовым текстом */}
+  sending=false;location.href=href;
+ });
  function invalidate(){generation++;photo=null;shareButton.disabled=true;note.textContent='';}
  function preparePhoto(){
   const id=++generation,{modelId,rows}=getRequest();
