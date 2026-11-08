@@ -1495,32 +1495,6 @@
         "tbToken": "tb",
         "led": "flat-flat",
         "marker": "flat-flat"
-      },
-      "flat-round": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "tb": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [
-          "side",
-          "tb"
-        ],
-        "tbToken": "tb",
-        "led": "flat-round",
-        "marker": "flat-round"
       }
     },
     "airbag": {
@@ -1722,14 +1696,10 @@
       "cf/flat-flat-forged.webp",
       "cf/flat-flat-glossy.webp",
       "cf/flat-flat-matte.webp",
-      "cf/flat-round-forged.webp",
-      "cf/flat-round-glossy.webp",
-      "cf/flat-round-matte.webp",
       "cf/yoke-forged.webp",
       "cf/yoke-glossy.webp",
       "cf/yoke-matte.webp",
       "flat-flat.webp",
-      "flat-round.webp",
       "grips/airbag-alcantara-map.webp",
       "grips/airbag-smooth-map.webp",
       "grips/flat-flat-side-alcantara-map.webp",
@@ -1738,12 +1708,6 @@
       "grips/flat-flat-tb-alcantara-map.webp",
       "grips/flat-flat-tb-perforated-map.webp",
       "grips/flat-flat-tb-smooth-map.webp",
-      "grips/flat-round-side-alcantara-map.webp",
-      "grips/flat-round-side-perforated-map.webp",
-      "grips/flat-round-side-smooth-map.webp",
-      "grips/flat-round-tb-alcantara-map.webp",
-      "grips/flat-round-tb-perforated-map.webp",
-      "grips/flat-round-tb-smooth-map.webp",
       "grips/yoke-bottom-alcantara-map.webp",
       "grips/yoke-bottom-perforated-map.webp",
       "grips/yoke-bottom-smooth-map.webp",
@@ -1751,15 +1715,11 @@
       "grips/yoke-side-perforated-map.webp",
       "grips/yoke-side-smooth-map.webp",
       "led/flat-flat.webp",
-      "led/flat-round.webp",
       "marker/flat-flat.webp",
-      "marker/flat-round.webp",
       "neutral/airbag-alcantara-logo.webp",
       "neutral/airbag-smooth-logo.webp",
       "stitch/flat-flat-side.webp",
       "stitch/flat-flat-tb.webp",
-      "stitch/flat-round-side.webp",
-      "stitch/flat-round-tb.webp",
       "stitch/yoke-bottom.webp",
       "stitch/yoke-side.webp",
       "yoke.webp"
@@ -1818,29 +1778,6 @@
         "tbToken": "tb",
         "led": "flat-flat",
         "marker": "flat-flat"
-      },
-      "flat-round": {
-        "zones": {
-          "side": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ],
-          "tb": [
-            "perforated",
-            "alcantara",
-            "smooth"
-          ]
-        },
-        "carbons": [
-          "forged",
-          "glossy",
-          "matte"
-        ],
-        "stitched": [],
-        "tbToken": "tb",
-        "led": "flat-round",
-        "marker": "flat-round"
       }
     },
     "airbag": {
@@ -2042,14 +1979,10 @@
       "cf/flat-flat-forged.webp",
       "cf/flat-flat-glossy.webp",
       "cf/flat-flat-matte.webp",
-      "cf/flat-round-forged.webp",
-      "cf/flat-round-glossy.webp",
-      "cf/flat-round-matte.webp",
       "cf/yoke-forged.webp",
       "cf/yoke-glossy.webp",
       "cf/yoke-matte.webp",
       "flat-flat.webp",
-      "flat-round.webp",
       "grips/airbag-alcantara-map.webp",
       "grips/airbag-smooth-map.webp",
       "grips/flat-flat-side-alcantara-map.webp",
@@ -2058,12 +1991,6 @@
       "grips/flat-flat-tb-alcantara-map.webp",
       "grips/flat-flat-tb-perforated-map.webp",
       "grips/flat-flat-tb-smooth-map.webp",
-      "grips/flat-round-side-alcantara-map.webp",
-      "grips/flat-round-side-perforated-map.webp",
-      "grips/flat-round-side-smooth-map.webp",
-      "grips/flat-round-tb-alcantara-map.webp",
-      "grips/flat-round-tb-perforated-map.webp",
-      "grips/flat-round-tb-smooth-map.webp",
       "grips/yoke-bottom-alcantara-map.webp",
       "grips/yoke-bottom-perforated-map.webp",
       "grips/yoke-bottom-smooth-map.webp",
@@ -2071,9 +1998,7 @@
       "grips/yoke-side-perforated-map.webp",
       "grips/yoke-side-smooth-map.webp",
       "led/flat-flat.webp",
-      "led/flat-round.webp",
       "marker/flat-flat.webp",
-      "marker/flat-round.webp",
       "neutral/airbag-alcantara-logo.webp",
       "neutral/airbag-smooth-logo.webp",
       "stitch/flat-flat-side.webp",

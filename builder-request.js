@@ -1,6 +1,5 @@
 // Keep this v1 field order stable: already-sent links must restore the same wheel.
 const FIELDS=['shape','side','sideColor','sideStitch','top','topColor','trim','airbag','airbagColor','airbagStitch','marker','led','heat','vibration','acc'];
-const CHANNEL='Подписывайся на наш лайв-канал: https://t.me/bmw_steeringwheels';
 export function configurationLink(modelId,state,base=location.href){
  const token=btoa(JSON.stringify([1,modelId,...FIELDS.map(k=>state[k]??null)])).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
  const url=new URL(base);url.search='';if(modelId!=='bmw-gseries')url.searchParams.set('model',modelId);url.searchParams.set('v','155');url.hash='c='+token;return url.href;
@@ -18,7 +17,7 @@ export function readConfiguration(hash,modelId,defaults,allowed){
   state.topStitch=state.sideStitch;return {state,shared:true};
  }catch{return {state:{...defaults},shared:false,error:true};}
 }
-export function requestText(rows,link){return ['Здравствуйте! Подскажите цену этого руля:','',...rows.map(([k,v])=>`${k}: ${v}`),'','Посмотреть мой собранный руль:',link,'',CHANNEL].join('\n');}
+export function requestText(rows){return ['Здравствуйте! Подскажите цену этого руля:','',...rows.map(([k,v])=>`${k}: ${v}`)].join('\n');}
 export function telegramLink(message){return 'https://t.me/samoha8989?text='+encodeURIComponent(message);}
 const ORDER_ENDPOINT='https://wheel-orders.vserul-wheels.workers.dev';
 export function bindRequest({canvas,order,shareButton,note,getRequest,isReady}){
@@ -31,6 +30,7 @@ export function bindRequest({canvas,order,shareButton,note,getRequest,isReady}){
   event.preventDefault();if(sending)return;sending=true;
   try{
    const body=new FormData();body.set('photo',photo);body.set('text',request.message);
+   try{const u=JSON.parse(sessionStorage.getItem('tgUser')||'null');if(u&&u.id){body.set('tg_id',String(u.id));body.set('tg_first',u.first||'');body.set('tg_last',u.last||'');body.set('tg_username',u.username||'');}}catch{}
    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),5000);
    try{await fetch(ORDER_ENDPOINT,{method:'POST',body,signal:controller.signal});}finally{clearTimeout(timer);}
   }catch{/* если отправка не удалась, клиент всё равно попадает в чат с готовым текстом */}
