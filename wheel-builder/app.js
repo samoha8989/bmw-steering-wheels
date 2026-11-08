@@ -1,4 +1,4 @@
-import {configurationLink,readConfiguration,requestText,telegramLink,bindRequest} from '../builder-request.js?v=169';
+import {configurationLink,readConfiguration,requestText,telegramLink,bindRequest} from '../builder-request.js?v=170';
 import {enhancePanels,refreshPanels} from '../builder-panels.js?v=153';
 import {renderMaterial} from '../g-builder/material-renderer.js?v=153';
 import {RU,MRU} from './labels.js?v=153';

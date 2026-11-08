@@ -213,7 +213,7 @@ function summaryRows() {
   return rows;
 }
 
-function message(catalog) {
+function messageText(catalog) {
   const L = k => LABEL(k, st[k]) || 'помогите выбрать';
   const l = k => L(k).replace(/^([А-ЯЁ])(?=[а-яё])/, c => c.toLowerCase()); // «Красная» → «красная», BMW/M не трогаем
   const f = funcs(), yes = (k, a = 'нужен', b = 'не нужен') => f[k] ? a : b;
@@ -231,8 +231,49 @@ function message(catalog) {
   lines.push('Вибромотор: ' + yes('vib'), 'Кнопка круиза: ' + yes('cruise', 'нужна', 'не нужна'), 'Адаптивный круиз-контроль: ' + yes('acc'));
   const pr = priceFrom(catalog);
   if (pr) lines.push('Цена в каталоге: от ' + money(pr.sum));
-  lines.push('', 'Подписывайся на наш лайв-канал: @bmw_steeringwheels');
-  return 'https://t.me/samoha8989?text=' + encodeURIComponent(lines.join('\n'));
+  return lines.join('\n');
+}
+const message = catalog => 'https://t.me/samoha8989?text=' + encodeURIComponent(messageText(catalog));
+
+// Кнопка «Узнать цену в Telegram»: до перехода в чат отправляем владельцу фото руля и текст (через воркер заявок).
+const ORDER_ENDPOINT = 'https://wheel-orders.vserul-wheels.workers.dev';
+function wheelPhoto() {
+  const box = document.querySelector('#bd-wheel .bd-wheel-img');
+  const base = box && box.querySelector('.bd-base');
+  if (!base || !base.complete || !base.naturalWidth) return Promise.resolve(null);
+  const S = 900, c = document.createElement('canvas'); c.width = c.height = S;
+  const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, S, S);
+  try {
+    ctx.drawImage(base, 0, 0, S, S);
+    for (const img of box.querySelectorAll('.bd-layer.on')) {
+      if (!img.complete || !img.naturalWidth) continue;
+      const f = k => parseFloat(img.style[k]) / 100 * S;
+      ctx.drawImage(img, f('left'), f('top'), f('width'), f('height'));
+    }
+    return new Promise(res => c.toBlob(b => res(b ? new File([b], 'wheel.jpg', { type: 'image/jpeg' }) : null), 'image/jpeg', .85));
+  } catch { return Promise.resolve(null); }
+}
+let orderSending = false;
+export async function sendOrderClick(event, catalog) {
+  const a = event.target.closest('.bd-send');
+  if (!a || !a.closest('#bd-root')) return false;
+  event.preventDefault(); event.stopImmediatePropagation();
+  if (orderSending) return true;
+  orderSending = true;
+  const href = message(catalog), label = a.innerHTML;
+  a.textContent = 'Отправляем…';
+  try {
+    const body = new FormData(), photo = await wheelPhoto();
+    if (photo) body.set('photo', photo);
+    body.set('text', messageText(catalog));
+    try { const u = JSON.parse(sessionStorage.getItem('tgUser') || 'null'); if (u && u.id) { body.set('tg_id', String(u.id)); body.set('tg_first', u.first || ''); body.set('tg_last', u.last || ''); body.set('tg_username', u.username || ''); } } catch {}
+    const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 15000);
+    try { await fetch(ORDER_ENDPOINT, { method: 'POST', body, signal: ctl.signal }); } finally { clearTimeout(timer); }
+  } catch { /* не вышло отправить: клиент всё равно попадает в чат с готовым текстом */ }
+  a.innerHTML = label; orderSending = false;
+  const tg = window.Telegram && window.Telegram.WebApp;
+  if (tg && tg.initData && tg.openTelegramLink) tg.openTelegramLink(href); else location.href = href;
+  return true;
 }
 
 function optionCard(s, o) {
@@ -374,6 +415,7 @@ function repaint(catalog) {
 }
 
 export function builderClick(event, catalog) {
+  if (event.target.closest && event.target.closest('.bd-send')) { sendOrderClick(event, catalog); return true; }
   const t = event.target.closest('[data-bd-key],[data-bd-func],[data-bd-reset]');
   if (!t || !t.closest('#bd-root')) return false;
   if (t.dataset.bdKey) {

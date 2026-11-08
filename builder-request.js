@@ -26,15 +26,14 @@ export function bindRequest({canvas,order,shareButton,note,getRequest,isReady}){
  order.addEventListener('click',async event=>{
   if(!isReady()){event.preventDefault();return;}
   const request=getRequest(),href=telegramLink(request.message);order.href=href;
-  if(!photo)return;
-  event.preventDefault();if(sending)return;sending=true;
+  event.preventDefault();if(sending)return;sending=true;const label=order.textContent;order.textContent='Отправляем…';
   try{
-   const body=new FormData();body.set('photo',photo);body.set('text',request.message);
+   const body=new FormData();if(photo)body.set('photo',photo);body.set('text',request.message);
    try{const u=JSON.parse(sessionStorage.getItem('tgUser')||'null');if(u&&u.id){body.set('tg_id',String(u.id));body.set('tg_first',u.first||'');body.set('tg_last',u.last||'');body.set('tg_username',u.username||'');}}catch{}
-   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),5000);
+   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);
    try{await fetch(ORDER_ENDPOINT,{method:'POST',body,signal:controller.signal});}finally{clearTimeout(timer);}
   }catch{/* если отправка не удалась, клиент всё равно попадает в чат с готовым текстом */}
-  sending=false;location.href=href;
+  sending=false;order.textContent=label;location.href=href;
  });
  function invalidate(){generation++;photo=null;shareButton.disabled=true;note.textContent='';}
  function preparePhoto(){
