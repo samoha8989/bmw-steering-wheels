@@ -31,7 +31,7 @@ export function bindRequest({canvas,order,shareButton,note,getRequest,isReady}){
   event.preventDefault();if(sending)return;sending=true;
   try{
    const body=new FormData();body.set('photo',photo);body.set('text',request.message);
-   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
+   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),5000);
    try{await fetch(ORDER_ENDPOINT,{method:'POST',body,signal:controller.signal});}finally{clearTimeout(timer);}
   }catch{/* если отправка не удалась, клиент всё равно попадает в чат с готовым текстом */}
   sending=false;location.href=href;
@@ -45,7 +45,7 @@ export function bindRequest({canvas,order,shareButton,note,getRequest,isReady}){
   for(const [key,value] of rows){let line='';for(const word of `${key}: ${value}`.split(' ')){const next=line?line+' '+word:word;if(ctx.measureText(next).width>width-96&&line){lines.push(line);line=word;}else line=next;}lines.push(line);}
   sheet.width=width;sheet.height=1254+125+lines.length*34;ctx.fillStyle='#fff';ctx.fillRect(0,0,sheet.width,sheet.height);ctx.drawImage(canvas,0,0,1254,1254);
   ctx.fillStyle='#111';ctx.font='bold 32px sans-serif';ctx.fillText('Моя конфигурация руля',48,1302);ctx.font='22px sans-serif';lines.forEach((line,i)=>ctx.fillText(line,48,1352+i*34));
-  sheet.toBlob(blob=>{if(id!==generation||!blob||!isReady())return;photo=new File([blob],modelId+'-конфигурация.png',{type:'image/png'});shareButton.disabled=false;},'image/png');
+  sheet.toBlob(blob=>{if(id!==generation||!blob||!isReady())return;photo=new File([blob],modelId+'-конфигурация.jpg',{type:'image/jpeg'});shareButton.disabled=false;},'image/jpeg',.88);
  }
  shareButton.addEventListener('click',async()=>{
   if(!isReady()||!photo)return;
