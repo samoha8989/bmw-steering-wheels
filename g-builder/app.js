@@ -12,10 +12,9 @@ const MRU={'White':'Белый','Piano Black':'Чёрный глянец','Jet B
 const defaults=()=>({side:'smooth',sideColor:'9860',topColor:'9861',sideStitch:'black',top:'smooth',topStitch:'black',trim:'original',airbag:'original',airbagStitch:'black',marker:'none',heat:'no',vibration:'no',acc:'no'});
 const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
 const HEAT_PRICE=7900,VIB_PRICE=4900,HEAT_VIB_PRICE=11900;
-const ALC_SIDE_PRICE=4900,ALC_FULL_PRICE=8900;
+const ALC_SIDE_PRICE=2500,ALC_FULL_PRICE=8900;
 const MARK_PRICE=3500;
 const freeNote='<p class="choice-price choice-price-free">+0 ₽</p>';
-const markNote=`<p class="choice-price">+${money(MARK_PRICE)} при добавлении метки</p>`;
 function heatVibGroup(){const both=state.heat==='yes'&&state.vibration==='yes';
  return `<div class="choices" id="heatvib-group">
   <button type="button" class="choice" data-hv="heat" aria-pressed="${state.heat==='yes'}" ${both?'hidden':''}><span>Подогрев<span class="hv-price">+${money(HEAT_PRICE)}</span></span></button>
@@ -23,7 +22,12 @@ function heatVibGroup(){const both=state.heat==='yes'&&state.vibration==='yes';
   <button type="button" class="choice" data-hv="both" aria-pressed="${both}" ${both?'':'hidden'}><span>Подогрев + вибро<span class="hv-price"><s>${money(HEAT_PRICE+VIB_PRICE)}</s> ${money(HEAT_VIB_PRICE)}</span></span></button>
  </div>`;}
 function alcCount(){return (state.side==='alcantara'?1:0)+(state.top==='alcantara'?1:0);}
-function alcPriceText(){const n=alcCount();if(n===0)return'';return n===1?`+${money(ALC_SIDE_PRICE)} — отделка алькантарой`:`+${money(ALC_FULL_PRICE)} — алькантара по всему рулю`;}
+function alcSideBadge(){return state.top==='alcantara'?ALC_FULL_PRICE-ALC_SIDE_PRICE:ALC_SIDE_PRICE;}
+function alcTopBadge(){return state.side==='alcantara'?ALC_FULL_PRICE-ALC_SIDE_PRICE:ALC_SIDE_PRICE;}
+function choicesPriced(key,options,priceFor){return `<div class="choices">${options.map(([value,name])=>{const p=priceFor?priceFor(value):0;return `<label class="choice"><input type="radio" name="${key}" value="${value}" ${state[key]===value?'checked':''}><span>${esc(name)}${p?`<span class="hv-price" data-price-for="${key}:${value}">+${money(p)}</span>`:''}</span></label>`;}).join('')}</div>`;}
+function sidePriceFor(v){return v==='alcantara'?alcSideBadge():0;}
+function topPriceFor(v){return v==='alcantara'?alcTopBadge():0;}
+function markerPriceFor(v){return v==='yes'?MARK_PRICE:0;}
 function addonsTotal(){let sum=0;const both=state.heat==='yes'&&state.vibration==='yes';
  if(both)sum+=HEAT_VIB_PRICE;else if(state.heat==='yes')sum+=HEAT_PRICE;else if(state.vibration==='yes')sum+=VIB_PRICE;
  const n=alcCount();if(n===1)sum+=ALC_SIDE_PRICE;else if(n===2)sum+=ALC_FULL_PRICE;
@@ -38,15 +42,15 @@ function choices(key,options){return `<div class="choices">${options.map(([value
 function palette(key,colors,isMarker=false){return `${isMarker?`<input class="palette-search" data-search="${key}" type="search" placeholder="Найти оттенок" aria-label="Найти оттенок: ${key==='marker'?'метка':key==='sideColor'?'зона хвата':'верх и низ'}">`:''}<div class="swatches" data-palette="${key}">${colors.map(c=>{const id=isMarker?c.code:c.key,name=isMarker?MRU[c.name]||c.name:RU[c.key]||c.name;return `<label class="swatch" style="--sw:${c.hex}" title="${esc(name)}${isMarker?' · '+id:''}" data-color-name="${esc(name.toLowerCase())} ${id}"><input type="radio" name="${key}" value="${id}" aria-label="${esc(name)}${isMarker?' · '+id:''}" ${state[key]===id?'checked':''}><i></i></label>`;}).join('')}</div><div class="picked" data-picked="${key}"></div>`;}
 function controls(){
  $('#options').innerHTML=field('01','Форма руля','<div class="fixed">Круглый руль <span>Выбрано ✓</span></div>')+
- field('02','Материал в зоне хвата',choices('side',MATERIALS))+
+ field('02','Материал в зоне хвата',choicesPriced('side',MATERIALS,sidePriceFor))+
  field('03','Цвет зоны хвата',palette('sideColor',data.leathers,true)+freeNote)+
  field('04','Строчка обода',palette('sideStitch',data.stitches)+freeNote)+
- field('05','Материал сверху и снизу',choices('top',[...MATERIALS,...CARBONS])+`<p class="choice-price" id="alc-price">${alcPriceText()}</p>`)+
+ field('05','Материал сверху и снизу',choicesPriced('top',[...MATERIALS,...CARBONS],topPriceFor))+
  field('06','Цвет верха и низа',palette('topColor',data.leathers,true)+freeNote,'top-color-field')+
  field('08','Накладка на спицы',choices('trim',TRIMS))+
  field('09','Обивка подушки',choices('airbag',AIRBAGS)+'<p class="picked">Цвет обивки — чёрный глянец</p>')+
  field('10','Строчка на подушке',`<div id="airbag-stitch">${palette('airbagStitch',data.stitches)}</div><div id="original-note" class="fixed">Штатная отделка подушки</div>`)+
- field('11','Метка на 12 часов',choices('markerMode',[['none','Без метки'],['yes','Добавить метку']])+markNote+`<div id="marker-colors" hidden>${palette('marker',data.markers,true)}</div>`)+
+ field('11','Метка на 12 часов',choicesPriced('markerMode',[['none','Без метки'],['yes','Добавить метку']],markerPriceFor)+`<div id="marker-colors" hidden>${palette('marker',data.markers,true)}</div>`)+
  field('12','Подогрев и вибро',heatVibGroup())+
  field('14','Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Бесплатно. Работу функций проверим по Вашему автомобилю.</p>');
  $('#options').elements.markerMode.value=state.marker==='none'?'none':'yes';enhancePanels($('#options'));sync();
@@ -57,7 +61,8 @@ function sync(){
  $('#top-color-field').hidden=isCarbon();
  $('#airbag-stitch').hidden=state.airbag==='original';$('#original-note').hidden=state.airbag!=='original';$('#marker-colors').hidden=state.marker==='none';
  if($('#heatvib-group'))$('#heatvib-group').outerHTML=heatVibGroup();
- if($('#alc-price'))$('#alc-price').textContent=alcPriceText();
+ {const el=$('[data-price-for="side:alcantara"]');if(el)el.textContent='+'+money(sidePriceFor('alcantara'));}
+ {const el=$('[data-price-for="top:alcantara"]');if(el)el.textContent='+'+money(topPriceFor('alcantara'));}
  for(const el of document.querySelectorAll('[data-picked]')){const key=el.dataset.picked;el.textContent=key==='marker'?(state.marker==='none'?'':`${MRU[marker(state.marker).name]||marker(state.marker).name} · ${state.marker}`):key.endsWith('Color')?`${colorLabel(state[key])} · ${state[key]}`:RU[state[key]];}
  refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
  const prices=catalog.filter(p=>p.series==='G').flatMap(p=>Object.values(p.prices||{})).map(p=>p.unheated).filter(n=>typeof n==='number'&&Number.isFinite(n));
