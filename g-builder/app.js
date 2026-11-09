@@ -13,6 +13,9 @@ const defaults=()=>({side:'smooth',sideColor:'9860',topColor:'9861',sideStitch:'
 const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
 const HEAT_PRICE=7900,VIB_PRICE=4900,HEAT_VIB_PRICE=11900;
 const ALC_SIDE_PRICE=4900,ALC_FULL_PRICE=8900;
+const MARK_PRICE=3500;
+const freeNote='<p class="choice-price choice-price-free">+0 ₽</p>';
+const markNote=`<p class="choice-price">+${money(MARK_PRICE)} при добавлении метки</p>`;
 function heatVibGroup(){const both=state.heat==='yes'&&state.vibration==='yes';
  return `<div class="choices" id="heatvib-group">
   <button type="button" class="choice" data-hv="heat" aria-pressed="${state.heat==='yes'}" ${both?'hidden':''}><span>Подогрев<span class="hv-price">+${money(HEAT_PRICE)}</span></span></button>
@@ -31,14 +34,14 @@ function palette(key,colors,isMarker=false){return `${isMarker?`<input class="pa
 function controls(){
  $('#options').innerHTML=field('01','Форма руля','<div class="fixed">Круглый руль <span>Выбрано ✓</span></div>')+
  field('02','Материал в зоне хвата',choices('side',MATERIALS))+
- field('03','Цвет зоны хвата',palette('sideColor',data.leathers,true))+
- field('04','Строчка обода',palette('sideStitch',data.stitches))+
+ field('03','Цвет зоны хвата',palette('sideColor',data.leathers,true)+freeNote)+
+ field('04','Строчка обода',palette('sideStitch',data.stitches)+freeNote)+
  field('05','Материал сверху и снизу',choices('top',[...MATERIALS,...CARBONS])+`<p class="choice-price" id="alc-price">${alcPriceText()}</p>`)+
- field('06','Цвет верха и низа',palette('topColor',data.leathers,true),'top-color-field')+
+ field('06','Цвет верха и низа',palette('topColor',data.leathers,true)+freeNote,'top-color-field')+
  field('08','Накладка на спицы',choices('trim',TRIMS))+
  field('09','Обивка подушки',choices('airbag',AIRBAGS)+'<p class="picked">Цвет обивки — чёрный глянец</p>')+
  field('10','Строчка на подушке',`<div id="airbag-stitch">${palette('airbagStitch',data.stitches)}</div><div id="original-note" class="fixed">Штатная отделка подушки</div>`)+
- field('11','Метка на 12 часов',choices('markerMode',[['none','Без метки'],['yes','Добавить метку']])+`<div id="marker-colors" hidden>${palette('marker',data.markers,true)}</div>`)+
+ field('11','Метка на 12 часов',choices('markerMode',[['none','Без метки'],['yes','Добавить метку']])+markNote+`<div id="marker-colors" hidden>${palette('marker',data.markers,true)}</div>`)+
  field('12','Подогрев и вибро',heatVibGroup())+
  field('14','Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Бесплатно. Работу функций проверим по Вашему автомобилю.</p>');
  $('#options').elements.markerMode.value=state.marker==='none'?'none':'yes';enhancePanels($('#options'));sync();

@@ -7,6 +7,9 @@ const BASE=new URL('./',import.meta.url),SIZE=1254;
 const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
 const HEAT_PRICE=7900,VIB_PRICE=4900,HEAT_VIB_PRICE=11900;
 const ALC_SIDE_PRICE=4900,ALC_FULL_PRICE=8900;
+const MARK_PRICE=3500;
+const freeNote=()=>model.series!=='F'?'':'<p class="choice-price choice-price-free">+0 ₽</p>';
+const markNote=()=>model.series!=='F'?'':`<p class="choice-price">+${money(MARK_PRICE)} при добавлении метки</p>`;
 function heatVibGroup(){if(model.series!=='F')return choices('heat',[['no','Без подогрева'],['yes','С подогревом']])+choices('vibration',[['no','Без вибро'],['yes','С вибро']]);
  const both=state.heat==='yes'&&state.vibration==='yes';
  return `<div class="choices" id="heatvib-group">
@@ -32,13 +35,13 @@ function fixedColor(code){return `<div class="fixed" data-color-code="${code}"><
 function controls(){let n=0;const section=(title,html,id='')=>field(++n,title,html,id);const sh=shape();
  $('#options').innerHTML=section('Форма руля',`<div class="shapes">${SHAPES.filter(([id])=>model.shapes[id]).map(([id,label])=>`<label class="choice shape-choice"><input type="radio" name="shape" value="${id}" ${state.shape===id?'checked':''}><img src="${asset(id+'.webp')}" alt="${esc(label)}" loading="lazy"><span>${label}</span></label>`).join('')}</div>`)+
  section('Материал в зоне хвата',choices('side',MATERIALS.filter(([id])=>sh.zones.side.includes(id))))+
- section('Цвет зоны хвата',swatches('sideColor',palette.leathers,'color'))+
- section('Строчка обода',swatches('sideStitch',palette.stitches))+
+ section('Цвет зоны хвата',swatches('sideColor',palette.leathers,'color')+freeNote())+
+ section('Строчка обода',swatches('sideStitch',palette.stitches)+freeNote())+
  section(state.shape==='yoke'?'Материал снизу':'Материал сверху и снизу',choices('top',[...MATERIALS.filter(([id])=>sh.zones[sh.tbToken].includes(id)),...CARBONS.filter(([id])=>sh.carbons.includes(id))])+alcPriceNote())+
- section('Цвет верха и низа',swatches('topColor',palette.leathers,'color'),'top-color-field')+
+ section('Цвет верха и низа',swatches('topColor',palette.leathers,'color')+freeNote(),'top-color-field')+
  (model.lowerTrim?section('Накладка на спицы',choices('trim',[['original','Штатная вставка'],...CARBONS])):'')+
  (model.airbag?section('Обивка подушки',choices('airbag',AIRBAGS.filter(([id])=>id==='original'||model.airbag.materials.includes(id))))+section('Цвет подушки',model.series==='F'?fixedColor('9860'):swatches('airbagColor',palette.airbagColors,'color'),'bag-color-field')+section('Строчка на подушке',swatches('airbagStitch',palette.stitches),'bag-stitch-field'):'')+
- (sh.marker?section('Метка на 12 часов',choices('markerMode',[['none','Без метки'],['yes','Добавить метку']])+`<div id="marker-colors">${swatches('marker',palette.markers,'marker')}</div>`):'')+
+ (sh.marker?section('Метка на 12 часов',choices('markerMode',[['none','Без метки'],['yes','Добавить метку']])+markNote()+`<div id="marker-colors">${swatches('marker',palette.markers,'marker')}</div>`):'')+
  (sh.led?section('LED-дисплей',choices('led',[['no','Без дисплея'],['yes','С дисплеем']])):'')+
  section('Подогрев и вибро',heatVibGroup())+
  section('Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Бесплатно. Работу функций проверим по Вашему автомобилю.</p>');

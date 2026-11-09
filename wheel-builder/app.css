@@ -8,3 +8,4 @@
 .hv-price{display:block;margin-top:4px;font-size:12px;font-weight:700;color:var(--accent)}
 .choice[aria-pressed="true"]{border-color:var(--accent);background:#e23b3b14}
 .choice[aria-pressed="true"]::after{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--card)}
+.choice-price-free{color:var(--faint)}
