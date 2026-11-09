@@ -15,7 +15,7 @@ function heatVibGroup(){if(model.series!=='F')return choices('heat',[['no','Бе
  return `<div class="choices" id="heatvib-group">
   <button type="button" class="choice" data-hv="heat" aria-pressed="${state.heat==='yes'}" ${both?'hidden':''}><span>Подогрев<span class="hv-price">+${money(HEAT_PRICE)}</span></span></button>
   <button type="button" class="choice" data-hv="vib" aria-pressed="${state.vibration==='yes'}" ${both?'hidden':''}><span>Вибро<span class="hv-price">+${money(VIB_PRICE)}</span></span></button>
-  <button type="button" class="choice" data-hv="both" aria-pressed="${both}" ${both?'':'hidden'}><span>Подогрев + вибро<span class="hv-price">+${money(HEAT_VIB_PRICE)}</span></span></button>
+  <button type="button" class="choice" data-hv="both" aria-pressed="${both}" ${both?'':'hidden'}><span>Подогрев + вибро<span class="hv-price"><s>${money(HEAT_PRICE+VIB_PRICE)}</s> ${money(HEAT_VIB_PRICE)}</span></span></button>
  </div>`;}
 function alcCount(){return (state.side==='alcantara'?1:0)+(state.top==='alcantara'?1:0);}
 function alcPriceText(){const n=alcCount();if(n===0)return'';return n===1?`+${money(ALC_SIDE_PRICE)} — отделка алькантарой`:`+${money(ALC_FULL_PRICE)} — алькантара по всему рулю`;}
