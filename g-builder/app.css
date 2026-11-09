@@ -3,3 +3,6 @@
 @media(max-width:760px){body.is-compact .stage{height:min(100vw,31svh)}.choice,.swatch{scroll-margin-top:calc(31svh + 55px);scroll-margin-bottom:140px}}
 .choice-price{clear:both;font-size:12px;font-weight:700;color:var(--accent);padding-top:10px;margin:0}
 .choice-price s{color:var(--faint);font-weight:400;margin-right:4px}
+.hv-price{display:block;margin-top:4px;font-size:12px;font-weight:700;color:var(--accent)}
+.choice[aria-pressed="true"]{border-color:var(--accent);background:#e23b3b14}
+.choice[aria-pressed="true"]::after{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--card)}

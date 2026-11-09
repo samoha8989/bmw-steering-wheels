@@ -11,8 +11,16 @@ const RU={black:'Чёрная',white:'Белая',charcoal:'Тёмно-сера�
 const MRU={'White':'Белый','Piano Black':'Чёрный глянец','Jet Black':'Чёрный','Raven':'Вороново крыло','Carbon Black':'Угольно-чёрный','Shadow Grey':'Теневой серый','Charcoal':'Угольный','Slate':'Сланцевый','Onyx':'Оникс','Gunmetal':'Оружейный серый','Steel':'Стальной','Anthracite':'Антрацит','Iron':'Железный','Graphite':'Графитовый','Slate Grey':'Сланцево-серый','Storm Grey':'Грозовой серый','Ash':'Пепельный','Basalt Grey':'Базальтовый','Pewter':'Оловянный','Smoke':'Дымчатый','Granite':'Гранитный','Silver Grey':'Серебристо-серый','Mist Grey':'Туманный серый','Moonlight White':'Лунный белый','Ivory':'Слоновая кость','Alpine White':'Альпийский белый','Cream':'Кремовый','Arctic White':'Арктический белый','Azalea':'Азалия','Almond':'Миндальный','Sand':'Песочный','Oat':'Овсяный','Wheat':'Пшеничный','Stone':'Каменный','Greige':'Серо-бежевый','China Red':'Китайский красный','Flame Red':'Огненно-красный','Rust Red':'Кирпично-красный','Ruby Red':'Рубиновый','Bordeaux':'Бордо','Wine':'Винный','Saffron':'Оранжевый','Mustard':'Горчичный','Gold':'Золотой','Ochre':'Охра','Earth Brown':'Землисто-коричневый','Khaki Brown':'Хаки','Cognac':'Коньячный','Signal Brown':'Сигнально-коричневый','Caramel':'Карамельный','Tobacco':'Табачный','Dark Brown':'Тёмно-коричневый','Walnut':'Ореховый','Bitter Brown':'Горький шоколад','Bark':'Древесный','Espresso':'Эспрессо','Taupe':'Тауп','Coffee':'Кофейный','Chocolate':'Шоколадный','Aqua Blue':'Аквамариновый','Azure':'Лазурный','Sky Blue':'Небесно-голубой','Steel Blue':'Стальной синий','Petrol':'Петроль','Violet Blue':'Сине-фиолетовый','Imperial Blue':'Королевский синий','Midnight Blue':'Полуночный синий','Grey Blue':'Серо-голубой','Ink Teal':'Чернильно-бирюзовый','Deep Blue':'Глубокий синий','Diamond Blue':'Бриллиантовый голубой','Navy':'Тёмно-синий','Aqua':'Морская волна','Turquoise':'Бирюзовый','Sage':'Шалфейный','Emerald':'Изумрудный','Plum':'Сливовый'};
 const defaults=()=>({side:'smooth',sideColor:'9860',topColor:'9861',sideStitch:'black',top:'smooth',topStitch:'black',trim:'original',airbag:'original',airbagStitch:'black',marker:'none',heat:'no',vibration:'no',acc:'no'});
 const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
-const HEAT_PRICE=7900,VIB_PRICE=4900,VIB_PRICE_WITH_HEAT=3900;
-function vibPriceHTML(){return state.heat==='yes'?`<s>${money(VIB_PRICE)}</s> ${money(VIB_PRICE_WITH_HEAT)} к стоимости руля`:`+${money(VIB_PRICE)} к стоимости руля`;}
+const HEAT_PRICE=7900,VIB_PRICE=4900,HEAT_VIB_PRICE=11900;
+const ALC_SIDE_PRICE=4900,ALC_FULL_PRICE=8900;
+function heatVibGroup(){const both=state.heat==='yes'&&state.vibration==='yes';
+ return `<div class="choices" id="heatvib-group">
+  <button type="button" class="choice" data-hv="heat" aria-pressed="${state.heat==='yes'}" ${both?'hidden':''}><span>Подогрев<span class="hv-price">+${money(HEAT_PRICE)}</span></span></button>
+  <button type="button" class="choice" data-hv="vib" aria-pressed="${state.vibration==='yes'}" ${both?'hidden':''}><span>Вибро<span class="hv-price">+${money(VIB_PRICE)}</span></span></button>
+  <button type="button" class="choice" data-hv="both" aria-pressed="${both}" ${both?'':'hidden'}><span>Подогрев + вибро<span class="hv-price">+${money(HEAT_VIB_PRICE)}</span></span></button>
+ </div>`;}
+function alcCount(){return (state.side==='alcantara'?1:0)+(state.top==='alcantara'?1:0);}
+function alcPriceText(){const n=alcCount();if(n===0)return'';return n===1?`+${money(ALC_SIDE_PRICE)} — отделка алькантарой`:`+${money(ALC_FULL_PRICE)} — алькантара по всему рулю`;}
 let state=defaults(),data,catalog=[],serial=0,ready=false,rendering=false;
 const label=(options,id)=>options.find(o=>o[0]===id)?.[1]||id;
 const color=id=>data.leathers.find(c=>c.code===id),colorLabel=id=>MRU[color(id).name]||color(id).name;
@@ -25,15 +33,14 @@ function controls(){
  field('02','Материал в зоне хвата',choices('side',MATERIALS))+
  field('03','Цвет зоны хвата',palette('sideColor',data.leathers,true))+
  field('04','Строчка обода',palette('sideStitch',data.stitches))+
- field('05','Материал сверху и снизу',choices('top',[...MATERIALS,...CARBONS]))+
+ field('05','Материал сверху и снизу',choices('top',[...MATERIALS,...CARBONS])+`<p class="choice-price" id="alc-price">${alcPriceText()}</p>`)+
  field('06','Цвет верха и низа',palette('topColor',data.leathers,true),'top-color-field')+
  field('08','Накладка на спицы',choices('trim',TRIMS))+
  field('09','Обивка подушки',choices('airbag',AIRBAGS)+'<p class="picked">Цвет обивки — чёрный глянец</p>')+
  field('10','Строчка на подушке',`<div id="airbag-stitch">${palette('airbagStitch',data.stitches)}</div><div id="original-note" class="fixed">Штатная отделка подушки</div>`)+
  field('11','Метка на 12 часов',choices('markerMode',[['none','Без метки'],['yes','Добавить метку']])+`<div id="marker-colors" hidden>${palette('marker',data.markers,true)}</div>`)+
- field('12','Подогрев',choices('heat',[['no','Без подогрева'],['yes','С подогревом']])+`<p class="choice-price">+${money(HEAT_PRICE)} к стоимости руля</p>`)+
- field('13','Вибро',choices('vibration',[['no','Без вибро'],['yes','С вибро']])+`<p class="choice-price" id="vib-price">${vibPriceHTML()}</p>`)+
- field('14','Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Работу функций проверим по Вашему автомобилю.</p>');
+ field('12','Подогрев и вибро',heatVibGroup())+
+ field('14','Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Бесплатно. Работу функций проверим по Вашему автомобилю.</p>');
  $('#options').elements.markerMode.value=state.marker==='none'?'none':'yes';enhancePanels($('#options'));sync();
 }
 function rows(){return [['Автомобиль','BMW G'],['Форма','Круглый'],['Зона хвата',label(MATERIALS,state.side)],['Цвет зоны хвата',colorLabel(state.sideColor)],['Строчка обода',RU[state.sideStitch]],['Верх и низ',label([...MATERIALS,...CARBONS],state.top)],...(!isCarbon()?[['Цвет верха и низа',colorLabel(state.topColor)]]:[]),['Накладка на спицы',label(TRIMS,state.trim)],['Подушка',label(AIRBAGS,state.airbag)],...(state.airbag!=='original'?[['Цвет подушки','Чёрный глянец · 9860'],['Строчка на подушке',RU[state.airbagStitch]]]:[]),['Метка на 12 часов',state.marker==='none'?'Без метки':MRU[marker(state.marker).name]||marker(state.marker).name],['Подогрев',state.heat==='yes'?'С подогревом':'Без подогрева'],['Вибро',state.vibration==='yes'?'С вибро':'Без вибро'],['Адаптивный круиз-контроль',state.acc==='yes'?'С адаптивным круизом':'Без адаптивного круиза']];}
@@ -41,7 +48,8 @@ function isCarbon(){return CARBONS.some(([id])=>id===state.top);}
 function sync(){
  $('#top-color-field').hidden=isCarbon();
  $('#airbag-stitch').hidden=state.airbag==='original';$('#original-note').hidden=state.airbag!=='original';$('#marker-colors').hidden=state.marker==='none';
- if($('#vib-price'))$('#vib-price').innerHTML=vibPriceHTML();
+ if($('#heatvib-group'))$('#heatvib-group').outerHTML=heatVibGroup();
+ if($('#alc-price'))$('#alc-price').textContent=alcPriceText();
  for(const el of document.querySelectorAll('[data-picked]')){const key=el.dataset.picked;el.textContent=key==='marker'?(state.marker==='none'?'':`${MRU[marker(state.marker).name]||marker(state.marker).name} · ${state.marker}`):key.endsWith('Color')?`${colorLabel(state[key])} · ${state[key]}`:RU[state[key]];}
  refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
  const prices=catalog.filter(p=>p.series==='G').flatMap(p=>Object.values(p.prices||{})).map(p=>state.heat==='yes'?p.heated:p.unheated).filter(n=>typeof n==='number'&&Number.isFinite(n));
@@ -80,6 +88,14 @@ function allowedOption(key){
 }
 const requestSharing=bindRequest({canvas:$('#wheel'),order:$('#order'),shareButton:$('#share-photo'),note:$('#share-note'),getRequest:currentRequest,isReady:()=>ready&&!rendering});
 $('#options').addEventListener('submit',e=>e.preventDefault());
+$('#options').addEventListener('click',e=>{
+ const hv=e.target.closest('[data-hv]');if(!hv)return;
+ const v=hv.dataset.hv;
+ if(v==='heat')state.heat=state.heat==='yes'?'no':'yes';
+ else if(v==='vib')state.vibration=state.vibration==='yes'?'no':'yes';
+ else if(v==='both'){state.heat='no';state.vibration='no';}
+ sync();render();
+});
 $('#options').addEventListener('change',e=>{const {name,value}=e.target;if(name==='sideStitch')state.topStitch=value;if(name==='markerMode'){state.marker=value==='none'?'none':'white';if(value!=='none')$('#options').querySelector('input[name="marker"][value="white"]').checked=true;}else if(name in state)state[name]=value;else return;sync();render();});
 $('#options').addEventListener('input',e=>{if(!e.target.matches('.palette-search'))return;const q=e.target.value.trim().toLowerCase(),key=e.target.dataset.search;for(const c of document.querySelectorAll(`[data-palette="${key}"] label`))c.hidden=!c.dataset.colorName.includes(q);});
 $('#reset').addEventListener('click',()=>{state=defaults();history.replaceState(null,'',location.pathname+location.search);$('#shared-note').textContent='';controls();render();});
