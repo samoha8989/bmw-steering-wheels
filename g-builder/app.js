@@ -24,6 +24,11 @@ function heatVibGroup(){const both=state.heat==='yes'&&state.vibration==='yes';
  </div>`;}
 function alcCount(){return (state.side==='alcantara'?1:0)+(state.top==='alcantara'?1:0);}
 function alcPriceText(){const n=alcCount();if(n===0)return'';return n===1?`+${money(ALC_SIDE_PRICE)} — отделка алькантарой`:`+${money(ALC_FULL_PRICE)} — алькантара по всему рулю`;}
+function addonsTotal(){let sum=0;const both=state.heat==='yes'&&state.vibration==='yes';
+ if(both)sum+=HEAT_VIB_PRICE;else if(state.heat==='yes')sum+=HEAT_PRICE;else if(state.vibration==='yes')sum+=VIB_PRICE;
+ const n=alcCount();if(n===1)sum+=ALC_SIDE_PRICE;else if(n===2)sum+=ALC_FULL_PRICE;
+ if(state.marker!=='none')sum+=MARK_PRICE;
+ return sum;}
 let state=defaults(),data,catalog=[],serial=0,ready=false,rendering=false;
 const label=(options,id)=>options.find(o=>o[0]===id)?.[1]||id;
 const color=id=>data.leathers.find(c=>c.code===id),colorLabel=id=>MRU[color(id).name]||color(id).name;
@@ -55,8 +60,8 @@ function sync(){
  if($('#alc-price'))$('#alc-price').textContent=alcPriceText();
  for(const el of document.querySelectorAll('[data-picked]')){const key=el.dataset.picked;el.textContent=key==='marker'?(state.marker==='none'?'':`${MRU[marker(state.marker).name]||marker(state.marker).name} · ${state.marker}`):key.endsWith('Color')?`${colorLabel(state[key])} · ${state[key]}`:RU[state[key]];}
  refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
- const prices=catalog.filter(p=>p.series==='G').flatMap(p=>Object.values(p.prices||{})).map(p=>state.heat==='yes'?p.heated:p.unheated).filter(n=>typeof n==='number'&&Number.isFinite(n));
- $('#price').textContent=prices.length?'от '+new Intl.NumberFormat('ru-RU').format(Math.min(...prices))+' ₽':'Уточним стоимость';
+ const prices=catalog.filter(p=>p.series==='G').flatMap(p=>Object.values(p.prices||{})).map(p=>p.unheated).filter(n=>typeof n==='number'&&Number.isFinite(n));
+ $('#price').textContent=prices.length?'от '+new Intl.NumberFormat('ru-RU').format(Math.min(...prices)+addonsTotal())+' ₽':'Уточним стоимость';
  $('#order').href=telegramLink(currentRequest().message);
 }
 async function load(path){if(!imgCache.has(path))imgCache.set(path,(async()=>{const im=new Image();im.src=new URL(path,ASSET);await im.decode();return im;})().catch(e=>{imgCache.delete(path);throw e;}));return imgCache.get(path);}
