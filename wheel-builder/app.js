@@ -4,6 +4,13 @@ import {renderMaterial} from '../g-builder/material-renderer.js?v=153';
 import {RU,MRU} from './labels.js?v=153';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const BASE=new URL('./',import.meta.url),SIZE=1254;
+const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
+const HEAT_PRICE=7900,VIB_PRICE=4900,VIB_PRICE_WITH_HEAT=3900;
+function funcPrice(key){if(model.series!=='F')return'';
+ if(key==='heat')return`<p class="choice-price" id="heat-price">+${money(HEAT_PRICE)} к стоимости руля</p>`;
+ if(key==='vibration')return`<p class="choice-price" id="vib-price">${vibPriceHTML()}</p>`;
+ return'';}
+function vibPriceHTML(){return state.heat==='yes'?`<s>${money(VIB_PRICE)}</s> ${money(VIB_PRICE_WITH_HEAT)} к стоимости руля`:`+${money(VIB_PRICE)} к стоимости руля`;}
 const MATERIALS=[['perforated','Перфорированная кожа'],['alcantara','Алькантара'],['smooth','Гладкая кожа']],CARBONS=[['forged','Кованый карбон'],['glossy','Глянцевый карбон'],['matte','Матовый карбон']],AIRBAGS=[['original','Штатная подушка'],['alcantara','Алькантара'],['smooth','Гладкая кожа']],SHAPES=[['round','Круглый'],['yoke','Открытый сверху'],['flat-flat','Плоский сверху и снизу'],['flat-round','Анатомия']];
 let models=[],palette,model,catalog=[],state,serial=0,ready=false;
 const images=new Map(),renders=new Map();
@@ -27,8 +34,8 @@ function controls(){let n=0;const section=(title,html,id='')=>field(++n,title,ht
  (model.airbag?section('Обивка подушки',choices('airbag',AIRBAGS.filter(([id])=>id==='original'||model.airbag.materials.includes(id))))+section('Цвет подушки',model.series==='F'?fixedColor('9860'):swatches('airbagColor',palette.airbagColors,'color'),'bag-color-field')+section('Строчка на подушке',swatches('airbagStitch',palette.stitches),'bag-stitch-field'):'')+
  (sh.marker?section('Метка на 12 часов',choices('markerMode',[['none','Без метки'],['yes','Добавить метку']])+`<div id="marker-colors">${swatches('marker',palette.markers,'marker')}</div>`):'')+
  (sh.led?section('LED-дисплей',choices('led',[['no','Без дисплея'],['yes','С дисплеем']])):'')+
- section('Подогрев',choices('heat',[['no','Без подогрева'],['yes','С подогревом']]))+
- section('Вибро',choices('vibration',[['no','Без вибро'],['yes','С вибро']]))+
+ section('Подогрев',choices('heat',[['no','Без подогрева'],['yes','С подогревом']])+funcPrice('heat'))+
+ section('Вибро',choices('vibration',[['no','Без вибро'],['yes','С вибро']])+funcPrice('vibration'))+
  section('Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Работу функций проверим по Вашему автомобилю.</p>');
  enhancePanels($('#options'));if($('#options').elements.markerMode)$('#options').elements.markerMode.value=state.marker==='none'?'none':'yes';sync();
 }
@@ -38,6 +45,7 @@ function price(){if(model.series==='F'){const nums=catalog.filter(p=>p.series===
  const nums=catalog.filter(p=>p.series==='Mercedes'&&Number.isFinite(p.optBase)).map(p=>{if(state.heat!=='yes')return p.optBase;const extra=p.opts?.find(o=>o.k==='heat'&&!o.l)?.price;return Number.isFinite(extra)?p.optBase+extra:null;}).filter(Number.isFinite);return nums.length?Math.min(...nums):null;}
 function sync(){for(const input of $('#options').querySelectorAll('input[type=radio]')){const value=input.name==='markerMode'?(state.marker==='none'?'none':'yes'):state[input.name];input.checked=input.value===value;}
 for(const id of ['top-color-field'])$('#'+id).hidden=isCarbon();for(const id of ['bag-color-field','bag-stitch-field'])if($('#'+id))$('#'+id).hidden=state.airbag==='original';if($('#marker-colors'))$('#marker-colors').hidden=state.marker==='none';
+ if($('#vib-price'))$('#vib-price').innerHTML=vibPriceHTML();
  for(const el of document.querySelectorAll('[data-picked]')){const key=el.dataset.picked;el.textContent=key==='marker'?(state.marker==='none'?'':`${ru(marker(state.marker))} · ${state.marker}`):key.endsWith('Color')?`${ru(color(state[key]))} · ${state[key]}`:RU[state[key]];}
  refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');const p=price();$('#price').textContent=p==null?'Уточним стоимость':'от '+new Intl.NumberFormat('ru-RU').format(p)+' ₽';$('#model-name').textContent=model.title+' · '+name(SHAPES,state.shape).toLowerCase();
  $('#order').href=telegramLink(currentRequest().message);}

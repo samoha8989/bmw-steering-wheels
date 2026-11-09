@@ -151,9 +151,14 @@ const STEPS = [
   { key: 'done', title: 'Ваш руль', sub: 'Проверьте выбор и отправьте — менеджер назовёт точную цену и срок.' },
 ];
 
+const HEAT_PRICE = 7900, VIB_PRICE = 4900, VIB_PRICE_WITH_HEAT = 3900;
 const FUNCS = [
-  { k: 'heat', l: 'Подогрев', note: () => isE() ? 'На E-кузова рули с подогревом не делаем' : 'Работает, если подогрев был в машине изначально', off: () => isE() },
-  { k: 'vib', l: 'Вибромотор', note: () => 'Работает, если вибрация была в машине' },
+  { k: 'heat', l: 'Подогрев', note: () => isE() ? 'На E-кузова рули с подогревом не делаем' : 'Работает, если подогрев был в машине изначально', off: () => isE(),
+    price: () => isBMW() && !isE() ? `+${money(HEAT_PRICE)}` : '' },
+  { k: 'vib', l: 'Вибромотор', note: () => 'Работает, если вибрация была в машине',
+    price: () => !isBMW() ? '' : funcs().heat
+      ? `<s>${money(VIB_PRICE)}</s> ${money(VIB_PRICE_WITH_HEAT)}`
+      : `+${money(VIB_PRICE)}` },
   { k: 'cruise', l: 'Кнопка круиза', note: () => 'Работает, если круиз был в машине' },
   { k: 'acc', l: 'Адаптивный круиз-контроль', note: () => 'Совместимость уточним по Вашему автомобилю' },
 ];
@@ -188,7 +193,7 @@ function priceFrom(catalog) {
   const prices = catalog.filter(p => p.series === ser).flatMap(p => Object.values(p.prices || {}));
   const pick = prices.map(o => ser === 'E' ? o.single : f.heat ? o.heated : o.unheated).filter(n => typeof n === 'number');
   if (!pick.length) return null;
-  const extra = [f.vib && 'вибромотор', f.cruise && 'круиз', f.acc && 'адаптивный круиз',
+  const extra = [f.vib && 'вибромотор ' + (f.heat ? '+' + money(VIB_PRICE_WITH_HEAT) : '+' + money(VIB_PRICE)), f.cruise && 'круиз', f.acc && 'адаптивный круиз',
     st.rim && !['smooth', 'perf', 'leather'].includes(st.rim) && 'обод: ' + LABEL('rim', st.rim).toLowerCase(),
     !isG() && (st.cover === 'carbon' || st.cover === 'forged') && 'накладка: ' + LABEL('cover', st.cover).toLowerCase(),
     isG() && st.trim && st.trim !== 'none' && 'накладка кнопок: ' + LABEL('trim', st.trim).toLowerCase(),
@@ -353,7 +358,7 @@ function markWheelReady(wheelEl) {
 function stepBody(catalog, s) {
   if (s.key === 'functions') {
     const f = funcs();
-    return `<div class="bd-options bd-list">${FUNCS.map(x => { const off = x.off && x.off(); return `<button type="button" class="bd-opt bd-switch" data-bd-func="${x.k}" role="switch" aria-checked="${!!f[x.k] && !off}" ${off ? 'disabled' : ''}><span class="bd-opt-text"><b>${x.l}</b><small>${esc(x.note())}</small></span><span class="bd-toggle" aria-hidden="true"></span></button>`; }).join('')}</div>`;
+    return `<div class="bd-options bd-list">${FUNCS.map(x => { const off = x.off && x.off(); const price = x.price && x.price(); return `<button type="button" class="bd-opt bd-switch" data-bd-func="${x.k}" role="switch" aria-checked="${!!f[x.k] && !off}" ${off ? 'disabled' : ''}><span class="bd-opt-text"><b>${x.l}${price ? `<span class="bd-func-price">${price}</span>` : ''}</b><small>${esc(x.note())}</small></span><span class="bd-toggle" aria-hidden="true"></span></button>`; }).join('')}</div>`;
   }
   const opts = s.options();
   return `<div class="bd-options ${opts.some(o => o.thumb) ? 'bd-photos' : ''}">${opts.map(o => optionCard(s, o)).join('')}</div>`;

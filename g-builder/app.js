@@ -10,6 +10,9 @@ const AIRBAGS=[['original','Штатная подушка'],['alcantara','Аль
 const RU={black:'Чёрная',white:'Белая',charcoal:'Тёмно-серая',light_gray:'Светло-серая',tan:'Бежевая',red:'Красная',burgundy:'Бордовая',hot_pink:'Ярко-розовая',royal_blue:'Синяя',navy:'Тёмно-синяя',baby_blue:'Голубая',racing_green:'Тёмно-зелёная',lime:'Лаймовая',teal:'Бирюзовая',yellow:'Жёлтая',orange:'Оранжевая',brown:'Коричневая',chocolate:'Шоколадная',gold:'Золотая'};
 const MRU={'White':'Белый','Piano Black':'Чёрный глянец','Jet Black':'Чёрный','Raven':'Вороново крыло','Carbon Black':'Угольно-чёрный','Shadow Grey':'Теневой серый','Charcoal':'Угольный','Slate':'Сланцевый','Onyx':'Оникс','Gunmetal':'Оружейный серый','Steel':'Стальной','Anthracite':'Антрацит','Iron':'Железный','Graphite':'Графитовый','Slate Grey':'Сланцево-серый','Storm Grey':'Грозовой серый','Ash':'Пепельный','Basalt Grey':'Базальтовый','Pewter':'Оловянный','Smoke':'Дымчатый','Granite':'Гранитный','Silver Grey':'Серебристо-серый','Mist Grey':'Туманный серый','Moonlight White':'Лунный белый','Ivory':'Слоновая кость','Alpine White':'Альпийский белый','Cream':'Кремовый','Arctic White':'Арктический белый','Azalea':'Азалия','Almond':'Миндальный','Sand':'Песочный','Oat':'Овсяный','Wheat':'Пшеничный','Stone':'Каменный','Greige':'Серо-бежевый','China Red':'Китайский красный','Flame Red':'Огненно-красный','Rust Red':'Кирпично-красный','Ruby Red':'Рубиновый','Bordeaux':'Бордо','Wine':'Винный','Saffron':'Оранжевый','Mustard':'Горчичный','Gold':'Золотой','Ochre':'Охра','Earth Brown':'Землисто-коричневый','Khaki Brown':'Хаки','Cognac':'Коньячный','Signal Brown':'Сигнально-коричневый','Caramel':'Карамельный','Tobacco':'Табачный','Dark Brown':'Тёмно-коричневый','Walnut':'Ореховый','Bitter Brown':'Горький шоколад','Bark':'Древесный','Espresso':'Эспрессо','Taupe':'Тауп','Coffee':'Кофейный','Chocolate':'Шоколадный','Aqua Blue':'Аквамариновый','Azure':'Лазурный','Sky Blue':'Небесно-голубой','Steel Blue':'Стальной синий','Petrol':'Петроль','Violet Blue':'Сине-фиолетовый','Imperial Blue':'Королевский синий','Midnight Blue':'Полуночный синий','Grey Blue':'Серо-голубой','Ink Teal':'Чернильно-бирюзовый','Deep Blue':'Глубокий синий','Diamond Blue':'Бриллиантовый голубой','Navy':'Тёмно-синий','Aqua':'Морская волна','Turquoise':'Бирюзовый','Sage':'Шалфейный','Emerald':'Изумрудный','Plum':'Сливовый'};
 const defaults=()=>({side:'smooth',sideColor:'9860',topColor:'9861',sideStitch:'black',top:'smooth',topStitch:'black',trim:'original',airbag:'original',airbagStitch:'black',marker:'none',heat:'no',vibration:'no',acc:'no'});
+const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
+const HEAT_PRICE=7900,VIB_PRICE=4900,VIB_PRICE_WITH_HEAT=3900;
+function vibPriceHTML(){return state.heat==='yes'?`<s>${money(VIB_PRICE)}</s> ${money(VIB_PRICE_WITH_HEAT)} к стоимости руля`:`+${money(VIB_PRICE)} к стоимости руля`;}
 let state=defaults(),data,catalog=[],serial=0,ready=false,rendering=false;
 const label=(options,id)=>options.find(o=>o[0]===id)?.[1]||id;
 const color=id=>data.leathers.find(c=>c.code===id),colorLabel=id=>MRU[color(id).name]||color(id).name;
@@ -28,8 +31,8 @@ function controls(){
  field('09','Обивка подушки',choices('airbag',AIRBAGS)+'<p class="picked">Цвет обивки — чёрный глянец</p>')+
  field('10','Строчка на подушке',`<div id="airbag-stitch">${palette('airbagStitch',data.stitches)}</div><div id="original-note" class="fixed">Штатная отделка подушки</div>`)+
  field('11','Метка на 12 часов',choices('markerMode',[['none','Без метки'],['yes','Добавить метку']])+`<div id="marker-colors" hidden>${palette('marker',data.markers,true)}</div>`)+
- field('12','Подогрев',choices('heat',[['no','Без подогрева'],['yes','С подогревом']]))+
- field('13','Вибро',choices('vibration',[['no','Без вибро'],['yes','С вибро']]))+
+ field('12','Подогрев',choices('heat',[['no','Без подогрева'],['yes','С подогревом']])+`<p class="choice-price">+${money(HEAT_PRICE)} к стоимости руля</p>`)+
+ field('13','Вибро',choices('vibration',[['no','Без вибро'],['yes','С вибро']])+`<p class="choice-price" id="vib-price">${vibPriceHTML()}</p>`)+
  field('14','Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Работу функций проверим по Вашему автомобилю.</p>');
  $('#options').elements.markerMode.value=state.marker==='none'?'none':'yes';enhancePanels($('#options'));sync();
 }
@@ -38,6 +41,7 @@ function isCarbon(){return CARBONS.some(([id])=>id===state.top);}
 function sync(){
  $('#top-color-field').hidden=isCarbon();
  $('#airbag-stitch').hidden=state.airbag==='original';$('#original-note').hidden=state.airbag!=='original';$('#marker-colors').hidden=state.marker==='none';
+ if($('#vib-price'))$('#vib-price').innerHTML=vibPriceHTML();
  for(const el of document.querySelectorAll('[data-picked]')){const key=el.dataset.picked;el.textContent=key==='marker'?(state.marker==='none'?'':`${MRU[marker(state.marker).name]||marker(state.marker).name} · ${state.marker}`):key.endsWith('Color')?`${colorLabel(state[key])} · ${state[key]}`:RU[state[key]];}
  refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
  const prices=catalog.filter(p=>p.series==='G').flatMap(p=>Object.values(p.prices||{})).map(p=>state.heat==='yes'?p.heated:p.unheated).filter(n=>typeof n==='number'&&Number.isFinite(n));
