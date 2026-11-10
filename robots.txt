@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /bmw-steering-wheels/stats.html
+Disallow: /bmw-steering-wheels/stats.js
 
 Sitemap: https://samoha8989.github.io/bmw-steering-wheels/sitemap.xml

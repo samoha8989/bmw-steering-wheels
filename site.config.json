@@ -1,0 +1,10 @@
+{
+  "site_url": "https://samoha8989.github.io/bmw-steering-wheels",
+  "brand": "BMW Steering Wheels",
+  "telegram": "samoha8989",
+  "yandex_verification": "",
+  "metrika_id": "",
+  "stats_endpoint": "",
+  "assets_version": "160",
+  "_comment": "site_url — единственное место с адресом сайта. Меняете адрес здесь и запускаете: python3 build_pages.py. yandex_verification — код из Яндекс Вебмастера (только сам код). metrika_id — номер счётчика Метрики (цифры). stats_endpoint — адрес сборщика статистики (веб-приложение Apps Script, оканчивается на /exec)."
+}
