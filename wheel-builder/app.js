@@ -1,13 +1,12 @@
-import {configurationLink,readConfiguration,requestText,telegramLink,bindRequest} from '../builder-request.js?v=170';
-import {enhancePanels,refreshPanels} from '../builder-panels.js?v=153';
+import {configurationLink,readConfiguration,requestText,telegramLink,bindRequest} from '../builder-request.js?v=171';
+import {enhancePanels,refreshPanels} from '../builder-panels.js?v=154';
 import {renderMaterial} from '../g-builder/material-renderer.js?v=153';
 import {RU,MRU} from './labels.js?v=153';
+import {PRICES,money,badge,setBadge,addons,quote,priceRow,showPrice} from '../builder-prices.js?v=1';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const BASE=new URL('./',import.meta.url),SIZE=1254;
-const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
-const HEAT_PRICE=7900,VIB_PRICE=4900,HEAT_VIB_PRICE=11900;
-const ALC_SIDE_PRICE=2500,ALC_FULL_PRICE=8900;
-const MARK_PRICE=3500;
+const HEAT_PRICE=PRICES.heat,VIB_PRICE=PRICES.vibration,HEAT_VIB_PRICE=PRICES.heatVibration;
+const ALC_SIDE_PRICE=PRICES.alcantaraSide,ALC_FULL_PRICE=PRICES.alcantaraFull;
 function heatVibGroup(){if(model.series!=='F')return choices('heat',[['no','Без подогрева'],['yes','С подогревом']])+choices('vibration',[['no','Без вибро'],['yes','С вибро']]);
  const both=state.heat==='yes'&&state.vibration==='yes';
  return `<div class="choices" id="heatvib-group">
@@ -18,12 +17,16 @@ function heatVibGroup(){if(model.series!=='F')return choices('heat',[['no','Бе
 function alcCount(){return (state.side==='alcantara'?1:0)+(state.top==='alcantara'?1:0);}
 function alcSideBadge(){return state.top==='alcantara'?ALC_FULL_PRICE-ALC_SIDE_PRICE:ALC_SIDE_PRICE;}
 function alcTopBadge(){return state.side==='alcantara'?ALC_FULL_PRICE-ALC_SIDE_PRICE:ALC_SIDE_PRICE;}
-function choicesPriced(key,options,priceFor){return `<div class="choices">${options.map(([v,label])=>{const p=priceFor?priceFor(v):0;return `<label class="choice"><input type="radio" name="${key}" value="${v}" ${state[key]===v?'checked':''}><span>${esc(label)}${p?`<span class="hv-price" data-price-for="${key}:${v}">+${money(p)}</span>`:''}</span></label>`;}).join('')}</div>`;}
-function sidePriceFor(v){return model.series==='F'&&v==='alcantara'?alcSideBadge():0;}
-function topPriceFor(v){return model.series==='F'&&v==='alcantara'?alcTopBadge():0;}
-function markerPriceFor(v){return model.series==='F'&&v==='yes'?MARK_PRICE:0;}
+function choicesPriced(key,options,priceFor){return `<div class="choices">${options.map(([v,label])=>{const p=priceFor?priceFor(v):undefined;return `<label class="choice"><input type="radio" name="${key}" value="${v}" ${state[key]===v?'checked':''}><span>${esc(label)}${badge(p,key+':'+v)}</span></label>`;}).join('')}</div>`;}
+// Доплаты из builder-prices.js — только для BMW F; у Mercedes, Audi, Porsche прежняя схема без бейджей.
+const isF=()=>model.series==='F';
+function sidePriceFor(v){if(!isF())return;return v==='alcantara'?alcSideBadge():v==='perforated'?PRICES.perforated:undefined;}
+function topPriceFor(v){if(!isF())return;return v==='alcantara'?alcTopBadge():v==='perforated'?PRICES.perforated:v in PRICES.topCarbon?PRICES.topCarbon[v]:undefined;}
+function markerPriceFor(v){return isF()&&v==='yes'?PRICES.marker:undefined;}
+const tablePrice=table=>v=>!isF()||v==='original'?undefined:(v in table?table[v]:null);
+const NAMES={top:'Верх и низ',trim:'Накладка на спицы',airbag:'Обшивка крышки подушки'};
 const freeNote=()=>model.series!=='F'?'':'<p class="choice-price choice-price-free">+0 ₽</p>';
-const MATERIALS=[['perforated','Перфорированная кожа'],['alcantara','Алькантара'],['smooth','Гладкая кожа']],CARBONS=[['forged','Кованый карбон'],['glossy','Глянцевый карбон'],['matte','Матовый карбон']],AIRBAGS=[['original','Штатная подушка'],['alcantara','Алькантара'],['smooth','Гладкая кожа']],SHAPES=[['round','Круглый'],['yoke','Открытый сверху'],['flat-flat','Плоский сверху и снизу'],['flat-round','Анатомия']];
+const MATERIALS=[['perforated','Перфорированная кожа'],['alcantara','Алькантара'],['smooth','Гладкая кожа']],CARBONS=[['forged','Кованый карбон'],['glossy','Глянцевый карбон'],['matte','Матовый карбон']],AIRBAGS=[['original','Штатная отделка'],['smooth','Натуральная кожа'],['alcantara','Алькантара']],SHAPES=[['round','Круглый'],['yoke','Открытый сверху'],['flat-flat','Плоский сверху и снизу'],['flat-round','Анатомия']];
 let models=[],palette,model,catalog=[],state,serial=0,ready=false;
 const images=new Map(),renders=new Map();
 const name=(list,id)=>list.find(o=>o[0]===id)?.[1]||id;
@@ -42,30 +45,26 @@ function controls(){let n=0;const section=(title,html,id='')=>field(++n,title,ht
  section('Строчка обода',swatches('sideStitch',palette.stitches)+freeNote())+
  section(state.shape==='yoke'?'Материал снизу':'Материал сверху и снизу',choicesPriced('top',[...MATERIALS.filter(([id])=>sh.zones[sh.tbToken].includes(id)),...CARBONS.filter(([id])=>sh.carbons.includes(id))],topPriceFor))+
  section('Цвет верха и низа',swatches('topColor',palette.leathers,'color')+freeNote(),'top-color-field')+
- (model.lowerTrim?section('Накладка на спицы',choices('trim',[['original','Штатная вставка'],...CARBONS])):'')+
- (model.airbag?section('Обивка подушки',choices('airbag',AIRBAGS.filter(([id])=>id==='original'||model.airbag.materials.includes(id))))+section('Цвет подушки',model.series==='F'?fixedColor('9860'):swatches('airbagColor',palette.airbagColors,'color'),'bag-color-field')+section('Строчка на подушке',swatches('airbagStitch',palette.stitches),'bag-stitch-field'):'')+
+ (model.lowerTrim?section('Накладка на спицы',choicesPriced('trim',[['original','Штатная вставка'],...CARBONS],tablePrice(PRICES.trim))):'')+
+ (model.airbag?section('Обшивка крышки подушки',choicesPriced('airbag',AIRBAGS.filter(([id])=>id==='original'||model.airbag.materials.includes(id)),tablePrice(PRICES.airbag))+'<p class="picked">Меняется только обшивка крышки, модуль подушки остаётся.</p>')+section('Цвет подушки',model.series==='F'?fixedColor('9860'):swatches('airbagColor',palette.airbagColors,'color'),'bag-color-field')+section('Строчка на подушке',swatches('airbagStitch',palette.stitches),'bag-stitch-field'):'')+
  (sh.marker?section('Метка на 12 часов',choicesPriced('markerMode',[['none','Без метки'],['yes','Добавить метку']],markerPriceFor)+`<div id="marker-colors">${swatches('marker',palette.markers,'marker')}</div>`):'')+
  (sh.led?section('LED-дисплей',choices('led',[['no','Без дисплея'],['yes','С дисплеем']])):'')+
  section('Подогрев и вибро',heatVibGroup())+
  section('Адаптивный круиз-контроль',choices('acc',[['no','Без адаптивного круиза'],['yes','С адаптивным круизом']])+'<p class="picked">Бесплатно. Работу функций проверим по Вашему автомобилю.</p>');
  enhancePanels($('#options'));if($('#options').elements.markerMode)$('#options').elements.markerMode.value=state.marker==='none'?'none':'yes';sync();
 }
-function rows(){return [['Руль',model.title],['Форма',name(SHAPES,state.shape)],['Зона хвата',name(MATERIALS,state.side)],['Цвет зоны хвата',ru(color(state.sideColor))],['Строчка обода',RU[state.sideStitch]],['Верх и низ',name([...MATERIALS,...CARBONS],state.top)],...(!isCarbon()?[['Цвет верха и низа',ru(color(state.topColor))]]:[]),...(model.lowerTrim?[['Накладка на спицы',name([['original','Штатная вставка'],...CARBONS],state.trim)]]:[]),...(model.airbag?[['Подушка',name(AIRBAGS,state.airbag)],...(state.airbag!=='original'?[['Цвет подушки',ru(color(state.airbagColor))],['Строчка подушки',RU[state.airbagStitch]]]:[])]:[]),...(shape().marker?[['Метка',state.marker==='none'?'Без метки':ru(marker(state.marker))]]:[]),...(shape().led?[['LED-дисплей',state.led==='yes'?'С дисплеем':'Без дисплея']]:[]),['Подогрев',state.heat==='yes'?'С подогревом':'Без подогрева'],['Вибро',state.vibration==='yes'?'С вибро':'Без вибро'],['Адаптивный круиз-контроль',state.acc==='yes'?'С адаптивным круизом':'Без адаптивного круиза']];}
-function addonsTotal(){if(model.series!=='F')return 0;let sum=0;const both=state.heat==='yes'&&state.vibration==='yes';
- if(both)sum+=HEAT_VIB_PRICE;else if(state.heat==='yes')sum+=HEAT_PRICE;else if(state.vibration==='yes')sum+=VIB_PRICE;
- const n=alcCount();if(n===1)sum+=ALC_SIDE_PRICE;else if(n===2)sum+=ALC_FULL_PRICE;
- if(state.marker!=='none')sum+=MARK_PRICE;
- return sum;}
-function price(){if(model.series==='F'){const nums=catalog.filter(p=>p.series==='F').flatMap(p=>Object.values(p.prices||{})).map(p=>p.unheated).filter(Number.isFinite);return nums.length?Math.min(...nums)+addonsTotal():null;}
+function rows(){return [['Руль',model.title],['Форма',name(SHAPES,state.shape)],['Зона хвата',name(MATERIALS,state.side)],['Цвет зоны хвата',ru(color(state.sideColor))],['Строчка обода',RU[state.sideStitch]],['Верх и низ',name([...MATERIALS,...CARBONS],state.top)],...(!isCarbon()?[['Цвет верха и низа',ru(color(state.topColor))]]:[]),...(model.lowerTrim?[['Накладка на спицы',name([['original','Штатная вставка'],...CARBONS],state.trim)]]:[]),...(model.airbag?[['Обшивка крышки подушки',name(AIRBAGS,state.airbag)],...(state.airbag!=='original'?[['Цвет обшивки подушки',ru(color(state.airbagColor))],['Строчка подушки',RU[state.airbagStitch]]]:[])]:[]),...(shape().marker?[['Метка на 12 часов',state.marker==='none'?'Без метки':`${ru(marker(state.marker))} · ${isCarbon()?'на карбоне':state.top==='alcantara'?'на алькантаре':'на коже'}`]]:[]),...(shape().led?[['LED-дисплей',state.led==='yes'?'С дисплеем':'Без дисплея']]:[]),['Подогрев',state.heat==='yes'?'С подогревом':'Без подогрева'],['Вибро',state.vibration==='yes'?'С вибро':'Без вибро'],['Адаптивный круиз-контроль',state.acc==='yes'?'С адаптивным круизом':'Без адаптивного круиза']];}
+// BMW F: каталожная цена «от» без опций + доплаты; неутверждённые доплаты в сумму не входят.
+function currentQuote(){if(isF()){const nums=catalog.filter(p=>p.series==='F').flatMap(p=>Object.values(p.prices||{})).map(p=>p.unheated).filter(Number.isFinite);return quote(nums.length?Math.min(...nums):null,addons(state,NAMES));}return {total:price(),pending:[]};}
+function price(){
  if(model.series==='Porsche'||model.series==='Audi'){const nums=catalog.filter(p=>p.series===model.series).flatMap(p=>Object.values(p.prices||{})).map(p=>state.heat==='yes'?p.heated:p.unheated).filter(Number.isFinite);return nums.length?Math.min(...nums):null;}
  const nums=catalog.filter(p=>p.series==='Mercedes'&&Number.isFinite(p.optBase)).map(p=>{if(state.heat!=='yes')return p.optBase;const extra=p.opts?.find(o=>o.k==='heat'&&!o.l)?.price;return Number.isFinite(extra)?p.optBase+extra:null;}).filter(Number.isFinite);return nums.length?Math.min(...nums):null;}
 function sync(){for(const input of $('#options').querySelectorAll('input[type=radio]')){const value=input.name==='markerMode'?(state.marker==='none'?'none':'yes'):state[input.name];input.checked=input.value===value;}
 for(const id of ['top-color-field'])$('#'+id).hidden=isCarbon();for(const id of ['bag-color-field','bag-stitch-field'])if($('#'+id))$('#'+id).hidden=state.airbag==='original';if($('#marker-colors'))$('#marker-colors').hidden=state.marker==='none';
  if($('#heatvib-group'))$('#heatvib-group').outerHTML=heatVibGroup();
- {const el=$('[data-price-for="side:alcantara"]');if(el){const p=sidePriceFor('alcantara');if(p){el.hidden=false;el.textContent='+'+money(p);}else el.hidden=true;}}
- {const el=$('[data-price-for="top:alcantara"]');if(el){const p=topPriceFor('alcantara');if(p){el.hidden=false;el.textContent='+'+money(p);}else el.hidden=true;}}
+ setBadge($('[data-price-for="side:alcantara"]'),sidePriceFor('alcantara'));setBadge($('[data-price-for="top:alcantara"]'),topPriceFor('alcantara'));
  for(const el of document.querySelectorAll('[data-picked]')){const key=el.dataset.picked;el.textContent=key==='marker'?(state.marker==='none'?'':`${ru(marker(state.marker))} · ${state.marker}`):key.endsWith('Color')?`${ru(color(state[key]))} · ${state[key]}`:RU[state[key]];}
- refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');const p=price();$('#price').textContent=p==null?'Уточним стоимость':'от '+new Intl.NumberFormat('ru-RU').format(p)+' ₽';$('#model-name').textContent=model.title+' · '+name(SHAPES,state.shape).toLowerCase();
+ refreshPanels($('#options'));$('#summary').innerHTML=rows().map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');showPrice($('#price'),currentQuote());$('#model-name').textContent=model.title+' · '+name(SHAPES,state.shape).toLowerCase();
  $('#order').href=telegramLink(currentRequest().message);}
 async function load(path,optional=false){const url=asset(path).href;if(!images.has(url))images.set(url,(async()=>{const im=new Image();im.src=url;await im.decode();return im;})().catch(e=>{images.delete(url);throw e;}));try{return await images.get(url);}catch(e){if(optional)return null;throw e;}}
 function canvas(){const c=document.createElement('canvas');c.width=c.height=SIZE;return c;}
@@ -91,7 +90,7 @@ async function render(){const id=++serial,s={...state},car=model,sh=car.shapes[s
  const led=sh.led&&s.led==='yes'?await load(`led/${sh.led}.webp`):null,over=sh.over?await load(`over/${sh.over}.webp`):null;
  if(id!==serial)return;const c=canvas(),ctx=c.getContext('2d');draw(ctx,base);draw(ctx,side);draw(ctx,top);draw(ctx,trim);draw(ctx,bag);draw(ctx,logo);draw(ctx,mark);draw(ctx,led);draw(ctx,over);const output=$('#wheel').getContext('2d');output.clearRect(0,0,1254,1254);output.drawImage(c,0,0);ready=true;$('#order').setAttribute('aria-disabled','false');$('#status').textContent='';
  }catch(e){if(id===serial){$('#status').textContent='Не удалось загрузить превью. Выберите вариант ещё раз.';console.error(e);}}finally{if(id===serial){$('#save').disabled=!ready;if(ready)requestSharing.preparePhoto();}}}
-function currentRequest(){const summary=rows(),link=configurationLink(model.id,state);return {modelId:model.id,rows:summary,link,message:requestText(summary,link)};}
+function currentRequest(){const summary=[...rows(),priceRow(currentQuote())],link=configurationLink(model.id,state);return {modelId:model.id,rows:summary,link,message:requestText(summary,link)};}
 function allowedOption(key,s){
  const sh=model.shapes[s.shape];if(key==='shape')return Object.keys(model.shapes);if(!sh)return [];
  if(key==='side')return sh.zones.side;

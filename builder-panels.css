@@ -29,3 +29,14 @@ body{font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-seri
 }
 
 .request-note:empty,#share-note:empty{display:none}.request-note,.request-photo p,.request-photo small{color:var(--muted);font-size:12px;line-height:1.6}.request-photo{margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}.request-photo button{display:block;width:100%;min-height:46px;padding:10px 16px;background:transparent;color:var(--text,#eee);border:1px solid var(--line);border-radius:12px;font:inherit;font-size:13px;cursor:pointer}.request-photo button:disabled{opacity:.45;cursor:wait}.request-photo small{display:block;margin-top:8px}
+
+/* Цены «уточняется» и карточки деталей с фото (центральная вставка, накладки возле кнопок). */
+.hv-price.is-pending{color:#ffb3ad;font-weight:500}
+.orderbar .is-pending>span{color:#ffb3ad}
+.part-choice{justify-content:flex-start;gap:12px;padding:8px 15px 8px 8px;min-height:64px}
+.part-choice>span{flex:1;min-width:0}
+.part-choice>img,.part-choice>.part-none{flex:none;width:56px;height:48px;border-radius:8px;background:#000;object-fit:contain}
+.part-choice>.part-none{display:grid;place-items:center;font-size:9px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:#8d8c96;border:1px dashed #ffffff26;background:transparent}
+.part-note{font-size:12px;line-height:1.55}
+.part-note[hidden]{display:none}
+@media(max-width:760px){.part-choice{min-height:62px}.part-choice>img,.part-choice>.part-none{width:52px;height:44px}}

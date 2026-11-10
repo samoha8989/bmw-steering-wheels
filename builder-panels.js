@@ -2,7 +2,7 @@
 const GROUPS=[
  ['materials','Материалы',['side','sideColor','top','topColor']],
  ['stitching','Строчка обода',['sideStitch','topStitch']],
- ['trim','Накладка на спицы',['trim']],
+ ['trim','Накладки и вставки',['trim','insert','strips']],
  ['airbag','Подушка',['airbag','airbagColor','airbagStitch']],
  ['marker','Метка',['markerMode','marker']],
  ['equipment','Функции и оснащение',['paddles','led','heat','vibration','acc']]

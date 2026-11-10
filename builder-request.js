@@ -1,7 +1,9 @@
 // Keep this v1 field order stable: already-sent links must restore the same wheel.
 const FIELDS=['shape','side','sideColor','sideStitch','top','topColor','trim','airbag','airbagColor','airbagStitch','marker','led','heat','vibration','acc'];
+// v2 = поля v1 в том же порядке + новые поля в конце. Новые поля дописывать только в конец FIELDS2.
+const FIELDS2=[...FIELDS,'insert','strips'];
 export function configurationLink(modelId,state,base=location.href){
- const token=btoa(JSON.stringify([1,modelId,...FIELDS.map(k=>state[k]??null)])).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+ const token=btoa(JSON.stringify([2,modelId,...FIELDS2.map(k=>state[k]??null)])).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
  const url=new URL(base);url.search='';if(modelId!=='bmw-gseries')url.searchParams.set('model',modelId);url.searchParams.set('v','155');url.hash='c='+token;return url.href;
 }
 export function readConfiguration(hash,modelId,defaults,allowed){
@@ -9,10 +11,12 @@ export function readConfiguration(hash,modelId,defaults,allowed){
  try{
   const token=hash.slice(3);if(token.length>1800||!/^[-_a-zA-Z0-9]+$/.test(token))throw Error();
   const values=JSON.parse(atob(token.replace(/-/g,'+').replace(/_/g,'/')));
-  if(!Array.isArray(values)||values.length!==FIELDS.length+2||values[0]!==1||values[1]!==modelId)throw Error();
+  if(!Array.isArray(values)||values[1]!==modelId)throw Error();
+  const fields=values[0]===1?FIELDS:values[0]===2?FIELDS2:null;
+  if(!fields||values.length!==fields.length+2)throw Error();
   const state={...defaults};
-  FIELDS.forEach((key,i)=>{const value=values[i+2];if(!(key in defaults)){if(value!==null)throw Error();return;}if(typeof value!=='string'||value.length>64)throw Error();state[key]=value;});
-  for(const key of FIELDS)if(key in defaults&&!allowed(key,state).includes(state[key]))throw Error();
+  fields.forEach((key,i)=>{const value=values[i+2];if(!(key in defaults)){if(value!==null)throw Error();return;}if(typeof value!=='string'||value.length>64)throw Error();state[key]=value;});
+  for(const key of fields)if(key in defaults&&!allowed(key,state).includes(state[key]))throw Error();
   if(state.led==='yes'&&state.marker!=='none')throw Error();
   state.topStitch=state.sideStitch;return {state,shared:true};
  }catch{return {state:{...defaults},shared:false,error:true};}
