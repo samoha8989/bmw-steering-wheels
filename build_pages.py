@@ -281,7 +281,7 @@ def card(rel, p, branch=None, alt_for=None):
     w, h = img_size(src)
     alt = f'Руль № {num} для {SERIES_NAME[p["series"]]}' + (f', подбор на {alt_for}' if alt_for else '')
     pr = pmin(p, branch)
-    price = f'от{NBSP}{money(pr)}' if pr else 'цену уточним в Telegram'
+    price = f'от{NBSP}{money(pr)}' if pr else 'Цена по запросу'
     mode = 'В наличии' if p['availability'] == 'stock' else 'Под заказ'
     mat = p.get('material')
     href = f'{rel}rul/{WHEEL_SLUG[p["id"]]}/'
@@ -650,7 +650,7 @@ def build_wheel(p, order):
             for k in ('unheated', 'heated', 'single'):
                 if k in opt:
                     rows.append(f'<tr><th scope="row">{pre}{label[k]}</th><td>{money(opt[k])}</td></tr>')
-    ptable = ('<table class="tbl"><tbody>' + ''.join(rows) + '</tbody></table>') if rows else '<p>Цену уточним в Telegram.</p>'
+    ptable = ('<table class="tbl"><tbody>' + ''.join(rows) + '</tbody></table>') if rows else '<p>Цена по запросу</p>'
     price_line = f'<p class="bigprice">от{NBSP}{money(pr)}</p>' if pr else ''
     mode = ('В наличии — отправляем в день заказа, оплата при получении.' if stock
             else 'Под заказ — изготовление около трёх недель.')

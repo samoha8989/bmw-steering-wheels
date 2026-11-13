@@ -25,6 +25,7 @@ export function cleanState(value={}){
  return s;
 }
 export function priceInfo(p,s={},branchOverride){
+ if(p.priceOnRequest)return {min:null,max:null,range:false,unknown:true,caption:"Комплектацию уточним",selected:null};
  const matchesCar = (!s.brand || s.brand===brandKey(p)) && (!s.series || (p.compatibleSeries||[p.series]).includes(s.series));
  const branch=branchOverride || (matchesCar?s.branch:'');
  const options = p.prices[branch] ? [p.prices[branch]] : p.prices.default ? [p.prices.default] : Object.values(p.prices);

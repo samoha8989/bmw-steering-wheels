@@ -6659,5 +6659,277 @@
   "optDefaults": [],
   "availability": "order",
   "displayNumber": "A01"
+ },
+ {
+  "id": "m060-nov13",
+  "series": "Mercedes",
+  "material": "Белая метка, спицы в чёрном глянце и удлинённые лепестки",
+  "photos": [
+   "photos/m060-nov13-1.webp"
+  ],
+  "thumb": "thumbs/m060-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "M060"
+ },
+ {
+  "id": "m061-nov13",
+  "series": "Mercedes",
+  "material": "BRABUS · коричневые перфорированные боковины, декор под карбон",
+  "photos": [
+   "photos/m061-nov13-1.webp",
+   "photos/m061-nov13-2.webp",
+   "photos/m061-nov13-3.webp",
+   "photos/m061-nov13-4.webp",
+   "photos/m061-nov13-5.webp",
+   "photos/m061-nov13-6.webp",
+   "photos/m061-nov13-7.webp",
+   "photos/m061-nov13-8.webp",
+   "photos/m061-nov13-9.webp",
+   "photos/m061-nov13-10.webp"
+  ],
+  "thumb": "thumbs/m061-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "M061",
+  "video": "videos/m061-nov13.mp4"
+ },
+ {
+  "id": "e17-nov13",
+  "series": "E",
+  "material": "Чёрный обод со светлой меткой и простроченным центром",
+  "photos": [
+   "photos/e17-nov13-1.webp",
+   "photos/e17-nov13-2.webp",
+   "photos/e17-nov13-3.webp"
+  ],
+  "thumb": "thumbs/e17-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "E17"
+ },
+ {
+  "id": "f80-nov13",
+  "series": "F",
+  "material": "Матовый рисунок под карбон, перфорация и трёхцветная метка",
+  "photos": [
+   "photos/f80-nov13-1.webp",
+   "photos/f80-nov13-2.webp",
+   "photos/f80-nov13-3.webp"
+  ],
+  "thumb": "thumbs/f80-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "F80"
+ },
+ {
+  "id": "f81-nov13",
+  "series": "F",
+  "material": "Чёрный ворсовый обод, трёхцветная строчка и LED-дисплей",
+  "photos": [
+   "photos/f81-nov13-1.webp",
+   "photos/f81-nov13-2.webp",
+   "photos/f81-nov13-3.webp",
+   "photos/f81-nov13-4.webp"
+  ],
+  "thumb": "thumbs/f81-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "F81",
+  "hasScreen": true
+ },
+ {
+  "id": "f82-nov13",
+  "series": "F",
+  "material": "Рисунок кованого карбона, чёрно-белая эмблема и LED-дисплей",
+  "photos": [
+   "photos/f82-nov13-1.webp",
+   "photos/f82-nov13-2.webp",
+   "photos/f82-nov13-3.webp",
+   "photos/f82-nov13-4.webp",
+   "photos/f82-nov13-5.webp",
+   "photos/f82-nov13-6.webp",
+   "photos/f82-nov13-7.webp",
+   "photos/f82-nov13-8.webp"
+  ],
+  "thumb": "thumbs/f82-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "F82",
+  "hasScreen": true,
+  "video": "videos/f82-nov13.mp4"
+ },
+ {
+  "id": "f83-nov13",
+  "series": "F",
+  "material": "Перфорированные боковины, гладкий низ и LED-дисплей",
+  "photos": [
+   "photos/f83-nov13-1.webp",
+   "photos/f83-nov13-2.webp",
+   "photos/f83-nov13-3.webp",
+   "photos/f83-nov13-4.webp",
+   "photos/f83-nov13-5.webp"
+  ],
+  "thumb": "thumbs/f83-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "F83",
+  "hasScreen": true
+ },
+ {
+  "id": "g67-nov13",
+  "series": "G",
+  "material": "Красная метка, ворсовые боковины и накладка M Performance",
+  "photos": [
+   "photos/g67-nov13-1.webp",
+   "photos/g67-nov13-2.webp",
+   "photos/g67-nov13-3.webp",
+   "photos/g67-nov13-4.webp",
+   "photos/g67-nov13-5.webp",
+   "photos/g67-nov13-6.webp"
+  ],
+  "thumb": "thumbs/g67-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "G67",
+  "video": "videos/g67-nov13.mp4"
+ },
+ {
+  "id": "g68-nov13",
+  "series": "G",
+  "material": "Гладкий обод с плоским низом, красная метка и кнопки M1/M2",
+  "photos": [
+   "photos/g68-nov13-1.webp",
+   "photos/g68-nov13-2.webp",
+   "photos/g68-nov13-3.webp"
+  ],
+  "thumb": "thumbs/g68-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "G68",
+  "video": "videos/g68-nov13.mp4"
+ },
+ {
+  "id": "g69-nov13",
+  "series": "G",
+  "material": "Глянцевый декор под карбон, перфорация и LED-дисплей",
+  "photos": [
+   "photos/g69-nov13-1.webp"
+  ],
+  "thumb": "thumbs/g69-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "G69",
+  "hasScreen": true
+ },
+ {
+  "id": "p12-nov13",
+  "series": "Porsche",
+  "material": "Бежевые боковины и центр, серебристые спицы и лепестки",
+  "photos": [
+   "photos/p12-nov13-1.webp",
+   "photos/p12-nov13-2.webp",
+   "photos/p12-nov13-3.webp",
+   "photos/p12-nov13-4.webp",
+   "photos/p12-nov13-5.webp",
+   "photos/p12-nov13-6.webp"
+  ],
+  "thumb": "thumbs/p12-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "P12"
+ },
+ {
+  "id": "p13-nov13",
+  "series": "Porsche",
+  "material": "Рисунок кованого карбона, серебристая метка и селектор на правой спице",
+  "photos": [
+   "photos/p13-nov13-1.webp",
+   "photos/p13-nov13-2.webp",
+   "photos/p13-nov13-3.webp",
+   "photos/p13-nov13-4.webp",
+   "photos/p13-nov13-5.webp",
+   "photos/p13-nov13-6.webp",
+   "photos/p13-nov13-7.webp",
+   "photos/p13-nov13-8.webp",
+   "photos/p13-nov13-9.webp"
+  ],
+  "thumb": "thumbs/p13-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "P13",
+  "video": "videos/p13-nov13.mp4"
+ },
+ {
+  "id": "p14-nov13",
+  "series": "Porsche",
+  "material": "Чёрный ворсовый обод, красная метка и красная строчка",
+  "photos": [
+   "photos/p14-nov13-1.webp",
+   "photos/p14-nov13-2.webp",
+   "photos/p14-nov13-3.webp",
+   "photos/p14-nov13-4.webp",
+   "photos/p14-nov13-5.webp",
+   "photos/p14-nov13-6.webp",
+   "photos/p14-nov13-7.webp",
+   "photos/p14-nov13-8.webp",
+   "photos/p14-nov13-9.webp",
+   "photos/p14-nov13-10.webp"
+  ],
+  "thumb": "thumbs/p14-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "P14"
+ },
+ {
+  "id": "p15-nov13",
+  "series": "Porsche",
+  "material": "Глянцевый декор под карбон, перфорированные боковины и LED-дисплей",
+  "photos": [
+   "photos/p15-nov13-1.webp",
+   "photos/p15-nov13-2.webp",
+   "photos/p15-nov13-3.webp",
+   "photos/p15-nov13-4.webp",
+   "photos/p15-nov13-5.webp",
+   "photos/p15-nov13-6.webp",
+   "photos/p15-nov13-7.webp"
+  ],
+  "thumb": "thumbs/p15-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "P15",
+  "hasScreen": true,
+  "video": "videos/p15-nov13.mp4"
+ },
+ {
+  "id": "p16-nov13",
+  "series": "Porsche",
+  "material": "Гладкий чёрный обод и открытые спицы",
+  "photos": [
+   "photos/p16-nov13-1.webp",
+   "photos/p16-nov13-2.webp",
+   "photos/p16-nov13-3.webp",
+   "photos/p16-nov13-4.webp",
+   "photos/p16-nov13-5.webp"
+  ],
+  "thumb": "thumbs/p16-nov13.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "P16"
  }
 ]
