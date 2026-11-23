@@ -6833,6 +6833,48 @@
   "hasScreen": true
  },
  {
+  "id": "g70-nov23",
+  "series": "G",
+  "material": "Рисунок кованого карбона, перфорированные боковины, красные кнопки и удлинённые лепестки с красными вставками",
+  "photos": [
+   "photos/g70-nov23-1.webp",
+   "photos/g70-nov23-2.webp",
+   "photos/g70-nov23-3.webp",
+   "photos/g70-nov23-4.webp",
+   "photos/g70-nov23-5.webp",
+   "photos/g70-nov23-6.webp",
+   "photos/g70-nov23-7.webp",
+   "photos/g70-nov23-8.webp"
+  ],
+  "thumb": "thumbs/g70-nov23.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "G70",
+  "video": "videos/g70-nov23.mp4"
+ },
+ {
+  "id": "g71-nov23",
+  "series": "G",
+  "material": "Рисунок кованого карбона, перфорированные боковины и графитовые лепестки",
+  "photos": [
+   "photos/g71-nov23-1.webp",
+   "photos/g71-nov23-2.webp",
+   "photos/g71-nov23-3.webp",
+   "photos/g71-nov23-4.webp",
+   "photos/g71-nov23-5.webp",
+   "photos/g71-nov23-6.webp",
+   "photos/g71-nov23-7.webp",
+   "photos/g71-nov23-8.webp"
+  ],
+  "thumb": "thumbs/g71-nov23.webp",
+  "prices": {},
+  "priceOnRequest": true,
+  "availability": "order",
+  "displayNumber": "G71",
+  "video": "videos/g71-nov23.mp4"
+ },
+ {
   "id": "p12-nov13",
   "series": "Porsche",
   "material": "Бежевые боковины и центр, серебристые спицы и лепестки",
